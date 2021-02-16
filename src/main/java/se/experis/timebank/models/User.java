@@ -4,6 +4,8 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Component
@@ -27,5 +29,9 @@ public class User {
 
     @Column
     private String profileImg;
+
+
+
+
 
 }

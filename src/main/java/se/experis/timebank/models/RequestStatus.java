@@ -1,6 +1,6 @@
 package se.experis.timebank.models;
 
-public enum RequestState {
+public enum RequestStatus {
     PENDING,
     APPROVED,
     DENIED
