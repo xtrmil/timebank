@@ -1,4 +1,4 @@
-HELP.md
+HEgit staLP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
@@ -37,24 +37,24 @@ build/
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-client/node_modules
-client/.pnp
-client.pnp.js
+client/timebank/node_modules
+client/timebank/.pnp
+client/timebank/.pnp.js
 
 # testing
-client/coverage
+client/timebank/coverage
 
 # production
-client/build
+client/timebank/build
 
 # misc
-client.DS_Store
-client.env.local
-client.env.development.local
-client.env.test.local
-client.env.production.local
+client/timebank/.DS_Store
+client/timebank/.env.local
+client/timebank/.env.development.local
+client/timebank/.env.test.local
+client/timebank/.env.production.local
 
-client/npm-debug.log*
-client/yarn-debug.log*
-client/yarn-error.log*
+client/timebank/npm-debug.log*
+client/timebank/yarn-debug.log*
+client/timebank/yarn-error.log*
 
