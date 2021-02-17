@@ -1,5 +1,6 @@
 package se.experis.timebank.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +11,7 @@ import java.util.List;
 @Entity
 @Component
 @Data
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,8 +32,7 @@ public class User {
     @Column
     private String profileImg;
 
-
-
-
-
+    @JsonBackReference
+    @OneToMany(mappedBy = "user")
+    private List<VacationRequest> vacationRequests;
 }

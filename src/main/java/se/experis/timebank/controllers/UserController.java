@@ -16,8 +16,8 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("")
-    public ResponseEntity<CommonResponse> createUser(){
-        return null;
+    public ResponseEntity<CommonResponse> createUser(@RequestBody User user){
+        return userService.createUser(user);
     }
 
     @GetMapping("")

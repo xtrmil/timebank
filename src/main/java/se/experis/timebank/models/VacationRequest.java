@@ -1,12 +1,12 @@
 package se.experis.timebank.models;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
+
 
 @Entity
 
@@ -31,6 +31,7 @@ public class VacationRequest {
     @Column(nullable = false)
     private RequestStatus status;
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -38,5 +39,4 @@ public class VacationRequest {
     @ManyToOne
     @JoinColumn(name = "admin_id")
     private User admin;
-
 }

@@ -20,7 +20,6 @@ public class EligibilityPeriod {
     @Column(nullable = false)
     private Date endDate;
 
-    @Column(nullable = false)
     @ManyToOne
     private User createdBy;
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import se.experis.timebank.models.User;
 import se.experis.timebank.repositories.UserRepository;
 
 @Service
@@ -11,6 +12,16 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    public ResponseEntity<CommonResponse> createUser(User user){
+        CommonResponse cr = new CommonResponse();
+        userRepository.save(user);
+        cr.data = user;
+        cr.msg = "User with id:" + user.getId() + " created";
+        cr.status = HttpStatus.CREATED;
+
+        return new ResponseEntity<>(cr,cr.status);
+    }
 
     public ResponseEntity<CommonResponse> getUser() {
         CommonResponse cr = new CommonResponse();
