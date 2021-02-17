@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import se.experis.timebank.models.VacationRequest;
 import se.experis.timebank.repositories.VacationRequestRepository;
 
+import java.util.Optional;
+
 @Service
 public class VacationRequestService {
 
@@ -56,4 +58,57 @@ public class VacationRequestService {
         }
         return new ResponseEntity<>(cr, cr.status);
     }
+
+    public ResponseEntity<CommonResponse> updateVacationRequest(Long requestId, VacationRequest newVacationRequest){
+        CommonResponse cr = new CommonResponse();
+
+        Optional<VacationRequest> optionalUser = vacationRequestRepository.findById(requestId);
+        if(optionalUser.isPresent()) {
+
+            VacationRequest request = optionalUser.get();
+            //if admin
+            if(newVacationRequest.getStatus() != null){
+                request.setStatus(newVacationRequest.getStatus());
+            }
+
+            // if not moderated, and authorized
+            if (newVacationRequest.getStartDate() != null) {
+                request.setStartDate(newVacationRequest.getStartDate());
+            }
+
+            if (newVacationRequest.getEndDate() != null) {
+                request.setEndDate(newVacationRequest.getEndDate());
+            }
+
+            if (newVacationRequest.getTitle() != null) {
+                request.setTitle(newVacationRequest.getTitle());
+            }
+
+            cr.data = vacationRequestRepository.save(newVacationRequest);
+            cr.msg = "VacationRequest with id " + requestId + " was updated";
+            cr.status = HttpStatus.OK;
+        }else{
+            cr.msg = "VacationRequest with id " + requestId + " not found";
+        }
+
+        return new ResponseEntity<>(cr, cr.status);
+    }
+
+    public ResponseEntity<CommonResponse> deleteVacationRequestById(Long requestId){
+        CommonResponse cr = new CommonResponse();
+
+        Optional<VacationRequest> optionalRequest = vacationRequestRepository.findById(requestId);
+
+        if(optionalRequest.isPresent()){
+            vacationRequestRepository.deleteById(requestId);
+            cr.status = HttpStatus.OK;
+            cr.msg = "Request with id: " + requestId + " successfully deleted";
+        } else {
+            cr.status = HttpStatus.NOT_FOUND;
+            cr.msg = "Request with id: " + requestId + " not found";
+        }
+
+        return new ResponseEntity<>(cr,cr.status);
+    }
 }
+

@@ -2,7 +2,6 @@ package se.experis.timebank.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import se.experis.timebank.models.User;
 import se.experis.timebank.services.CommonResponse;
@@ -27,26 +26,20 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<CommonResponse> getUserById(@PathVariable Long userId) {
-        return userService.getUserById(userId);
-    }
+        return userService.getUserById(userId); }
 
-    @PatchMapping("/{userId}")
-    public ResponseEntity<CommonResponse> updateUserById(@PathVariable Long userId){
-        return null;
+    @PutMapping("/{userId}")
+    public ResponseEntity<CommonResponse> updateUserById(@PathVariable Long userId, @RequestBody User user){
+        return userService.updateUserById(userId,user);
     }
 
     @DeleteMapping("/{userId}")
     public ResponseEntity<CommonResponse> deleteUserById(@PathVariable Long userId){
-        return null;
+        return userService.deleteUserById(userId);
     }
-    /** Move to own repository? */
-    //@GetMapping("/{userId}/requests")
-    //public ResponseEntity<CommonResponse> get
 
-    @PostMapping("/{userId}")
-    public ResponseEntity<CommonResponse> updatePasswordById(
-            @RequestBody User user,
-            @PathVariable Long userId){
-        return null;
-    }
+//    @PutMapping("/{userId}")
+//    public ResponseEntity<CommonResponse> updatePasswordById(@RequestBody User user, @PathVariable Long userId){
+//        return null;
+//    }
 }

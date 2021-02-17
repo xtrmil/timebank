@@ -23,7 +23,7 @@ public class VacationRequestController {
     @GetMapping("")
     public ResponseEntity<CommonResponse> getVacationRequest(){
         return null;
-    }
+    }  // addera token
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<CommonResponse> getVacationRequestByUserId(@PathVariable Long userId)
@@ -36,13 +36,14 @@ public class VacationRequestController {
         return vacationRequestService.getVacationRequestById(requestId);
     }
 
-    @PatchMapping("/{requestId}")
-    public ResponseEntity<CommonResponse> updateVacationRequest(){
-        return null;
+    @PutMapping("/{requestId}")
+    public ResponseEntity<CommonResponse> updateVacationRequest(@PathVariable Long requestId, @RequestBody VacationRequest vacationRequest){
+        return vacationRequestService.updateVacationRequest(requestId,vacationRequest);
     }
 
     @DeleteMapping("/{requestId}")
-    public ResponseEntity<CommonResponse> deleteVacationRequest(){
-        return null;
+    public ResponseEntity<CommonResponse> deleteVacationRequest(@PathVariable Long requestId){
+
+        return vacationRequestService.deleteVacationRequestById(requestId);
     }
 }

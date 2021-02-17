@@ -33,6 +33,7 @@ public class VacationRequest {
     private RequestStatus status = RequestStatus.PENDING;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "user_id")
     private User user;
 

@@ -30,7 +30,7 @@ public class User {
     private String email;
 
     @Column(nullable = false)
-    private boolean isAdmin;
+    private Boolean isAdmin;
 
     @Column
     private String profileImg;
