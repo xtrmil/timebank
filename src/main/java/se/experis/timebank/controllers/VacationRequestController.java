@@ -25,9 +25,15 @@ public class VacationRequestController {
         return null;
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<CommonResponse> getVacationRequestByUserId(@PathVariable Long userId)
+    {
+        return vacationRequestService.getVacationRequestByUserId(userId);
+    }
+
     @GetMapping("/{requestId}")
-    public ResponseEntity<CommonResponse> getVacationRequestById(){
-        return null;
+    public ResponseEntity<CommonResponse> getVacationRequestById(@PathVariable Long requestId) {
+        return vacationRequestService.getVacationRequestById(requestId);
     }
 
     @PatchMapping("/{requestId}")
