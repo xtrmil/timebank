@@ -23,7 +23,7 @@ public class CommentService {
         CommonResponse cr = new CommonResponse();
         cr.data = commentRepository.findAllByVacationRequestId(requestId); // add sorting chronological order (soonest first)
         cr.status = HttpStatus.OK;
-        cr.msg = "all ineligible periods";
+        cr.msg = "all Comments on request with id: " + requestId;
 
         return new ResponseEntity<>(cr, cr.status);
     }
@@ -68,10 +68,10 @@ public class CommentService {
             }
 
             cr.data = commentRepository.save(comment);
-            cr.msg = "Eligibility Period with id " + id + " was updated";
+            cr.msg = "Comment with id " + id + " was updated";
             cr.status = HttpStatus.OK;
         } else {
-            cr.msg = "Eligibility  with id " + id + " not found";
+            cr.msg = "Comment  with id " + id + " not found";
         }
 
         return new ResponseEntity<>(cr, cr.status);
