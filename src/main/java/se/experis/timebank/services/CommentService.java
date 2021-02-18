@@ -25,24 +25,39 @@ public class CommentService {
 
     public ResponseEntity<CommonResponse> getAllCommentsByRequestId(Long requestId) {
         CommonResponse cr = new CommonResponse();
-        cr.data = commentRepository.findAllByVacationRequestId(requestId); // add sorting chronological order (soonest first)
-        cr.status = HttpStatus.OK;
-        cr.msg = "all Comments on request with id: " + requestId;
 
+        Optional<VacationRequest> optionalRequest = vacationRequestRepository.findById(requestId);
+        if(optionalRequest.isPresent()){
+            cr.data = commentRepository.findAllByVacationRequestIdOrderByCreatedAtDesc(requestId); // add sorting chronological order (soonest first)
+            cr.msg = "all Comments on request with id: " + requestId;
+            cr.status = HttpStatus.OK;
+        }else {
+            cr.msg = "Request id not found, unable to get all comments.";
+            cr.status = HttpStatus.NOT_FOUND;
+        }
         return new ResponseEntity<>(cr, cr.status);
     }
 
     public ResponseEntity<CommonResponse> createComment(Long requestId, Comment newComment) {
         CommonResponse cr = new CommonResponse();
         VacationRequest vacationRequest = vacationRequestRepository.findById(requestId).get();
-        User user = userRepository.findById(newComment.getUser().getId()).get();
-        newComment.setUser(user);
-        newComment.setVacationRequest(vacationRequest);
-        commentRepository.save(newComment);
-        cr.data = newComment;
-        cr.msg = "New Comment added. ";
-        cr.status = HttpStatus.CREATED;
 
+        Long userId = newComment.getUser().getId();
+
+        Optional<User> optionalUser = userRepository.findById(userId);
+
+        if(optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            newComment.setUser(user);
+            newComment.setVacationRequest(vacationRequest);
+            commentRepository.save(newComment);
+            cr.data = newComment;
+            cr.msg = "New Comment added. ";
+            cr.status = HttpStatus.CREATED;
+        }else{
+            cr.msg = "User with id:" + userId + " was not found.";
+            cr.status = HttpStatus.NOT_FOUND;
+        }
         return new ResponseEntity<>(cr, cr.status);
     }
 
@@ -53,33 +68,31 @@ public class CommentService {
             cr.data = commentOptional.get();
             cr.msg = "Comment found with id: " + id;
             cr.status = HttpStatus.OK;
-
         } else {
             cr.msg = "No Comment found with id: " + id;
             cr.status = HttpStatus.NOT_FOUND;
         }
-
         return new ResponseEntity<>(cr, cr.status);
     }
 
+    /**TODO validate for edit within 24h*/
     public ResponseEntity<CommonResponse> updateCommentById(Long id, Comment newComment) {
         CommonResponse cr = new CommonResponse();
 
         Optional<Comment> optionalComment = commentRepository.findById(id);
-        if (optionalComment.isPresent()) {
 
+        if (optionalComment.isPresent()) {
             Comment comment = optionalComment.get();
             if (newComment.getMessage() != null) {
                 comment.setMessage(newComment.getMessage());
             }
-
             cr.data = commentRepository.save(comment);
             cr.msg = "Comment with id " + id + " was updated";
             cr.status = HttpStatus.OK;
         } else {
             cr.msg = "Comment  with id " + id + " not found";
+            cr.status = HttpStatus.NOT_FOUND;
         }
-
         return new ResponseEntity<>(cr, cr.status);
     }
 
@@ -96,7 +109,6 @@ public class CommentService {
             cr.msg = "Comment with id: " + id + " not found";
             cr.status = HttpStatus.NOT_FOUND;
         }
-
         return new ResponseEntity<>(cr, cr.status);
     }
 }

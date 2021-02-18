@@ -8,6 +8,7 @@ import se.experis.timebank.models.EligibilityPeriod;
 import se.experis.timebank.models.User;
 import se.experis.timebank.repositories.EligibilityRepository;
 import se.experis.timebank.repositories.UserRepository;
+import se.experis.timebank.utils.Validations;
 
 import java.util.Optional;
 
@@ -19,9 +20,11 @@ public class EligibilityService {
     @Autowired
     private UserRepository userRepository;
 
+    private Validations validation = new Validations();
+
     public ResponseEntity<CommonResponse> getAllIneligiblePeriods() {
         CommonResponse cr = new CommonResponse();
-        cr.data = eligibilityRepository.findAll();  // add sorting chronological order (soonest first)
+        cr.data = eligibilityRepository.findAllByOrderByStartDateAsc();  // add sorting chronological order (soonest first)
         cr.status = HttpStatus.OK;
         cr.msg = "all ineligible periods";
 
@@ -30,29 +33,36 @@ public class EligibilityService {
 
     public ResponseEntity<CommonResponse> createIneligiblePeriod(EligibilityPeriod newPeriod) {
         CommonResponse cr = new CommonResponse();
-        User user = userRepository.findById(newPeriod.getCreatedBy().getId()).get();
-        newPeriod.setCreatedBy(user);
-        eligibilityRepository.save(newPeriod);
-        cr.data = newPeriod;
-        cr.msg = "ineligble period added. Start: " + newPeriod.getStartDate() + " Stop: " + newPeriod.getEndDate();
-        cr.status = HttpStatus.CREATED;
 
+        Long userId = newPeriod.getCreatedBy().getId();
+        Optional<User> optionalUser = userRepository.findById(userId);
+
+        if (optionalUser.isPresent() &&
+                validation.validatePeriodLength(newPeriod.getStartDate(), newPeriod.getEndDate()) >= 0) {
+            newPeriod.setCreatedBy(optionalUser.get());
+            eligibilityRepository.save(newPeriod);
+            cr.data = newPeriod;
+            cr.msg = "ineligible period added. Start: " + newPeriod.getStartDate() + " Stop: " + newPeriod.getEndDate();
+            cr.status = HttpStatus.CREATED;
+        } else {
+            cr.msg = "Unable to add ineligible period.";
+            cr.status = HttpStatus.BAD_REQUEST;
+        }
         return new ResponseEntity<>(cr, cr.status);
     }
 
     public ResponseEntity<CommonResponse> getIneligiblePeriodById(Long id) {
         CommonResponse cr = new CommonResponse();
         Optional<EligibilityPeriod> eligibilityPeriodOptional = eligibilityRepository.findById(id);
+
         if (eligibilityPeriodOptional.isPresent()) {
             cr.data = eligibilityPeriodOptional.get();
             cr.msg = "Eligibility period found with id: " + id;
             cr.status = HttpStatus.OK;
-
         } else {
             cr.msg = "No period found with id: " + id;
             cr.status = HttpStatus.NOT_FOUND;
         }
-
         return new ResponseEntity<>(cr, cr.status);
     }
 
@@ -75,6 +85,7 @@ public class EligibilityService {
             cr.status = HttpStatus.OK;
         } else {
             cr.msg = "Eligibility  with id " + id + " not found";
+            cr.status = HttpStatus.NOT_FOUND;
         }
 
         return new ResponseEntity<>(cr, cr.status);
@@ -93,7 +104,6 @@ public class EligibilityService {
             cr.msg = "Eligibility Period with id: " + id + " not found";
             cr.status = HttpStatus.NOT_FOUND;
         }
-
         return new ResponseEntity<>(cr, cr.status);
 
     }

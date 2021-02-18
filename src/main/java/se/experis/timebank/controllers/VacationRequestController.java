@@ -26,9 +26,9 @@ public class VacationRequestController {
     }  // addera token
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<CommonResponse> getVacationRequestByUserId(@PathVariable Long userId)
+    public ResponseEntity<CommonResponse> getAllVacationRequestByUserId(@PathVariable Long userId)
     {
-        return vacationRequestService.getVacationRequestByUserId(userId);
+        return vacationRequestService.getAllVacationRequestByUserId(userId);
     }
 
     @GetMapping("/{requestId}")

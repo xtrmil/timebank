@@ -17,11 +17,15 @@ public class UserService {
 
     public ResponseEntity<CommonResponse> createUser(User user){
         CommonResponse cr = new CommonResponse();
-        userRepository.save(user);
-        cr.data = user;
-        cr.msg = "User with id:" + user.getId() + " created";
-        cr.status = HttpStatus.CREATED;
 
+        if(!userRepository.existsByEmail(user.getEmail())){
+            cr.data =  userRepository.save(user);
+            cr.msg = "User with id:" + user.getId() + " created";
+            cr.status = HttpStatus.CREATED;
+        }else {
+            cr.msg = "User with email: " + user.getEmail() + " already exists.";
+            cr.status = HttpStatus.BAD_REQUEST;
+        }
         return new ResponseEntity<>(cr,cr.status);
     }
 
@@ -41,6 +45,7 @@ public class UserService {
 
     public ResponseEntity<CommonResponse> getUserById(Long userId) {
         CommonResponse cr = new CommonResponse();
+
         Optional<User> optionalUser = userRepository.findById(userId);
 
         if(optionalUser.isPresent()){
@@ -66,7 +71,6 @@ public class UserService {
             }
             if (newUser.getLastName() != null) {
                 user.setLastName(newUser.getLastName());
-
             }
             if (newUser.getEmail() != null) {
                 user.setEmail(newUser.getEmail());
@@ -79,8 +83,8 @@ public class UserService {
             cr.status = HttpStatus.OK;
         }else{
             cr.msg = "User with id " + userId + " not found";
+            cr.status = HttpStatus.BAD_REQUEST;
         }
-
         return new ResponseEntity<>(cr, cr.status);
     }
 
@@ -97,7 +101,6 @@ public class UserService {
             cr.msg = "User with id: " + userId + " not found";
             cr.status = HttpStatus.NOT_FOUND;
         }
-
         return new ResponseEntity<>(cr,cr.status);
     }
 }
