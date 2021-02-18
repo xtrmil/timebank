@@ -35,7 +35,6 @@ public class User {
     @Column
     private String profileImg;
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "user")
     @JsonProperty(access = Access.WRITE_ONLY)
     private List<VacationRequest> vacationRequests;

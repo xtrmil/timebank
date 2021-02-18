@@ -4,10 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import se.experis.timebank.models.User;
 import se.experis.timebank.models.VacationRequest;
+import se.experis.timebank.repositories.UserRepository;
 import se.experis.timebank.repositories.VacationRequestRepository;
 
+import java.time.LocalDate;
 import java.util.Optional;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Service
 public class VacationRequestService {
@@ -17,12 +22,27 @@ public class VacationRequestService {
     @Autowired
     private VacationRequestRepository vacationRequestRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public ResponseEntity<CommonResponse> createVacationRequest(VacationRequest vacationRequest){
         CommonResponse cr = new CommonResponse();
-        vacationRequestRepository.save(vacationRequest);
-        cr.data = vacationRequest;
-        cr.msg = "User with id:" + vacationRequest.getId() + " created";
-        cr.status = HttpStatus.CREATED;
+       long requestedLength =  checkVacationLength(vacationRequest.getStartDate(),vacationRequest.getEndDate());
+        if( requestedLength >= 0 && requestedLength <= maxPeriod) {
+            User user  = userRepository.findById(vacationRequest.getUser().getId()).get();
+            vacationRequest.setUser(user);
+            vacationRequestRepository.save(vacationRequest);
+            cr.data = vacationRequest;
+            cr.msg = "vacationRequest created successfully";
+            cr.status = HttpStatus.CREATED;
+        }else{
+            if( requestedLength > 0){
+                cr.msg = "VacationRequest length (" + requestedLength +") exceeds max length (" + maxPeriod + ")";
+            }else{
+                cr.msg = "VacationRequest length must be minimum 1 day";
+            }
+            cr.status = HttpStatus.BAD_REQUEST;
+        }
 
         return new ResponseEntity<>(cr,cr.status);
     }
@@ -109,6 +129,10 @@ public class VacationRequestService {
         }
 
         return new ResponseEntity<>(cr,cr.status);
+    }
+
+    private long checkVacationLength(LocalDate startDate, LocalDate endDate){
+        return DAYS.between(startDate, endDate);
     }
 }
 

@@ -5,8 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import se.experis.timebank.models.Comment;
+import se.experis.timebank.models.User;
 import se.experis.timebank.models.VacationRequest;
 import se.experis.timebank.repositories.CommentRepository;
+import se.experis.timebank.repositories.UserRepository;
 import se.experis.timebank.repositories.VacationRequestRepository;
 
 
@@ -18,6 +20,8 @@ public class CommentService {
     private CommentRepository commentRepository;
     @Autowired
     private VacationRequestRepository vacationRequestRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     public ResponseEntity<CommonResponse> getAllCommentsByRequestId(Long requestId) {
         CommonResponse cr = new CommonResponse();
@@ -31,6 +35,8 @@ public class CommentService {
     public ResponseEntity<CommonResponse> createComment(Long requestId, Comment newComment) {
         CommonResponse cr = new CommonResponse();
         VacationRequest vacationRequest = vacationRequestRepository.findById(requestId).get();
+        User user = userRepository.findById(newComment.getUser().getId()).get();
+        newComment.setUser(user);
         newComment.setVacationRequest(vacationRequest);
         commentRepository.save(newComment);
         cr.data = newComment;

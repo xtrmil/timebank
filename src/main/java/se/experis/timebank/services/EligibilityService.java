@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import se.experis.timebank.models.EligibilityPeriod;
 import se.experis.timebank.models.User;
 import se.experis.timebank.repositories.EligibilityRepository;
+import se.experis.timebank.repositories.UserRepository;
 
 import java.util.Optional;
 
@@ -15,6 +16,8 @@ public class EligibilityService {
 
     @Autowired
     private EligibilityRepository eligibilityRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     public ResponseEntity<CommonResponse> getAllIneligiblePeriods() {
         CommonResponse cr = new CommonResponse();
@@ -27,6 +30,8 @@ public class EligibilityService {
 
     public ResponseEntity<CommonResponse> createIneligiblePeriod(EligibilityPeriod newPeriod) {
         CommonResponse cr = new CommonResponse();
+        User user = userRepository.findById(newPeriod.getCreatedBy().getId()).get();
+        newPeriod.setCreatedBy(user);
         eligibilityRepository.save(newPeriod);
         cr.data = newPeriod;
         cr.msg = "ineligble period added. Start: " + newPeriod.getStartDate() + " Stop: " + newPeriod.getEndDate();
@@ -40,7 +45,7 @@ public class EligibilityService {
         Optional<EligibilityPeriod> eligibilityPeriodOptional = eligibilityRepository.findById(id);
         if (eligibilityPeriodOptional.isPresent()) {
             cr.data = eligibilityPeriodOptional.get();
-            cr.msg = "Eligibilityperiod found with id: " + id;
+            cr.msg = "Eligibility period found with id: " + id;
             cr.status = HttpStatus.OK;
 
         } else {

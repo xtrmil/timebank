@@ -20,26 +20,26 @@ public class EligibilityController {
         return eligibilityService.getAllIneligiblePeriods();
     }
 
+    //bara admins ska kunna använda denna
     @PostMapping("")
     public ResponseEntity<CommonResponse> createIneligiblePeriod(@RequestBody EligibilityPeriod period) {
-
         return eligibilityService.createIneligiblePeriod(period);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CommonResponse> getIneligiblePeriodById(@PathVariable Long id) {
-
         return eligibilityService.getIneligiblePeriodById(id);
     }
 
+    //bara admins ska kunna använda denna
     @PutMapping("/{id}")
     public ResponseEntity<CommonResponse> updateIneligiblePeriodById(@PathVariable Long id, @RequestBody EligibilityPeriod newPeriod) {
         return eligibilityService.updateIneligiblePeriodById(id, newPeriod);
     }
 
+    //bara admins ska kunna använda denna
     @DeleteMapping("/{id}")
     public ResponseEntity<CommonResponse> deletedIneligiblePeriodById(@PathVariable Long id) {
-
         return eligibilityService.deleteIneligiblePeriodById(id);
     }
 }
