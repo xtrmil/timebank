@@ -3,6 +3,7 @@ package se.experis.timebank.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import se.experis.timebank.models.User;
 import se.experis.timebank.repositories.UserRepository;
@@ -19,6 +20,8 @@ public class UserService {
         CommonResponse cr = new CommonResponse();
 
         if(!userRepository.existsByEmail(user.getEmail())){
+            String encodedPassword = new BCryptPasswordEncoder().encode(user.getPassword());
+            user.setPassword(encodedPassword);
             cr.data =  userRepository.save(user);
             cr.msg = "User with id:" + user.getId() + " created";
             cr.status = HttpStatus.CREATED;

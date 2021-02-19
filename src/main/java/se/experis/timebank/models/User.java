@@ -1,6 +1,7 @@
 package se.experis.timebank.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
@@ -28,6 +29,10 @@ public class User {
 
     @Column(nullable = false, unique = true)
     private String email;
+
+    @Column
+    @JsonProperty(access = Access.WRITE_ONLY)
+    private String password;
 
     @Column(nullable = false)
     private Boolean isAdmin;
