@@ -23,11 +23,16 @@ public class UserCredentials implements UserDetails {
         this.email = user.getEmail();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
+        this.password = user.getPassword();
         if(user.getIsAdmin()){
             this.authorities = Collections.singletonList( new SimpleGrantedAuthority("ROLE_ADMIN"));
         }else{
             this.authorities =  Collections.singletonList( new SimpleGrantedAuthority("ROLE_USER"));
         }
+    }
+
+    public Long getId() {
+        return id;
     }
 
     @Override
@@ -38,12 +43,24 @@ public class UserCredentials implements UserDetails {
     @Override
     @JsonIgnore
     public String getPassword() {
-        return null;
+        return password;
     }
 
     @Override
     public String getUsername() {
         return null;
+    }
+
+    public String getEmail(){
+        return email;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     @Override
