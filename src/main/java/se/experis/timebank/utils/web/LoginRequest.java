@@ -1,4 +1,4 @@
-package se.experis.timebank.utils;
+package se.experis.timebank.utils.web;
 
 import lombok.Data;
 

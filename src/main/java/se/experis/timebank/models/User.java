@@ -40,6 +40,9 @@ public class User {
     @JsonProperty(access = Access.WRITE_ONLY)
     String secret;
 
+    @Column(nullable = false)
+    private Boolean isVerified;
+
     @OneToMany(mappedBy = "user")
     @JsonProperty(access = Access.WRITE_ONLY)
     private List<VacationRequest> vacationRequests;
