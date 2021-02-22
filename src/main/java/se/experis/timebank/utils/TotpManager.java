@@ -20,8 +20,6 @@ import static dev.samstevens.totp.util.Utils.getDataUriForImage;
 @Service
 @Slf4j
 public class TotpManager {
-    @Autowired
-    private ByteArrayToImage byteArrayToImage;
 
     public String generateSecret() {
         SecretGenerator generator = new CustomSecretGenerator();
@@ -46,7 +44,6 @@ public class TotpManager {
         } catch (QrGenerationException e) {
             log.error("unable to generate QrCode");
         }
-        byteArrayToImage.createImage(imageData);
         String mimeType = generator.getImageMimeType();
 
         return getDataUriForImage(imageData, mimeType);

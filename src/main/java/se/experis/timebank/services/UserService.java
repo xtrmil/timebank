@@ -7,7 +7,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import se.experis.timebank.models.User;
 import se.experis.timebank.repositories.UserRepository;
-import se.experis.timebank.utils.ByteArrayToImage;
 import se.experis.timebank.utils.TotpManager;
 
 import java.io.IOException;
@@ -22,8 +21,6 @@ public class UserService {
     @Autowired
     private TotpManager totpManager;
 
-    @Autowired
-    private ByteArrayToImage byteArrayToImage;
 
     public ResponseEntity<CommonResponse> createUser(User user) throws IOException {
         CommonResponse cr = new CommonResponse();

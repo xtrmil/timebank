@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 import se.experis.timebank.models.UserCredentials;
 import se.experis.timebank.services.CommonResponse;
 import se.experis.timebank.services.UserCredentialsService;
-import se.experis.timebank.services.UserService;
-import se.experis.timebank.utils.JwtUtil;
-import se.experis.timebank.utils.LoginRequest;
+import se.experis.timebank.utils.*;
+import se.experis.timebank.utils.web.LoginRequest;
+import se.experis.timebank.utils.web.QrSecret;
+import se.experis.timebank.utils.web.VerifyRequest;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping( value = "/api/v1/auth")
@@ -30,20 +33,36 @@ public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;
 
+    @Autowired
+    private TotpManager totpManager;
+
     @PostMapping("/login")
     public ResponseEntity<CommonResponse> login(@RequestBody LoginRequest loginRequest){
         CommonResponse cr = new CommonResponse();
         try{
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail().toLowerCase(),loginRequest.getPassword()));
             UserCredentials userCredentials = userCredentialsService.loadUserByUsername(loginRequest.getEmail().toLowerCase());
-            cr.data = jwtUtil.generateToken(userCredentials);
-            cr.msg = "Login successful";
+            if(!userCredentials.isVerified()){
+                QrSecret qrSecret = new QrSecret();
+                qrSecret.setQrUri(totpManager.getUriForImage(userCredentials.getSecret(),userCredentials.getEmail()));
+                qrSecret.setConfigCode(userCredentials.getSecret());
+                cr.msg = "Scan or enter config code";
+                cr.data = qrSecret;
+            }else{
+                cr.msg = "Enter verification code";
+            }
             cr.status = HttpStatus.OK;
-        }catch (BadCredentialsException bce){
+
+        }catch (BadCredentialsException | IOException bce){
             cr.msg= "Wrong username or password";
             cr.status = HttpStatus.UNAUTHORIZED;
         }
 
         return  new ResponseEntity<>(cr,cr.status);
+    }
+
+    @PostMapping("/verify")
+    public ResponseEntity<CommonResponse> verifyLogin(@RequestBody VerifyRequest verifyRequest){
+        return userCredentialsService.verifyLogin(verifyRequest);
     }
 }
