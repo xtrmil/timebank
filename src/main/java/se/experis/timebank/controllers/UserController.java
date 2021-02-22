@@ -7,6 +7,8 @@ import se.experis.timebank.models.User;
 import se.experis.timebank.services.CommonResponse;
 import se.experis.timebank.services.UserService;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping(value = "/api/v1/user")
 public class UserController {
@@ -15,7 +17,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("")
-    public ResponseEntity<CommonResponse> createUser(@RequestBody User user){
+    public ResponseEntity<CommonResponse> createUser(@RequestBody User user) throws IOException {
         return userService.createUser(user);
     }
 

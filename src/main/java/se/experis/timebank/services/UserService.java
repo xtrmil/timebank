@@ -7,7 +7,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import se.experis.timebank.models.User;
 import se.experis.timebank.repositories.UserRepository;
+import se.experis.timebank.utils.ByteArrayToImage;
+import se.experis.timebank.utils.TotpManager;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @Service
@@ -16,12 +19,20 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public ResponseEntity<CommonResponse> createUser(User user){
+    @Autowired
+    private TotpManager totpManager;
+
+    @Autowired
+    private ByteArrayToImage byteArrayToImage;
+
+    public ResponseEntity<CommonResponse> createUser(User user) throws IOException {
         CommonResponse cr = new CommonResponse();
 
         if(!userRepository.existsByEmail(user.getEmail())){
             String encodedPassword = new BCryptPasswordEncoder().encode(user.getPassword());
             user.setPassword(encodedPassword);
+            user.setSecret(totpManager.generateSecret());
+            totpManager.getUriForImage(user.getSecret(), user.getEmail());
             cr.data =  userRepository.save(user);
             cr.msg = "User with id:" + user.getId() + " created";
             cr.status = HttpStatus.CREATED;
