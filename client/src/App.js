@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import NotFoundPage from "./pages/NotFoundPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import VerifyLoginPage from "./pages/VerifyLoginPage"
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
                    <Redirect to="/login"/>
                </Route>
                <Route exact path="/login" component={LoginPage}/>
+               <Route exact path="/verify" component={VerifyLoginPage}/>
                <Route exact path="/register" component={RegisterPage}/>
                <Route exact path="/home" component={Home}/>
                <Route path="*" component={NotFoundPage}/>
