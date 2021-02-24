@@ -41,7 +41,7 @@ public class User {
     String secret;
 
     @Column(nullable = false)
-    private Boolean isVerified;
+    private Boolean isVerified = false;
 
     @OneToMany(mappedBy = "user")
     @JsonProperty(access = Access.WRITE_ONLY)
