@@ -25,12 +25,22 @@ const deleteVacationRequest = (id) => {
         );
 }
 
+const getAllVacationRequestsByStatus = (status) => {
+    return Api.get(`/request/status/${status}`,
+        {
+            headers: {
+                Authorization:""
+            }
+        })
+}
+
 export {
     addVacationRequest,
     getVacationRequestById,
     getAllVacationRequestsByUser,
     updateVacationRequest,
-    deleteVacationRequest
+    deleteVacationRequest,
+    getAllVacationRequestsByStatus
 };
 
 
