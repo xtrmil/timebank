@@ -7,6 +7,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./dashboard.scss";
 import CalendarNavigation from "./CalendarNavigation";
 import {getAllVacationRequestsByStatus} from "../api/vacationRequest";
+import {getAllVacationRequestsByUser} from "../api/vacationRequest";
 
 const localizer = momentLocalizer(moment);
 
@@ -15,14 +16,14 @@ const Dashboard = () => {
     const [events, setEvents] = useState([]);
 
     useEffect(async ()  => {
-       let result = await getAllVacationRequestsByStatus("approved");
+       let result = await getAllVacationRequestsByUser(1)
        console.log(result.data.data)
         setEvents(result.data.data);
     }, []);
 
     const eventColorStyle = (event, start, end, isSelected) => {
         let backgroundColor;
-        if(event.status == "APPROVED") {
+        if(event.status === "APPROVED") {
             backgroundColor = "#fcba03";
         }
         let style = {
@@ -51,7 +52,9 @@ const Dashboard = () => {
                events={events}
                startAccessor="startDate"
                endAccessor="endDate"
-               style={{ height: 500 }}
+               style={{ height: 1000 }}
+               popup
+               onSelectEvent={(event) => console.log(event)}
            />
        </Container>
     )
