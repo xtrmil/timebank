@@ -9,11 +9,9 @@ import CalendarNavigation from "./CalendarNavigation";
 import {getAllVacationRequestsByStatus} from "../api/vacationRequest";
 import {getAllVacationRequests} from "../api/vacationRequest";
 import EditVacationRequestModal from "../components/navbar/vacationrequest/EditVacationRequestModal";
-
 const localizer = momentLocalizer(moment);
 
 const Dashboard = () => {
-
     const [requests, setRequests] = useState([]);
     const [isLoading, setIsLoading]= useState(true);
     const [selectedEvent, setSelectedEvent] = useState([]);
