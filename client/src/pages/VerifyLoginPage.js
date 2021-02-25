@@ -1,5 +1,6 @@
-import { Button, Container, TextField } from "@material-ui/core";
-import { Form, Formik } from "formik";
+
+import { Formik } from "formik";
+import { Form,Button,Container } from "react-bootstrap";
 import React from "react";
 import { Redirect } from "react-router-dom";
 import "./VerifyLoginPage.scss";
@@ -56,31 +57,16 @@ const VerifyLoginPage = (props) => {
             handleBlur,
           }) => (
             <Form onSubmit={handleSubmit} noValidate>
-              <TextField
-                variant="outlined"
-                fullWidth
-                id="code"
-                label="Verification code"
-                required
-                name="code"
-                value={values.code}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={!!errors.code && !!touched.code}
-                helperText={errors.code && touched.code && errors.code}
-                FormHelperTextProps={{
-                  error: !!errors.code && !!touched.code,
-                  classes: { error: classes.error },
-                }}
-                autoComplete="off"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
+              <Form.Group>
+
+                <Form.Label>
+                  Verification code
+                </Form.Label>
+                <Form.Control name="code" value={values.code} type="text" onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.code && touched.code} />
+                <Form.Control.Feedback type="invalid" >{errors.code} </Form.Control.Feedback>
+              </Form.Group>
+
+              <Button type="submit" variant="success">
                 Verify
               </Button>
             </Form>

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import se.experis.timebank.models.RequestStatus;
 import se.experis.timebank.models.User;
 import se.experis.timebank.models.VacationRequest;
 import se.experis.timebank.repositories.UserRepository;
@@ -80,6 +81,13 @@ public class VacationRequestService {
             cr.status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
         return new ResponseEntity<>(cr, cr.status);
+    }
+
+    public ResponseEntity<CommonResponse> getAllVacationRequests(){
+        CommonResponse cr = new CommonResponse();
+        cr.data = vacationRequestRepository.findAllByStatusNot(RequestStatus.DENIED);
+        cr.status = HttpStatus.OK;
+        return new ResponseEntity<>(cr,cr.status);
     }
 
     public ResponseEntity<CommonResponse> updateVacationRequest(Long requestId, VacationRequest newVacationRequest) {

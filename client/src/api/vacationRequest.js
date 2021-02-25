@@ -14,7 +14,7 @@ const getAllVacationRequestsByUser = (id) => {
     return Api.get(`/request/user/${id}`,
     {
         headers: {
-            Authorization:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmbGFrYW4xMjNAZ21haWwuY29tIiwiZXhwIjoxNjE0MjEzNDU0LCJ1c2VyIjp7ImlkIjoxMSwiZW1haWwiOiJmbGFrYW4xMjNAZ21haWwuY29tIiwiZmlyc3ROYW1lIjoiSm9obm55IiwibGFzdE5hbWUiOiJIb2FuZyIsInNlY3JldCI6IlhYVlhESEtMWFlaT1E0R0QiLCJhdXRob3JpdGllcyI6W3siYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJ2ZXJpZmllZCI6dHJ1ZSwidXNlcm5hbWUiOm51bGx9LCJpYXQiOjE2MTQxNzc0NTR9.dZ0AY5fpSSlpa5TL2ThIROjQxTyVIBX9caQ-VCca_2M"
+            Authorization:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QGdtYWlsLmNvbSIsImV4cCI6MTYxNDI4MDEwMSwidXNlciI6eyJpZCI6MTIsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJmaXJzdE5hbWUiOiJQYXJpYSIsImxhc3ROYW1lIjoiS2FyaW0iLCJzZWNyZXQiOiJaRUYzM0dENVNPQ09TUDQyIiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV0sInZlcmlmaWVkIjp0cnVlLCJ1c2VybmFtZSI6bnVsbH0sImlhdCI6MTYxNDI0NDEwMX0.x-AFria2pMoWwGCl-Kfe73HG0IlnQ7c2vhvlnGSijqg"
         }
     })
 }
@@ -34,7 +34,16 @@ const getAllVacationRequestsByStatus = (status) => {
     return Api.get(`/request/status/${status}`,
         {
             headers: {
-                Authorization:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmbGFrYW4xMjNAZ21haWwuY29tIiwiZXhwIjoxNjE0MjEzNDU0LCJ1c2VyIjp7ImlkIjoxMSwiZW1haWwiOiJmbGFrYW4xMjNAZ21haWwuY29tIiwiZmlyc3ROYW1lIjoiSm9obm55IiwibGFzdE5hbWUiOiJIb2FuZyIsInNlY3JldCI6IlhYVlhESEtMWFlaT1E0R0QiLCJhdXRob3JpdGllcyI6W3siYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJ2ZXJpZmllZCI6dHJ1ZSwidXNlcm5hbWUiOm51bGx9LCJpYXQiOjE2MTQxNzc0NTR9.dZ0AY5fpSSlpa5TL2ThIROjQxTyVIBX9caQ-VCca_2M"
+                Authorization:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QGdtYWlsLmNvbSIsImV4cCI6MTYxNDI4MDEwMSwidXNlciI6eyJpZCI6MTIsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJmaXJzdE5hbWUiOiJQYXJpYSIsImxhc3ROYW1lIjoiS2FyaW0iLCJzZWNyZXQiOiJaRUYzM0dENVNPQ09TUDQyIiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV0sInZlcmlmaWVkIjp0cnVlLCJ1c2VybmFtZSI6bnVsbH0sImlhdCI6MTYxNDI0NDEwMX0.x-AFria2pMoWwGCl-Kfe73HG0IlnQ7c2vhvlnGSijqg"
+            }
+        })
+}
+
+const getAllVacationRequests = () => {
+    return Api.get(`/request/all`,
+        {
+            headers: {
+                Authorization:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QGdtYWlsLmNvbSIsImV4cCI6MTYxNDI4MDEwMSwidXNlciI6eyJpZCI6MTIsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJmaXJzdE5hbWUiOiJQYXJpYSIsImxhc3ROYW1lIjoiS2FyaW0iLCJzZWNyZXQiOiJaRUYzM0dENVNPQ09TUDQyIiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV0sInZlcmlmaWVkIjp0cnVlLCJ1c2VybmFtZSI6bnVsbH0sImlhdCI6MTYxNDI0NDEwMX0.x-AFria2pMoWwGCl-Kfe73HG0IlnQ7c2vhvlnGSijqg"
             }
         })
 }
@@ -42,6 +51,7 @@ const getAllVacationRequestsByStatus = (status) => {
 export {
     addVacationRequest,
     getVacationRequestById,
+    getAllVacationRequests,
     getAllVacationRequestsByUser,
     updateVacationRequest,
     deleteVacationRequest,

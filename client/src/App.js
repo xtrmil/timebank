@@ -1,6 +1,6 @@
 import React from "react";
 import {BrowserRouter as Router, Switch, Redirect, Route} from "react-router-dom";
-
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 import Dashboard from "./pages/Dashboard";
 import NotFoundPage from "./pages/NotFoundPage";
 import LoginPage from "./pages/LoginPage";
