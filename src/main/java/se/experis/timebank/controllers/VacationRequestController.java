@@ -21,12 +21,16 @@ public class VacationRequestController {
     }
 
     @GetMapping("")
-    public ResponseEntity<CommonResponse> getVacationRequest(){
+    public ResponseEntity<CommonResponse> getVacationRequest(){ // token
         return null;
-    }  // addera token
+    }
+    @GetMapping("/all")
+    public ResponseEntity<CommonResponse> getAllVacationRequests(){
+        return vacationRequestService.getAllVacationRequests();
+    }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<CommonResponse> getAllVacationRequestByUserId(@PathVariable Long userId)
+    public ResponseEntity<CommonResponse> getAllVacationRequestByUserId(@PathVariable Long userId)   //token, check admin
     {
         return vacationRequestService.getAllVacationRequestByUserId(userId);
     }
@@ -37,12 +41,12 @@ public class VacationRequestController {
     }
 
     @PutMapping("/{requestId}")
-    public ResponseEntity<CommonResponse> updateVacationRequest(@PathVariable Long requestId, @RequestBody VacationRequest vacationRequest){
+    public ResponseEntity<CommonResponse> updateVacationRequest(@PathVariable Long requestId, @RequestBody VacationRequest vacationRequest){   //token,check admin
         return vacationRequestService.updateVacationRequest(requestId,vacationRequest);
     }
 
     @DeleteMapping("/{requestId}")
-    public ResponseEntity<CommonResponse> deleteVacationRequest(@PathVariable Long requestId){
+    public ResponseEntity<CommonResponse> deleteVacationRequest(@PathVariable Long requestId){  //token
 
         return vacationRequestService.deleteVacationRequestById(requestId);
     }
