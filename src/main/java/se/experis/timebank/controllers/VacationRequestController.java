@@ -25,7 +25,7 @@ public class VacationRequestController {
         return null;
     }
     @GetMapping("/all")
-    public ResponseEntity<CommonResponse> getAllVacationRequests(){
+    public ResponseEntity<CommonResponse> getAllVacationRequests(){    // token, check admin
         return vacationRequestService.getAllVacationRequests();
     }
 

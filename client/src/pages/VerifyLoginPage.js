@@ -8,7 +8,9 @@ import * as yup from "yup";
 import { useStyles } from "../forms/styles";
 import { verifyLogin } from "../api/auth";
 import MobileStoreButton from "react-mobile-store-button";
-
+import {Cookies} from 'react-cookie'
+import {useAuth} from '../context/Context'
+import {useHistory} from 'react-router-dom';
 const initialValues = {
   code: "",
 };
@@ -17,7 +19,10 @@ const schema = yup.object().shape({
 });
 
 const VerifyLoginPage = (props) => {
+  const history = useHistory();
+  const auth = useAuth();
   const classes = useStyles();
+  const cookies = new Cookies();
 
   if (!props.location.state) {
     return <Redirect to="/login" />;
@@ -32,7 +37,9 @@ const VerifyLoginPage = (props) => {
     };
     const response = await verifyLogin(verifyRequest);
     const jwtToken = response.data;
-    console.log(jwtToken);
+    cookies.set("session_token", jwtToken);
+    auth.login();
+    history.replace("/home");
   };
   return (
     <Container component="main" maxWidth="xs" className="verify-container">

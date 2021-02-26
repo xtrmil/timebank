@@ -11,7 +11,10 @@ import se.experis.timebank.repositories.UserRepository;
 import se.experis.timebank.repositories.VacationRequestRepository;
 import se.experis.timebank.utils.Validations;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class VacationRequestService {
@@ -85,10 +88,22 @@ public class VacationRequestService {
 
     public ResponseEntity<CommonResponse> getAllVacationRequests(){
         CommonResponse cr = new CommonResponse();
-        cr.data = vacationRequestRepository.findAllByStatusNot(RequestStatus.DENIED);
+        Set<VacationRequest> requests;
+        boolean isAdmin = false;
+        long userId = 1;
+        if(isAdmin){
+
+            requests = new HashSet<>(vacationRequestRepository.findAllByStatusNot(RequestStatus.DENIED));
+        }else{
+            requests = new HashSet<>(vacationRequestRepository.findAllByStatus(RequestStatus.APPROVED));
+            requests.addAll(new HashSet<>(vacationRequestRepository.findAllByUserId(userId)));
+        }
+        cr.data = requests;
         cr.status = HttpStatus.OK;
         return new ResponseEntity<>(cr,cr.status);
     }
+
+
 
     public ResponseEntity<CommonResponse> updateVacationRequest(Long requestId, VacationRequest newVacationRequest) {
         CommonResponse cr = new CommonResponse();
