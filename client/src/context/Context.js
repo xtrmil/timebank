@@ -2,8 +2,10 @@ import { createContext, useState, useEffect, useContext } from "react";
 import jwt_decode from "jwt-decode";
 import { Cookies } from "react-cookie";
 
+
 const context = createContext();
 const cookies = new Cookies();
+
 
 const ContextProvider = ({ children }) => {
   const auth = useCreateAuthContext();
@@ -25,6 +27,13 @@ const useCreateAuthContext = () => {
       }
     }
   };
+
+  const logout = () => {
+    cookies.remove("session_token");
+    setLoggedInUser({});
+    setIsLoggedIn(false);
+  }
+
   useEffect(() => {
     login();
     setIsLoading(false);
@@ -35,6 +44,7 @@ const useCreateAuthContext = () => {
     isLoggedIn,
     isLoading,
     login,
+    logout
   };
 };
 

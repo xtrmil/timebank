@@ -6,13 +6,14 @@ import NotFoundPage from "./pages/NotFoundPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import VerifyLoginPage from "./pages/VerifyLoginPage"
-import Navbar from "./components/navbar/Navbar";
+import BootstrapNavbar from "./components/navbar/Navbar";
+import PrivateRoute from "./components/utils/PrivateRoute";
 
 function App() {
   return (
       <Router>
         <div className="App">
-            <Navbar/>
+            <BootstrapNavbar/>
            <Switch>
                <Route exact path="/">
                    <Redirect to="/login"/>
@@ -20,7 +21,7 @@ function App() {
                <Route exact path="/login" component={LoginPage}/>
                <Route exact path="/verify" component={VerifyLoginPage}/>
                <Route exact path="/register" component={RegisterPage}/>
-               <Route exact path="/home" component={Dashboard}/>
+               <PrivateRoute exact path="/home" component={Dashboard}/>
                <Route path="*" component={NotFoundPage}/>
            </Switch>
         </div>
