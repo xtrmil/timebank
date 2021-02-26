@@ -12,4 +12,5 @@ public interface VacationRequestRepository extends JpaRepository<VacationRequest
 
     List<VacationRequest> findAllByUserId(Long userId);
     List<VacationRequest> findAllByStatusNot(RequestStatus status);
+    List<VacationRequest> findAllByStatus(RequestStatus status);
 }
