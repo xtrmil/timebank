@@ -89,7 +89,7 @@ public class VacationRequestService {
     public ResponseEntity<CommonResponse> getAllVacationRequests(){
         CommonResponse cr = new CommonResponse();
         Set<VacationRequest> requests;
-        boolean isAdmin = false;
+        boolean isAdmin = true;
         long userId = 1;
         if(isAdmin){
 

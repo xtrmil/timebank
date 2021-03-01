@@ -8,6 +8,8 @@ import RegisterPage from "./pages/RegisterPage";
 import VerifyLoginPage from "./pages/VerifyLoginPage"
 import BootstrapNavbar from "./components/navbar/Navbar";
 import PrivateRoute from "./components/utils/PrivateRoute";
+import AdminPage from "./pages/AdminPage";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   return (
@@ -15,13 +17,13 @@ function App() {
         <div className="App">
             <BootstrapNavbar/>
            <Switch>
-               <Route exact path="/">
-                   <Redirect to="/login"/>
-               </Route>
+               <Route exact path="/"><Redirect to="/login"/></Route>
                <Route exact path="/login" component={LoginPage}/>
                <Route exact path="/verify" component={VerifyLoginPage}/>
                <Route exact path="/register" component={RegisterPage}/>
                <PrivateRoute exact path="/home" component={Dashboard}/>
+               <Route exact path="/admin" component={AdminPage}/>
+               <Route exact path="/profile" component={ProfilePage}/>
                <Route path="*" component={NotFoundPage}/>
            </Switch>
         </div>

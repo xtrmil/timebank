@@ -12,6 +12,14 @@ const Navbar = () => {
     const auth = useAuth();
     const history = useHistory();
 
+    const onAdminOverviewClicked = () => {
+        history.push("/admin");
+    }
+
+    const onProfileClicked = () => {
+        history.push("/profile");
+    }
+
     const handleLogout = () => {
         auth.logout();
         history.push("/login");
@@ -25,11 +33,27 @@ const Navbar = () => {
                 </BootstrapNavbar.Brand>
                 <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
                 <BootstrapNavbar.Collapse id="basic-navbar-nav">
-                    <Nav className="mr-auto"></Nav>
-                        {auth.isLoggedIn &&
+                    {auth.isLoggedIn &&
+                    <Nav className="mr-auto">
+
+                        <Button className="btn btn-sm m-2">
+                            Calendar
+                        </Button>
+                        <Button onClick={onProfileClicked}
+                                className="btn btn-sm m-2">
+                            Profile
+                        </Button>
+                        <Button onClick={onAdminOverviewClicked}
+                                className="btn btn-sm m-2">
+                            Admin Overview
+                        </Button>
+
                         <Button onClick={handleLogout}
-                                className="logout btn btn-sm d-inline-block">Logout</Button>
-                        }
+                                className="logout btn btn-sm m-2 d-inline-block">
+                            Logout
+                        </Button>
+                    </Nav>
+                    }
                 </BootstrapNavbar.Collapse>
             </BootstrapNavbar>
         </div>
