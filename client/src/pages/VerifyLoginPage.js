@@ -37,7 +37,7 @@ const VerifyLoginPage = (props) => {
     };
     const response = await verifyLogin(verifyRequest);
     const jwtToken = response.data;
-    cookies.set("session_token", jwtToken);
+     await cookies.set("session_token", jwtToken);
     auth.login();
     history.replace("/home");
   };

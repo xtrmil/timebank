@@ -1,13 +1,12 @@
 import Api from "./baseUrl";
 import { Cookies } from 'react-cookie'
 const cookies = new Cookies();
-const token = cookies.get("session_token");
 
 const addVacationRequest = (body) => {
     return Api.post("/request",
         {...body}, {
             headers: {
-                Authorization: `Bearer ${token} `
+                Authorization: `Bearer ${cookies.get("session_token")} `
             }
         }
         );
@@ -20,7 +19,7 @@ const getAllVacationRequestsByUser = (id) => {
     return Api.get(`/request/user/${id}`,
     {
         headers: {
-            Authorization: `Bearer ${token} `
+            Authorization: `Bearer ${cookies.get("session_token")} `
         }
     })
 }
@@ -40,7 +39,7 @@ const getAllVacationRequestsByStatus = (status) => {
     return Api.get(`/request/status/${status}`,
         {
             headers: {
-                Authorization: `Bearer ${token} `
+                Authorization: `Bearer ${cookies.get("session_token")} `
             }
         })
 }
@@ -49,7 +48,7 @@ const getAllVacationRequests = () => {
     return Api.get(`/request/all`,
         {
             headers: {
-                Authorization: `Bearer ${token} `
+                Authorization: `Bearer ${cookies.get("session_token")} `
             }
         })
 }
