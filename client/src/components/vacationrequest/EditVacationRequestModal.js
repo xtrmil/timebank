@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
-import { useAuth } from "../../../context/Context";
+import { useAuth } from "../../context/Context";
 
 const EditVacationRequestModal = (props) => {
   const { showModal, setShowModal, request } = props;

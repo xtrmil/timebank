@@ -1,4 +1,5 @@
 import React from "react";
+import AddNewVacationRequest from "./AddNewVacationRequest";
 
 
 function CalendarNavigation(props) {
@@ -15,6 +16,7 @@ function CalendarNavigation(props) {
             <span className="rbc-toolbar-label">{props.label}</span>
             <button type="button" onClick={() => navigate('NEXT')}>Next</button>
           </span>
+            <AddNewVacationRequest/>
         </div>
     );
 }

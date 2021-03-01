@@ -5,10 +5,10 @@ import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./dashboard.scss";
-import CalendarNavigation from "./CalendarNavigation";
+import CalendarNavigation from "../components/CalendarNavigation";
 import {getAllVacationRequestsByStatus} from "../api/vacationRequest";
 import {getAllVacationRequests} from "../api/vacationRequest";
-import EditVacationRequestModal from "../components/navbar/vacationrequest/EditVacationRequestModal";
+import EditVacationRequestModal from "../components/vacationrequest/EditVacationRequestModal";
 const localizer = momentLocalizer(moment);
 
 const Dashboard = () => {
