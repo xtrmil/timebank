@@ -4,19 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import se.experis.timebank.models.EligibilityPeriod;
+import se.experis.timebank.models.IneligiblePeriod;
 import se.experis.timebank.models.User;
-import se.experis.timebank.repositories.EligibilityRepository;
+import se.experis.timebank.repositories.IneligibleRepository;
 import se.experis.timebank.repositories.UserRepository;
 import se.experis.timebank.utils.Validations;
 
 import java.util.Optional;
 
 @Service
-public class EligibilityService {
+public class IneligibleService {
 
     @Autowired
-    private EligibilityRepository eligibilityRepository;
+    private IneligibleRepository ineligibleRepository;
     @Autowired
     private UserRepository userRepository;
 
@@ -24,14 +24,14 @@ public class EligibilityService {
 
     public ResponseEntity<CommonResponse> getAllIneligiblePeriods() {
         CommonResponse cr = new CommonResponse();
-        cr.data = eligibilityRepository.findAllByOrderByStartDateAsc();  // add sorting chronological order (soonest first)
+        cr.data = ineligibleRepository.findAllByOrderByStartDateAsc();  // add sorting chronological order (soonest first)
         cr.status = HttpStatus.OK;
         cr.msg = "all ineligible periods";
 
         return new ResponseEntity<>(cr, cr.status);
     }
 
-    public ResponseEntity<CommonResponse> createIneligiblePeriod(EligibilityPeriod newPeriod) {
+    public ResponseEntity<CommonResponse> createIneligiblePeriod(IneligiblePeriod newPeriod) {
         CommonResponse cr = new CommonResponse();
 
         Long userId = newPeriod.getCreatedBy().getId();
@@ -40,7 +40,7 @@ public class EligibilityService {
         if (optionalUser.isPresent() &&
                 validation.validatePeriodLength(newPeriod.getStartDate(), newPeriod.getEndDate()) >= 0) {
             newPeriod.setCreatedBy(optionalUser.get());
-            eligibilityRepository.save(newPeriod);
+            ineligibleRepository.save(newPeriod);
             cr.data = newPeriod;
             cr.msg = "ineligible period added. Start: " + newPeriod.getStartDate() + " Stop: " + newPeriod.getEndDate();
             cr.status = HttpStatus.CREATED;
@@ -53,7 +53,7 @@ public class EligibilityService {
 
     public ResponseEntity<CommonResponse> getIneligiblePeriodById(Long id) {
         CommonResponse cr = new CommonResponse();
-        Optional<EligibilityPeriod> eligibilityPeriodOptional = eligibilityRepository.findById(id);
+        Optional<IneligiblePeriod> eligibilityPeriodOptional = ineligibleRepository.findById(id);
 
         if (eligibilityPeriodOptional.isPresent()) {
             cr.data = eligibilityPeriodOptional.get();
@@ -66,13 +66,13 @@ public class EligibilityService {
         return new ResponseEntity<>(cr, cr.status);
     }
 
-    public ResponseEntity<CommonResponse> updateIneligiblePeriodById(Long id, EligibilityPeriod newPeriod) {
+    public ResponseEntity<CommonResponse> updateIneligiblePeriodById(Long id, IneligiblePeriod newPeriod) {
         CommonResponse cr = new CommonResponse();
 
-        Optional<EligibilityPeriod> optionalPeriod = eligibilityRepository.findById(id);
+        Optional<IneligiblePeriod> optionalPeriod = ineligibleRepository.findById(id);
         if (optionalPeriod.isPresent()) {
 
-            EligibilityPeriod period = optionalPeriod.get();
+            IneligiblePeriod period = optionalPeriod.get();
             if (newPeriod.getStartDate() != null) {
                 period.setStartDate(newPeriod.getStartDate());
             }
@@ -80,7 +80,7 @@ public class EligibilityService {
             if (newPeriod.getEndDate() != null) {
                 period.setEndDate(newPeriod.getEndDate());
             }
-            cr.data = eligibilityRepository.save(period);
+            cr.data = ineligibleRepository.save(period);
             cr.msg = "Eligibility Period with id " + id + " was updated";
             cr.status = HttpStatus.OK;
         } else {
@@ -94,10 +94,10 @@ public class EligibilityService {
     public ResponseEntity<CommonResponse> deleteIneligiblePeriodById(Long id) {
         CommonResponse cr = new CommonResponse();
 
-        Optional<EligibilityPeriod> optionalPeriod = eligibilityRepository.findById(id);
+        Optional<IneligiblePeriod> optionalPeriod = ineligibleRepository.findById(id);
 
         if (optionalPeriod.isPresent()) {
-            eligibilityRepository.deleteById(id);
+            ineligibleRepository.deleteById(id);
             cr.status = HttpStatus.OK;
             cr.msg = "Eligibility Period with id: " + id + " successfully deleted";
         } else {

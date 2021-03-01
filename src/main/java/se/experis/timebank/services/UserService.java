@@ -3,6 +3,7 @@ package se.experis.timebank.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import se.experis.timebank.models.User;
@@ -20,7 +21,6 @@ public class UserService {
 
     @Autowired
     private TotpManager totpManager;
-
 
     public ResponseEntity<CommonResponse> createUser(User user) throws IOException {
         CommonResponse cr = new CommonResponse();
@@ -40,20 +40,6 @@ public class UserService {
         return new ResponseEntity<>(cr,cr.status);
     }
 
-    public ResponseEntity<CommonResponse> getUser() {   // addera token
-        CommonResponse cr = new CommonResponse();
-
-        try{
-            cr.msg = "User by id:" + " was found.";
-            cr.status = HttpStatus.OK;
-        } catch(Exception e) {
-            cr.data = e.getMessage();
-            cr.msg = " Currently unable to get user";
-            cr.status = HttpStatus.INTERNAL_SERVER_ERROR;
-        }
-        return new ResponseEntity<>(cr, cr.status);
-    }
-
     public ResponseEntity<CommonResponse> getUserById(Long userId) {
         CommonResponse cr = new CommonResponse();
 
@@ -70,10 +56,10 @@ public class UserService {
         return new ResponseEntity<>(cr, cr.status);
     }
 
-    public ResponseEntity<CommonResponse> updateUserById(Long userId, User newUser){
+    public ResponseEntity<CommonResponse> updateUserById(User newUser){
         CommonResponse cr = new CommonResponse();
 
-        Optional<User> optionalUser = userRepository.findById(userId);
+        Optional<User> optionalUser = userRepository.findById(newUser.getId());
         if(optionalUser.isPresent()) {
 
             User user = optionalUser.get();
@@ -90,10 +76,10 @@ public class UserService {
                 user.setProfileImg(newUser.getProfileImg());
             }
             cr.data = userRepository.save(user);
-            cr.msg = "User with id " + userId + " was updated";
+            cr.msg = "User with id " + newUser.getId() + " was updated";
             cr.status = HttpStatus.OK;
         }else{
-            cr.msg = "User with id " + userId + " not found";
+            cr.msg = "User with id " + newUser.getId() + " not found";
             cr.status = HttpStatus.BAD_REQUEST;
         }
         return new ResponseEntity<>(cr, cr.status);

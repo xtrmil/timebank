@@ -3,8 +3,12 @@ import {Button, Form, Modal} from "react-bootstrap";
 import {Formik} from "formik";
 import * as yup from "yup";
 import {Link} from "react-router-dom";
+import {addVacationRequest} from "../api/vacationRequest";
+import {useAuth} from "../context/Context"
 
 const AddNewVacationRequest = () => {
+
+    const auth = useAuth();
 
     const [showModal, setShowModal] = useState(false);
 
@@ -33,6 +37,9 @@ const AddNewVacationRequest = () => {
         const endDate = new Date (data.endDate);
         if (startDate.getTime() < endDate.getTime()){
             console.log("success");
+            const user = {id:auth.loggedInUser.id};
+            data.user = user;
+            addVacationRequest(data);
         }else {
             console.log("fail");
         }

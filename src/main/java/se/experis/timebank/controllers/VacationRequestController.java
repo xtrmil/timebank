@@ -1,8 +1,12 @@
 package se.experis.timebank.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import se.experis.timebank.models.UserCredentials;
 import se.experis.timebank.models.VacationRequest;
 import se.experis.timebank.services.CommonResponse;
 import se.experis.timebank.services.VacationRequestService;
@@ -20,34 +24,44 @@ public class VacationRequestController {
         return vacationRequestService.createVacationRequest(vacationRequest);
     }
 
-    @GetMapping("")
-    public ResponseEntity<CommonResponse> getVacationRequest(){ // token
-        return null;
-    }
     @GetMapping("/all")
-    public ResponseEntity<CommonResponse> getAllVacationRequests(){    // token, check admin
-        return vacationRequestService.getAllVacationRequests();
+    public ResponseEntity<CommonResponse> getAllVacationRequests(@AuthenticationPrincipal UserCredentials userCredentials){
+        return vacationRequestService.getAllVacationRequests(userCredentials);
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<CommonResponse> getAllVacationRequestByUserId(@PathVariable Long userId)   //token, check admin
+    @GetMapping("/user")
+    public ResponseEntity<CommonResponse> getAllVacationRequestByUserId(@AuthenticationPrincipal UserCredentials userCredentials)
     {
-        return vacationRequestService.getAllVacationRequestByUserId(userId);
-    }
-
-    @GetMapping("/{requestId}")
-    public ResponseEntity<CommonResponse> getVacationRequestById(@PathVariable Long requestId) {
-        return vacationRequestService.getVacationRequestById(requestId);
+        return vacationRequestService.getAllVacationRequestByUserId(userCredentials);
     }
 
     @PutMapping("/{requestId}")
-    public ResponseEntity<CommonResponse> updateVacationRequest(@PathVariable Long requestId, @RequestBody VacationRequest vacationRequest){   //token,check admin
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<CommonResponse> updateVacationRequest(@PathVariable Long requestId, @RequestBody VacationRequest vacationRequest){
         return vacationRequestService.updateVacationRequest(requestId,vacationRequest);
     }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{requestId}")
-    public ResponseEntity<CommonResponse> deleteVacationRequest(@PathVariable Long requestId){  //token
+    public ResponseEntity<CommonResponse> deleteVacationRequest(@PathVariable Long requestId){
 
         return vacationRequestService.deleteVacationRequestById(requestId);
     }
+    @GetMapping("/test")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<CommonResponse> test(@AuthenticationPrincipal UserCredentials userCredentials){
+        CommonResponse cr = new CommonResponse();
+        cr.data = userCredentials.getAuthorities();
+        return new ResponseEntity<>(cr, HttpStatus.OK);
+
+    }
+
+//    @GetMapping("")
+//    public ResponseEntity<CommonResponse> getVacationRequest(){ // token
+//        return null;
+//    }
+
+//    @GetMapping("/{requestId}")
+//    public ResponseEntity<CommonResponse> getVacationRequestById(@PathVariable Long requestId) {    // behövs?
+//        return vacationRequestService.getVacationRequestById(requestId);
+//    }
 }

@@ -5,7 +5,11 @@ const token = cookies.get("session_token");
 
 const addVacationRequest = (body) => {
     return Api.post("/request",
-        {...body}
+        {...body}, {
+            headers: {
+                Authorization: `Bearer ${token} `
+            }
+        }
         );
 }
 const getVacationRequestById = (id) => {

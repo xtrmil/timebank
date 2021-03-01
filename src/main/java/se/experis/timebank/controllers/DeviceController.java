@@ -11,7 +11,7 @@ import se.experis.timebank.services.CommonResponse;
 public class DeviceController {
 
     @GetMapping("/api/v1/device")
-    public ResponseEntity<CommonResponse> greeting(Device device) {
+    public ResponseEntity<CommonResponse> checkOS(Device device) {
         CommonResponse cr = new CommonResponse();
         cr.status = HttpStatus.OK;
 

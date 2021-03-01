@@ -18,6 +18,7 @@ public class UserCredentials implements UserDetails {
     private String password;
     private String secret;
     private boolean isVerified;
+    private boolean isAdmin;
     private List<GrantedAuthority> authorities;
 
     public UserCredentials(User user){
@@ -28,6 +29,7 @@ public class UserCredentials implements UserDetails {
         this.password = user.getPassword();
         this.secret = user.getSecret();
         this.isVerified = user.getIsVerified();
+        this.isAdmin = user.getIsAdmin();
         if(user.getIsAdmin()){
             this.authorities = Collections.singletonList( new SimpleGrantedAuthority("ROLE_ADMIN"));
         }else{
@@ -74,6 +76,8 @@ public class UserCredentials implements UserDetails {
     public Boolean isVerified() {
         return isVerified;
     }
+
+    public Boolean isAdmin(){ return isAdmin; }
 
     @Override
     @JsonIgnore

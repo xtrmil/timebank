@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import se.experis.timebank.models.RequestStatus;
 import se.experis.timebank.models.User;
+import se.experis.timebank.models.UserCredentials;
 import se.experis.timebank.models.VacationRequest;
 import se.experis.timebank.repositories.UserRepository;
 import se.experis.timebank.repositories.VacationRequestRepository;
@@ -70,14 +71,14 @@ public class VacationRequestService {
         return new ResponseEntity<>(cr, cr.status);
     }
 
-    public ResponseEntity<CommonResponse> getAllVacationRequestByUserId(Long userId) {
+    public ResponseEntity<CommonResponse> getAllVacationRequestByUserId(UserCredentials userCredentials) {
         CommonResponse cr = new CommonResponse();
 
-        Optional<User> optionalUser = userRepository.findById(userId);
+        Optional<User> optionalUser = userRepository.findById(userCredentials.getId());
 
         if (optionalUser.isPresent()) {
-            cr.data = vacationRequestRepository.findAllByUserId(userId);
-            cr.msg = "VacationRequest with id:" + userId + " was found.";
+            cr.data = vacationRequestRepository.findAllByUserId(optionalUser.get().getId());
+            cr.msg = "VacationRequest with id:" + optionalUser.get().getId() + " was found.";
             cr.status = HttpStatus.OK;
         } else {
             cr.msg = " Currently unable to get request";
@@ -86,38 +87,33 @@ public class VacationRequestService {
         return new ResponseEntity<>(cr, cr.status);
     }
 
-    public ResponseEntity<CommonResponse> getAllVacationRequests(){
+    public ResponseEntity<CommonResponse> getAllVacationRequests(UserCredentials userCredentials){
         CommonResponse cr = new CommonResponse();
         Set<VacationRequest> requests;
-        boolean isAdmin = true;
-        long userId = 1;
-        if(isAdmin){
+
+        if(userCredentials.isAdmin()){
 
             requests = new HashSet<>(vacationRequestRepository.findAllByStatusNot(RequestStatus.DENIED));
         }else{
             requests = new HashSet<>(vacationRequestRepository.findAllByStatus(RequestStatus.APPROVED));
-            requests.addAll(new HashSet<>(vacationRequestRepository.findAllByUserId(userId)));
+            requests.addAll(new HashSet<>(vacationRequestRepository.findAllByUserId(userCredentials.getId())));
         }
         cr.data = requests;
         cr.status = HttpStatus.OK;
         return new ResponseEntity<>(cr,cr.status);
     }
 
-
-
     public ResponseEntity<CommonResponse> updateVacationRequest(Long requestId, VacationRequest newVacationRequest) {
         CommonResponse cr = new CommonResponse();
-
         Optional<VacationRequest> optionalUser = vacationRequestRepository.findById(requestId);
-        if (optionalUser.isPresent()) {
 
+        if (optionalUser.isPresent()) {
             VacationRequest request = optionalUser.get();
-            //if admin
+
             if (newVacationRequest.getStatus() != null) {
                 request.setStatus(newVacationRequest.getStatus());
             }
 
-            // if not moderated, and authorized
             if (newVacationRequest.getStartDate() != null) {
                 request.setStartDate(newVacationRequest.getStartDate());
             }
@@ -141,7 +137,6 @@ public class VacationRequestService {
 
     public ResponseEntity<CommonResponse> deleteVacationRequestById(Long requestId) {
         CommonResponse cr = new CommonResponse();
-
         Optional<VacationRequest> optionalRequest = vacationRequestRepository.findById(requestId);
 
         if (optionalRequest.isPresent()) {

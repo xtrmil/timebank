@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Entity
 @Component
 @Data
-public class EligibilityPeriod {
+public class IneligiblePeriod {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
