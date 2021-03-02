@@ -1,37 +1,56 @@
-import React from "react";
+import React, {useState} from "react";
 import { Modal, Button } from "react-bootstrap";
 import { useAuth } from "../../context/Context";
+import VacationRequestForm from "./VacationRequestForm";
+import {addVacationRequest, updateVacationRequest} from "../../api/vacationRequest";
 
 const EditVacationRequestModal = (props) => {
   const { showModal, setShowModal, request } = props;
-  const { loggedInUser } = useAuth();
+  const { loggedInUser, isAdmin } = useAuth();
+
   //Kolla om loggedInUser är admin eller ägaren till request
-  //Kolla om request är pending
   //Visa då upp edit fälten.
-  console.log(loggedInUser);
-  console.log(request);
+
+    const initialValues = {
+        title: request.title,
+        startDate: request.startDate,
+        endDate: request.endDate
+    }
+
+   const editVacationRequest = (data) => {
+        try{
+            const startDate = new Date (data.startDate);
+            const endDate = new Date (data.endDate);
+            if(startDate.getTime() < endDate.getTime()){
+                updateVacationRequest(request.id, data);
+                setShowModal(false);
+            }
+        }catch(error){
+        }
+   }
+
+    const isEditable = (request.user
+        && (request.user.id === loggedInUser.id || isAdmin)
+        && request.status === "PENDING" ? true : false);
+
   const handleClose = () => {
     setShowModal(false);
   };
+
   return (
-    <Modal show={showModal} onHide={handleClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>{request.title}</Modal.Title>
-      </Modal.Header>
+    <>
+            <Modal show={showModal} onHide={handleClose}>
+                <Modal.Body>
+                    <h4 className="text-center">{request.title}</h4>
+                    { isEditable
+                        ? <VacationRequestForm
+                        onSubmitClicked={editVacationRequest}
+                        setShowModal={setShowModal}
+                        initialValues={initialValues}/> : <div><p>någon annans</p></div>}
+                </Modal.Body>
+            </Modal>
 
-      <Modal.Body>
-        <p>
-          {request.startDate} - {request.endDate}
-        </p>
-      </Modal.Body>
-
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          Close
-        </Button>
-        <Button variant="primary">Save changes</Button>
-      </Modal.Footer>
-    </Modal>
+    </>
   );
 };
 

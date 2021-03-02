@@ -105,10 +105,10 @@ public class VacationRequestService {
 
     public ResponseEntity<CommonResponse> updateVacationRequest(Long requestId, VacationRequest newVacationRequest) {
         CommonResponse cr = new CommonResponse();
-        Optional<VacationRequest> optionalUser = vacationRequestRepository.findById(requestId);
+        Optional<VacationRequest> optionalRequest = vacationRequestRepository.findById(requestId);
 
-        if (optionalUser.isPresent()) {
-            VacationRequest request = optionalUser.get();
+        if (optionalRequest.isPresent()) {
+            VacationRequest request = optionalRequest.get();
 
             if (newVacationRequest.getStatus() != null) {
                 request.setStatus(newVacationRequest.getStatus());
@@ -125,7 +125,7 @@ public class VacationRequestService {
             if (newVacationRequest.getTitle() != null) {
                 request.setTitle(newVacationRequest.getTitle());
             }
-            cr.data = vacationRequestRepository.save(newVacationRequest);
+            cr.data = vacationRequestRepository.save(request);
             cr.msg = "VacationRequest with id " + requestId + " was updated";
             cr.status = HttpStatus.OK;
         } else {

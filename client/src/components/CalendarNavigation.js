@@ -1,5 +1,5 @@
 import React from "react";
-import AddNewVacationRequest from "./AddNewVacationRequest";
+import AddVacationRequestModal from "./vacationrequest/AddVacationRequestModal";
 import {useAuth} from '../context/Context'
 import {Button} from 'react-bootstrap'
 import AddIneligiblePeriod from '../components/ineligibleperiod/AddIneligiblePeriod';
@@ -19,7 +19,7 @@ function CalendarNavigation(props) {
             <span className="rbc-toolbar-label">{props.label}</span>
             <button type="button" onClick={() => navigate('NEXT')}>Next</button>
           </span>
-           { <AddNewVacationRequest/>}
+           { <AddVacationRequestModal/>}
            {isAdmin && <AddIneligiblePeriod/>}
         </div>
     );

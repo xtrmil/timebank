@@ -39,7 +39,7 @@ const Dashboard = () => {
   const eventColorStyle = (event, start, end, isSelected) => {
     let backgroundColor = "#ff0300";
     if (event.status === "APPROVED") {
-      backgroundColor = "#00ff00";
+      backgroundColor = "#a5d6b8";
     } else if (event.status === "PENDING") {
       backgroundColor = "#ffcc00";
     }
