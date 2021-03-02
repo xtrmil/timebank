@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {Children, useEffect, useState} from "react";
 import Container from "@material-ui/core/Container";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
@@ -9,13 +9,16 @@ import { getAllVacationRequestsByStatus } from "../api/vacationRequest";
 import { getAllVacationRequests } from "../api/vacationRequest";
 import EditVacationRequestModal from "../components/vacationrequest/EditVacationRequestModal";
 import { useAuth } from "../context/Context";
+import {getAllIneligiblePeriods} from "../api/ineligiblePeriod";
 const localizer = momentLocalizer(moment);
 
 const Dashboard = () => {
   const [requests, setRequests] = useState([]);
+  const [ineligiblePeriods, setIneligiblePeriods] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedEvent, setSelectedEvent] = useState([]);
   const [showModal, setShowModal] = useState(false);
+
   const fetchVacationRequests = async () => {
     try {
       let result = await getAllVacationRequests();
@@ -27,6 +30,52 @@ const Dashboard = () => {
     }
   };
 
+  const fetchIneligiblePeriods = async () => {
+    try{
+      let result = await getAllIneligiblePeriods();
+      setIneligiblePeriods(result.data.data);
+    }catch(error){
+        console.log("inside fetchInPeriods", error);
+    }finally {
+      setIsLoading(false);
+    }
+  }
+
+    const blockedDateCellWrapper = ({ children, value }) => {
+    let blockedDate =
+          ineligiblePeriods.find(period =>
+              moment(value).isBetween(
+                  moment(period.startDate),
+                  moment(period.endDate),
+                  null,
+                  "[]"
+              )
+          ) != undefined;
+
+     return React.cloneElement(Children.only(children), {
+        style: {
+          ...children.style,
+          backgroundColor: blockedDate ? "#e4e8f0" : "white"
+        }
+      });
+  }
+
+ const blockedDateStyle = {
+     dateHeader: ({ date, label }) => {
+       let highlightDate =
+           ineligiblePeriods.find(period =>
+               moment(date).isBetween(
+                   moment(period.startDate),
+                   moment(period.endDate),
+                   null,
+                   "[]"
+               )
+           ) != undefined;
+       return (
+        <a style={highlightDate ? {color: "#c8cedb"} : null}>{label}</a>
+      );
+}}
+
   const handleSelectEvent = (event) => {
     setSelectedEvent(event);
     setShowModal(true);
@@ -34,6 +83,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchVacationRequests();
+    fetchIneligiblePeriods();
   }, []);
 
   const eventColorStyle = (event, start, end, isSelected) => {
@@ -63,9 +113,7 @@ const Dashboard = () => {
           <h1>Home</h1>
           <Calendar
             eventPropGetter={eventColorStyle}
-            selectable={true}
-            onSelectSlot={(event) => console.log(event)}
-            components={{ toolbar: CalendarNavigation }}
+            components={{ toolbar: CalendarNavigation, dateCellWrapper: blockedDateCellWrapper, month: blockedDateStyle}}
             views={["month"]}
             localizer={localizer}
             events={requests}

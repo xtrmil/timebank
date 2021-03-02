@@ -3,8 +3,8 @@ import {Button, Form, Modal} from "react-bootstrap";
 import {Formik} from "formik";
 import * as yup from "yup";
 import {Link} from "react-router-dom";
-import {addVacationRequest} from "../api/vacationRequest";
-import {useAuth} from "../context/Context"
+import {addVacationRequest} from "../../api/vacationRequest";
+import {useAuth} from "../../context/Context"
 
 const AddNewVacationRequest = () => {
 
@@ -35,11 +35,12 @@ const AddNewVacationRequest = () => {
     const onFormSubmit = (data) => {
         const startDate = new Date (data.startDate);
         const endDate = new Date (data.endDate);
-        if (startDate.getTime() < endDate.getTime()){
+        if (startDate.getTime() <= endDate.getTime()){
             console.log("success");
             const user = {id:auth.loggedInUser.id};
             data.user = user;
             addVacationRequest(data);
+            onClickClose();
         }else {
             console.log("fail");
         }
@@ -90,6 +91,7 @@ const AddNewVacationRequest = () => {
                                     <Form.Control type="date"
                                                   name="startDate"
                                                   value={values.startDate}
+                                                  max={values.endDate}
                                                   onChange={handleChange}
                                                   onBlur={handleBlur}
                                                   isInvalid={!!errors.startDate && touched.startDate}/>
@@ -106,6 +108,7 @@ const AddNewVacationRequest = () => {
                                     <Form.Control type="date"
                                                   name="endDate"
                                                   value={values.endDate}
+                                                  min={values.startDate}
                                                   onChange={handleChange}
                                                   onBlur={handleBlur}
                                                   isInvalid={!!errors.endDate && touched.endDate}/>

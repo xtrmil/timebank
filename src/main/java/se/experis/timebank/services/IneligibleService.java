@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import se.experis.timebank.models.IneligiblePeriod;
 import se.experis.timebank.models.User;
+import se.experis.timebank.models.UserCredentials;
 import se.experis.timebank.repositories.IneligibleRepository;
 import se.experis.timebank.repositories.UserRepository;
 import se.experis.timebank.utils.Validations;
@@ -31,11 +32,10 @@ public class IneligibleService {
         return new ResponseEntity<>(cr, cr.status);
     }
 
-    public ResponseEntity<CommonResponse> createIneligiblePeriod(IneligiblePeriod newPeriod) {
+    public ResponseEntity<CommonResponse> createIneligiblePeriod(IneligiblePeriod newPeriod, UserCredentials userCredentials) {
         CommonResponse cr = new CommonResponse();
 
-        Long userId = newPeriod.getCreatedBy().getId();
-        Optional<User> optionalUser = userRepository.findById(userId);
+        Optional<User> optionalUser = userRepository.findById(userCredentials.getId());
 
         if (optionalUser.isPresent() &&
                 validation.validatePeriodLength(newPeriod.getStartDate(), newPeriod.getEndDate()) >= 0) {
