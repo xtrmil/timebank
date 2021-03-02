@@ -16,6 +16,8 @@ public class UserCredentials implements UserDetails {
     private String firstName;
     private String lastName;
     private String password;
+
+    @JsonIgnore
     private String secret;
     private boolean isVerified;
     private boolean isAdmin;
