@@ -1,5 +1,5 @@
 import React from "react";
-import AddNewVacationRequest from "./AddNewVacationRequest";
+import AddNewVacationRequest from "./vacationrequest/AddNewVacationRequest";
 import {useAuth} from '../context/Context'
 import {Button} from 'react-bootstrap'
 import AddIneligiblePeriod from '../components/ineligibleperiod/AddIneligiblePeriod';

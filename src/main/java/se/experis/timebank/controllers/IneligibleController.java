@@ -3,8 +3,10 @@ package se.experis.timebank.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import se.experis.timebank.models.IneligiblePeriod;
+import se.experis.timebank.models.UserCredentials;
 import se.experis.timebank.services.CommonResponse;
 import se.experis.timebank.services.IneligibleService;
 
@@ -22,8 +24,9 @@ public class IneligibleController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("")
-    public ResponseEntity<CommonResponse> createIneligiblePeriod(@RequestBody IneligiblePeriod period) {
-        return ineligibleService.createIneligiblePeriod(period);
+    public ResponseEntity<CommonResponse> createIneligiblePeriod(@AuthenticationPrincipal UserCredentials userCredentials,
+                                                                 @RequestBody IneligiblePeriod period) {
+        return ineligibleService.createIneligiblePeriod(period, userCredentials);
     }
 
     @GetMapping("/{id}")
