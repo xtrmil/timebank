@@ -13,7 +13,8 @@ const VacationRequestForm = (props) => {
     const schema = yup.object().shape({
         title: yup.string().required("Please enter a title."),
         startDate: yup.date("Invalid date").required("Start date is required."),
-        endDate: yup.date("Invalid date").required("End date is required.")
+        endDate: yup.date("Invalid date").required("End date is required."),
+        comment: yup.string()
     });
 
     return(
@@ -79,8 +80,26 @@ const VacationRequestForm = (props) => {
                         </Form.Control.Feedback>
                     </Form.Group>
 
+                    <Form.Group>
+                        <Form.Label>
+                            <strong>Comment:</strong>
+                        </Form.Label>
+                        <Form.Control type="text"
+                                      as = "textarea"
+                                      maxLength={200}
+                                      name="comment"
+                                      value={values.comment}
+                                      onChange={handleChange}
+                                      onBlur={handleBlur}
+                                      isInvalid={!!errors.comment && touched.comment}/>
+                        <Form.Control.Feedback
+                            type="invalid" >
+                            {errors.comment}
+                        </Form.Control.Feedback>
+                    </Form.Group>
+
                     <div className="text-center mt-5">
-                        <Button type="submit" variant="primary">Add</Button>
+                        <Button type="submit" variant="primary">Save</Button>
                         <Button className="ml-2" variant="secondary" onClick={onClickClose}>
                             Cancel
                         </Button>
