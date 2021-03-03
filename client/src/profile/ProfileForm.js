@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React,{useState,useEffect} from "react";
 import * as yup from "yup";
 import { Formik } from "formik";
 import { Button, Form } from "react-bootstrap";
@@ -7,15 +7,14 @@ import "./profilePage.scss";
 
 
 const ProfileForm = (props) => {
-    const { onSubmit, editDisabled } = props;
+    const { onSubmitClicked, editDisabled,setEditDisabled,...user } = props;
     const { loggedInUser } = useAuth();
 
-    console.log(loggedInUser);
 
     const initialValues = {
-        firstName: loggedInUser.firstName,
-        lastName: loggedInUser.lastName,
-        email: loggedInUser.email
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email
     }
 
     const schema = yup.object().shape({
@@ -28,7 +27,7 @@ const ProfileForm = (props) => {
         <Formik
             initialValues={initialValues}
             validationSchema={schema}
-            onSubmit={(data) => onSubmit(data)}
+            onSubmit={(data) => onSubmitClicked(data)}
         >
             {({
                 values,
@@ -99,7 +98,7 @@ const ProfileForm = (props) => {
                     </Form.Group>
                     <div>
                         {
-                            !editDisabled && <Button type="submit" variant="primary">Save</Button>
+                            !editDisabled && <Button onClick={setEditDisabled(true)} type="submit" variant="primary">Save</Button>
                         }
 
                     </div>

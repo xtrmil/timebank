@@ -45,7 +45,6 @@ public class UserService {
         CommonResponse cr = new CommonResponse();
 
         Optional<User> optionalUser = userRepository.findById(userId);
-
         if(optionalUser.isPresent()){
             cr.data = userRepository.findById(userId).get();
             cr.msg = "User with id:" + userId + " was found.";
@@ -57,34 +56,31 @@ public class UserService {
         return new ResponseEntity<>(cr, cr.status);
     }
 
-    public ResponseEntity<CommonResponse> updateUserById(UserCredentials userCredentials, User newUser){
+    public ResponseEntity<CommonResponse> updateUserById(Long userId, User updatedUser){
         CommonResponse cr = new CommonResponse();
 
-        Optional<User> optionalUser = userRepository.findById(newUser.getId());
+        Optional<User> optionalUser = userRepository.findById(userId);
         if(optionalUser.isPresent()) {
-            if(userCredentials.getId() == newUser.getId()) {
+
                 User user = optionalUser.get();
-                if (newUser.getFirstName() != null) {
-                    user.setFirstName(newUser.getFirstName());
+                if (updatedUser.getFirstName() != null) {
+                    user.setFirstName(updatedUser.getFirstName());
                 }
-                if (newUser.getLastName() != null) {
-                    user.setLastName(newUser.getLastName());
+                if (updatedUser.getLastName() != null) {
+                    user.setLastName(updatedUser.getLastName());
                 }
-                if (newUser.getEmail() != null) {
-                    user.setEmail(newUser.getEmail());
+                if (updatedUser.getEmail() != null) {
+                    user.setEmail(updatedUser.getEmail());
                 }
-                if (newUser.getProfileImg() != null) {
-                    user.setProfileImg(newUser.getProfileImg());
+                if (updatedUser.getProfileImg() != null) {
+                    user.setProfileImg(updatedUser.getProfileImg());
                 }
                 cr.data = userRepository.save(user);
-                cr.msg = "User with id " + newUser.getId() + " was updated";
+                cr.msg = "User with id " + userId + " was updated";
                 cr.status = HttpStatus.OK;
-            }else{
-                cr.msg = "Unauthorized operation";
-                cr.status = HttpStatus.UNAUTHORIZED;
-            }
+
         }else{
-            cr.msg = "User with id " + newUser.getId() + " not found";
+            cr.msg = "User with id " + updatedUser.getId() + " not found";
             cr.status = HttpStatus.BAD_REQUEST;
         }
         return new ResponseEntity<>(cr, cr.status);

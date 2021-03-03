@@ -11,13 +11,22 @@ const addUser = (body) => {
         });
 }
 
-const updateUser = (id, body) => {
-    return Api.put(`/user/${id}`,
-        {body}, {
+const getUserById = () => {
+    return Api.get("/user",
+    {
+        headers:{
+            Authorization: `Bearer ${cookies.get("session_token")} `
+        }
+    });
+}
+ 
+const updateUser = (body) => {
+    return Api.put("/user",
+        {...body}, {
             headers:{
                 Authorization: `Bearer ${cookies.get("session_token")} `
             }
         });
 }
 
-export {addUser, updateUser}
+export {addUser, updateUser, getUserById}
