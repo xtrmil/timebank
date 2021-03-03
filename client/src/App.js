@@ -9,7 +9,7 @@ import VerifyLoginPage from "./pages/VerifyLoginPage"
 import BootstrapNavbar from "./components/navbar/Navbar";
 import PrivateRoute from "./components/utils/PrivateRoute";
 import AdminPage from "./pages/AdminPage";
-import ProfilePage from "./pages/ProfilePage";
+import ProfilePage from "./profile/ProfilePage";
 
 function App() {
   return (

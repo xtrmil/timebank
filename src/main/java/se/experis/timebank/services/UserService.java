@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import se.experis.timebank.models.User;
+import se.experis.timebank.models.UserCredentials;
 import se.experis.timebank.repositories.UserRepository;
 import se.experis.timebank.utils.TotpManager;
 
@@ -56,28 +57,32 @@ public class UserService {
         return new ResponseEntity<>(cr, cr.status);
     }
 
-    public ResponseEntity<CommonResponse> updateUserById(User newUser){
+    public ResponseEntity<CommonResponse> updateUserById(UserCredentials userCredentials, User newUser){
         CommonResponse cr = new CommonResponse();
 
         Optional<User> optionalUser = userRepository.findById(newUser.getId());
         if(optionalUser.isPresent()) {
-
-            User user = optionalUser.get();
-            if (newUser.getFirstName() != null) {
-                user.setFirstName(newUser.getFirstName());
+            if(userCredentials.getId() == newUser.getId()) {
+                User user = optionalUser.get();
+                if (newUser.getFirstName() != null) {
+                    user.setFirstName(newUser.getFirstName());
+                }
+                if (newUser.getLastName() != null) {
+                    user.setLastName(newUser.getLastName());
+                }
+                if (newUser.getEmail() != null) {
+                    user.setEmail(newUser.getEmail());
+                }
+                if (newUser.getProfileImg() != null) {
+                    user.setProfileImg(newUser.getProfileImg());
+                }
+                cr.data = userRepository.save(user);
+                cr.msg = "User with id " + newUser.getId() + " was updated";
+                cr.status = HttpStatus.OK;
+            }else{
+                cr.msg = "Unauthorized operation";
+                cr.status = HttpStatus.UNAUTHORIZED;
             }
-            if (newUser.getLastName() != null) {
-                user.setLastName(newUser.getLastName());
-            }
-            if (newUser.getEmail() != null) {
-                user.setEmail(newUser.getEmail());
-            }
-            if (newUser.getProfileImg() != null) {
-                user.setProfileImg(newUser.getProfileImg());
-            }
-            cr.data = userRepository.save(user);
-            cr.msg = "User with id " + newUser.getId() + " was updated";
-            cr.status = HttpStatus.OK;
         }else{
             cr.msg = "User with id " + newUser.getId() + " not found";
             cr.status = HttpStatus.BAD_REQUEST;
