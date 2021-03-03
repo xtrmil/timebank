@@ -59,7 +59,8 @@ const VacationRequestForm = (props) => {
                                       onBlur={handleBlur}
                                       isInvalid={!!errors.startDate && touched.startDate}/>
                         <Form.Control.Feedback
-                            type="invalid" >
+                            type="invalid"
+                        >
                             {errors.startDate}
                         </Form.Control.Feedback>
                     </Form.Group>
