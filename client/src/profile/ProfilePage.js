@@ -2,12 +2,14 @@ import React, { useState,useEffect } from "react";
 import {useAuth} from "../context/Context";
 import { updateUser, getUserById } from "../api/user";
 import ProfileForm from "./ProfileForm";
-import { Button } from "react-bootstrap";
+import UpdatePasswordForm from './UpdatePasswordForm';
+import { Button, Container } from "react-bootstrap";
+
 
 const ProfilePage = (props) => {
     const {updateToken} = useAuth();
     const [editDisabled, setEditDisabled] = useState(true);
-
+    const [showPasswordForm, setShowPasswordForm] = useState(false);
     const updateProfileInfo = async (props) => {
         try {
             let response = await updateUser(props);
@@ -22,13 +24,15 @@ const ProfilePage = (props) => {
     return (
         <div>
             <h1>Profile page</h1>
-            <div className="form-container">
-                <ProfileForm
+            <Container className="form-container">
+               {!showPasswordForm && <ProfileForm
                     setEditDisabled={setEditDisabled}
                     editDisabled={editDisabled}
                     onSubmitClicked={updateProfileInfo}
-                />
-            </div>
+                    setShowPasswordForm = {setShowPasswordForm}
+                />}
+              {showPasswordForm &&  <UpdatePasswordForm  setShowPasswordForm = {setShowPasswordForm}/>}
+            </Container>
         </div>
     )
 }

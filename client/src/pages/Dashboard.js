@@ -50,7 +50,7 @@ const Dashboard = () => {
                   null,
                   "[]"
               )
-          ) != undefined;
+          ) !== undefined;
 
      return React.cloneElement(Children.only(children), {
         style: {
@@ -70,9 +70,9 @@ const Dashboard = () => {
                    null,
                    "[]"
                )
-           ) != undefined;
+           ) !== undefined;
        return (
-        <a style={highlightDate ? {color: "#c8cedb"} : null}>{label}</a>
+        <span style={highlightDate ? {color: "#c8cedb"} : null}>{label}</span>
       );
 }}
 

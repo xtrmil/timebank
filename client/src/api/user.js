@@ -29,4 +29,13 @@ const updateUser = (body) => {
         });
 }
 
-export {addUser, updateUser, getUserById}
+const updatePassword = (body)=>{
+    return Api.put("/user/password",
+    {...body}, {
+        headers:{
+            Authorization: `Bearer ${cookies.get("session_token")} `
+        }
+    });
+
+}
+export {addUser, updateUser, getUserById,updatePassword}

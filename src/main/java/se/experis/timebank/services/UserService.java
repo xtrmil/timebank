@@ -11,6 +11,7 @@ import se.experis.timebank.models.UserCredentials;
 import se.experis.timebank.repositories.UserRepository;
 import se.experis.timebank.utils.JwtUtil;
 import se.experis.timebank.utils.TotpManager;
+import se.experis.timebank.utils.web.UpdatePasswordRequest;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -26,6 +27,9 @@ public class UserService {
 
     @Autowired
     private JwtUtil jwtUtil;
+
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
     public ResponseEntity<CommonResponse> createUser(User user) throws IOException {
         CommonResponse cr = new CommonResponse();
@@ -105,6 +109,27 @@ public class UserService {
             cr.msg = "User with id: " + userId + " not found";
             cr.status = HttpStatus.NOT_FOUND;
         }
+        return new ResponseEntity<>(cr,cr.status);
+    }
+
+    public ResponseEntity<CommonResponse> updatePassword(UserCredentials userCredentials, UpdatePasswordRequest updatePasswordRequest){
+        CommonResponse cr = new CommonResponse();
+       if( encoder.matches(updatePasswordRequest.getCurrentPassword(), userCredentials.getPassword())){
+           Optional<User> optionalUser = userRepository.findById(userCredentials.getId());
+           if(optionalUser.isPresent()){
+               User user = optionalUser.get();
+               user.setPassword(encoder.encode(updatePasswordRequest.getNewPassword()));
+               userRepository.save(user);
+               cr.msg = "Password was updated successfully";
+               cr.status = HttpStatus.OK;
+           }else{
+               cr.msg = "User with id: " + userCredentials.getId() + " not found";
+               cr.status = HttpStatus.NOT_FOUND;
+           }
+       }else{
+           cr.msg = "Wrong password";
+           cr.status = HttpStatus.UNAUTHORIZED;
+       }
         return new ResponseEntity<>(cr,cr.status);
     }
 }

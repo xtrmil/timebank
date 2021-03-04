@@ -9,6 +9,7 @@ import se.experis.timebank.models.User;
 import se.experis.timebank.models.UserCredentials;
 import se.experis.timebank.services.CommonResponse;
 import se.experis.timebank.services.UserService;
+import se.experis.timebank.utils.web.UpdatePasswordRequest;
 
 import java.io.IOException;
 
@@ -46,8 +47,9 @@ public class UserController {
 //        return userService.getUserById(userId);
 //    }
 
-//    @PutMapping("/{userId}")
-//    public ResponseEntity<CommonResponse> updatePasswordById(@RequestBody User user, @PathVariable Long userId){
-//        return null;
-//    }
+    @PutMapping("/password")
+    public ResponseEntity<CommonResponse> updatePasswordById(@AuthenticationPrincipal UserCredentials userCredentials, @RequestBody UpdatePasswordRequest updatePasswordRequest){
+
+        return userService.updatePassword(userCredentials,updatePasswordRequest);
+    }
 }
