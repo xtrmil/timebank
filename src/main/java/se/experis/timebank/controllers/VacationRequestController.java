@@ -36,9 +36,9 @@ public class VacationRequestController {
     }
 
     @PutMapping("/{requestId}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<CommonResponse> updateVacationRequest(@PathVariable Long requestId, @RequestBody VacationRequest vacationRequest){
-        return vacationRequestService.updateVacationRequest(requestId,vacationRequest);
+    public ResponseEntity<CommonResponse> updateVacationRequest(@AuthenticationPrincipal UserCredentials userCredentials,
+                                                                @PathVariable Long requestId, @RequestBody VacationRequest vacationRequest){
+        return vacationRequestService.updateVacationRequest(userCredentials,requestId,vacationRequest);
     }
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{requestId}")

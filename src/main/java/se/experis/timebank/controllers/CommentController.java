@@ -10,30 +10,30 @@ import se.experis.timebank.services.CommentService;
 import se.experis.timebank.services.CommonResponse;
 
 @RestController
-@RequestMapping("/api/v1/request/{requestId}/comment")
+@RequestMapping("/api/v1/comment/")
 
 public class CommentController {
 
     @Autowired
     private CommentService commentService;
 
-    @GetMapping("")
+    @GetMapping("{requestId}")
     public ResponseEntity<CommonResponse> getAllCommentsByRequestId(@PathVariable Long requestId, @AuthenticationPrincipal UserCredentials userCredentials) {
         return commentService.getAllCommentsByRequestId(requestId, userCredentials);
     }
 
-    @PostMapping("")
+    @PostMapping("{requestId}")
     public ResponseEntity<CommonResponse> createComment(@PathVariable Long requestId, @RequestBody Comment newComment, @AuthenticationPrincipal UserCredentials userCredentials){
         return commentService.createComment(requestId,newComment, userCredentials);
     }
 
     @PutMapping("/{commentId}")
-    public ResponseEntity<CommonResponse> updateCommentById(@PathVariable Long requestId, @PathVariable Long commentId, @RequestBody Comment newComment, @AuthenticationPrincipal UserCredentials userCredentials){
+    public ResponseEntity<CommonResponse> updateCommentById(@PathVariable Long commentId, @RequestBody Comment newComment, @AuthenticationPrincipal UserCredentials userCredentials){
         return commentService.updateCommentById(commentId,newComment,userCredentials);
     }
 
     @DeleteMapping("/{commentId}")
-    public ResponseEntity<CommonResponse> deleteCommentById(@PathVariable Long requestId, @PathVariable Long commentId, @AuthenticationPrincipal UserCredentials userCredentials){
+    public ResponseEntity<CommonResponse> deleteCommentById(@PathVariable Long commentId, @AuthenticationPrincipal UserCredentials userCredentials){
         return commentService.deleteCommentById(commentId,userCredentials);
     }
 

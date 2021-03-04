@@ -9,7 +9,7 @@ import VerifyLoginPage from "./pages/VerifyLoginPage"
 import BootstrapNavbar from "./components/navbar/Navbar";
 import PrivateRoute from "./components/utils/PrivateRoute";
 import AdminPage from "./pages/AdminPage";
-import ProfilePage from "./pages/ProfilePage";
+import ProfilePage from "./profile/ProfilePage";
 
 function App() {
   return (
@@ -22,8 +22,8 @@ function App() {
                <Route exact path="/verify" component={VerifyLoginPage}/>
                <Route exact path="/register" component={RegisterPage}/>
                <PrivateRoute exact path="/home" component={Dashboard}/>
-               <Route exact path="/admin" component={AdminPage}/>
-               <Route exact path="/profile" component={ProfilePage}/>
+               <PrivateRoute exact path="/admin" component={AdminPage}/>
+               <PrivateRoute exact path="/profile" component={ProfilePage}/>
                <Route path="*" component={NotFoundPage}/>
            </Switch>
         </div>

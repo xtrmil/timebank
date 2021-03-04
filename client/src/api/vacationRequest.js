@@ -26,8 +26,12 @@ const getAllVacationRequestsByUser = (id) => {
 
 const updateVacationRequest = (id, body) => {
     return Api.put(`/request/${id}`,
-        {...body}
-        );
+        {...body},
+        {
+            headers: {
+                Authorization: `Bearer ${cookies.get("session_token")} `
+            }
+        });
 }
 
 const deleteVacationRequest = (id) => {

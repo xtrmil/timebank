@@ -103,31 +103,36 @@ public class VacationRequestService {
         return new ResponseEntity<>(cr,cr.status);
     }
 
-    public ResponseEntity<CommonResponse> updateVacationRequest(Long requestId, VacationRequest newVacationRequest) {
+    public ResponseEntity<CommonResponse> updateVacationRequest(UserCredentials userCredentials, Long requestId, VacationRequest newVacationRequest) {
         CommonResponse cr = new CommonResponse();
-        Optional<VacationRequest> optionalUser = vacationRequestRepository.findById(requestId);
+        Optional<VacationRequest> optionalRequest = vacationRequestRepository.findById(requestId);
 
-        if (optionalUser.isPresent()) {
-            VacationRequest request = optionalUser.get();
+        if (optionalRequest.isPresent()) {
+            VacationRequest request = optionalRequest.get();
+            if(userCredentials.isAdmin() || userCredentials.getId() == request.getUser().getId()) {
 
-            if (newVacationRequest.getStatus() != null) {
-                request.setStatus(newVacationRequest.getStatus());
+                if (newVacationRequest.getStatus() != null) {
+                    request.setStatus(newVacationRequest.getStatus());
+                }
+
+                if (newVacationRequest.getStartDate() != null) {
+                    request.setStartDate(newVacationRequest.getStartDate());
+                }
+
+                if (newVacationRequest.getEndDate() != null) {
+                    request.setEndDate(newVacationRequest.getEndDate());
+                }
+
+                if (newVacationRequest.getTitle() != null) {
+                    request.setTitle(newVacationRequest.getTitle());
+                }
+                cr.data = vacationRequestRepository.save(request);
+                cr.msg = "VacationRequest with id " + requestId + " was updated";
+                cr.status = HttpStatus.OK;
+            }else{
+                cr.msg = "Unauthorized operation";
+                cr.status = HttpStatus.UNAUTHORIZED;
             }
-
-            if (newVacationRequest.getStartDate() != null) {
-                request.setStartDate(newVacationRequest.getStartDate());
-            }
-
-            if (newVacationRequest.getEndDate() != null) {
-                request.setEndDate(newVacationRequest.getEndDate());
-            }
-
-            if (newVacationRequest.getTitle() != null) {
-                request.setTitle(newVacationRequest.getTitle());
-            }
-            cr.data = vacationRequestRepository.save(newVacationRequest);
-            cr.msg = "VacationRequest with id " + requestId + " was updated";
-            cr.status = HttpStatus.OK;
         } else {
             cr.msg = "VacationRequest with id " + requestId + " not found";
             cr.status = HttpStatus.NOT_FOUND;

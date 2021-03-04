@@ -30,14 +30,9 @@ public class UserController {
         return userService.getUserById(userCredentials.getId());
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<CommonResponse> getUserById(@PathVariable Long userId) {
-        return userService.getUserById(userId);
-    }
-
-    @PutMapping("/{userId}")
-    public ResponseEntity<CommonResponse> updateUserById(@RequestBody User user) {
-        return userService.updateUserById(user);
+    @PutMapping("")
+    public ResponseEntity<CommonResponse> updateUserById(@AuthenticationPrincipal UserCredentials userCredentials, @RequestBody User user) {
+        return userService.updateUserById(userCredentials.getId(),user);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -45,6 +40,11 @@ public class UserController {
     public ResponseEntity<CommonResponse> deleteUserById(@PathVariable Long userId) {
         return userService.deleteUserById(userId);
     }
+
+//    @GetMapping("/{userId}")
+//    public ResponseEntity<CommonResponse> getUserById(@PathVariable Long userId) {
+//        return userService.getUserById(userId);
+//    }
 
 //    @PutMapping("/{userId}")
 //    public ResponseEntity<CommonResponse> updatePasswordById(@RequestBody User user, @PathVariable Long userId){

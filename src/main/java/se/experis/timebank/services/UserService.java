@@ -7,7 +7,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import se.experis.timebank.models.User;
+import se.experis.timebank.models.UserCredentials;
 import se.experis.timebank.repositories.UserRepository;
+import se.experis.timebank.utils.JwtUtil;
 import se.experis.timebank.utils.TotpManager;
 
 import java.io.IOException;
@@ -21,6 +23,9 @@ public class UserService {
 
     @Autowired
     private TotpManager totpManager;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     public ResponseEntity<CommonResponse> createUser(User user) throws IOException {
         CommonResponse cr = new CommonResponse();
@@ -44,7 +49,6 @@ public class UserService {
         CommonResponse cr = new CommonResponse();
 
         Optional<User> optionalUser = userRepository.findById(userId);
-
         if(optionalUser.isPresent()){
             cr.data = userRepository.findById(userId).get();
             cr.msg = "User with id:" + userId + " was found.";
@@ -56,30 +60,33 @@ public class UserService {
         return new ResponseEntity<>(cr, cr.status);
     }
 
-    public ResponseEntity<CommonResponse> updateUserById(User newUser){
+    public ResponseEntity<CommonResponse> updateUserById(Long userId, User userToUpdate){
         CommonResponse cr = new CommonResponse();
 
-        Optional<User> optionalUser = userRepository.findById(newUser.getId());
+        Optional<User> optionalUser = userRepository.findById(userId);
         if(optionalUser.isPresent()) {
 
-            User user = optionalUser.get();
-            if (newUser.getFirstName() != null) {
-                user.setFirstName(newUser.getFirstName());
-            }
-            if (newUser.getLastName() != null) {
-                user.setLastName(newUser.getLastName());
-            }
-            if (newUser.getEmail() != null) {
-                user.setEmail(newUser.getEmail());
-            }
-            if (newUser.getProfileImg() != null) {
-                user.setProfileImg(newUser.getProfileImg());
-            }
-            cr.data = userRepository.save(user);
-            cr.msg = "User with id " + newUser.getId() + " was updated";
-            cr.status = HttpStatus.OK;
+                User user = optionalUser.get();
+                if (userToUpdate.getFirstName() != null) {
+                    user.setFirstName(userToUpdate.getFirstName());
+                }
+                if (userToUpdate.getLastName() != null) {
+                    user.setLastName(userToUpdate.getLastName());
+                }
+                if (userToUpdate.getEmail() != null) {
+                    user.setEmail(userToUpdate.getEmail());
+                }
+                if (userToUpdate.getProfileImg() != null) {
+                    user.setProfileImg(userToUpdate.getProfileImg());
+                }
+                User updatedUser = userRepository.save(user);
+                UserCredentials credentials = new UserCredentials(updatedUser);
+                cr.data = jwtUtil.generateToken(credentials);
+                cr.msg = "User with id " + userId + " was updated";
+                cr.status = HttpStatus.OK;
+
         }else{
-            cr.msg = "User with id " + newUser.getId() + " not found";
+            cr.msg = "User with id " + userToUpdate.getId() + " not found";
             cr.status = HttpStatus.BAD_REQUEST;
         }
         return new ResponseEntity<>(cr, cr.status);
