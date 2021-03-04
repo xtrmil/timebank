@@ -22,8 +22,8 @@ function App() {
                <Route exact path="/verify" component={VerifyLoginPage}/>
                <Route exact path="/register" component={RegisterPage}/>
                <PrivateRoute exact path="/home" component={Dashboard}/>
-               <Route exact path="/admin" component={AdminPage}/>
-               <Route exact path="/profile" component={ProfilePage}/>
+               <PrivateRoute exact path="/admin" component={AdminPage}/>
+               <PrivateRoute exact path="/profile" component={ProfilePage}/>
                <Route path="*" component={NotFoundPage}/>
            </Switch>
         </div>

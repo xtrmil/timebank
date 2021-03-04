@@ -7,14 +7,14 @@ import "./profilePage.scss";
 
 
 const ProfileForm = (props) => {
-    const { onSubmitClicked, editDisabled,setEditDisabled,...user } = props;
-    const { loggedInUser } = useAuth();
+    const {loggedInUser} = useAuth();
+    const { onSubmitClicked, editDisabled,setEditDisabled} = props;
 
 
     const initialValues = {
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email
+        firstName: loggedInUser.firstName,
+        lastName: loggedInUser.lastName,
+        email: loggedInUser.email
     }
 
     const schema = yup.object().shape({
@@ -22,6 +22,14 @@ const ProfileForm = (props) => {
         lastName: yup.string().required(),
         email: yup.string().email().required()
     })
+
+    const onCancelClicked = () => {
+        setEditDisabled(true);
+    }
+
+    const onEditClicked = () => {
+        setEditDisabled(false);
+    }
 
     return (
         <Formik
@@ -97,8 +105,24 @@ const ProfileForm = (props) => {
 
                     </Form.Group>
                     <div>
-                        {
-                            !editDisabled && <Button onClick={setEditDisabled(true)} type="submit" variant="primary">Save</Button>
+                        {editDisabled &&
+                        <Button
+                            onClick={onEditClicked}
+                            variant="primary">
+                            Edit
+                        </Button>
+                        }
+                        {!editDisabled && <>
+                        <Button
+                            type="submit"
+                            variant="primary">
+                            Save
+                        </Button>
+                        <Button
+                            onClick={onCancelClicked}
+                            variant="primary">
+                            Cancel
+                        </Button> </>
                         }
 
                     </div>

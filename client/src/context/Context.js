@@ -35,6 +35,11 @@ const useCreateAuthContext = () => {
     cookies.remove("session_token");
   }
 
+  const updateToken = (token) => {
+    cookies.set("session_token", token);
+    login();
+  }
+
   useEffect(() => {
     login();
     setIsLoading(false);
@@ -46,7 +51,8 @@ const useCreateAuthContext = () => {
     isLoggedIn,
     isLoading,
     login,
-    logout
+    logout,
+    updateToken
   };
 };
 
