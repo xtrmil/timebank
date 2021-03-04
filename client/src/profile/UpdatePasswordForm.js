@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import * as yup from "yup";
 import { Formik } from "formik";
 import { Button, Form } from "react-bootstrap";
-import { useAuth } from "../context/Context";
 import "./profilePage.scss";
 import { updatePassword } from "../api/user";
 
@@ -128,12 +127,16 @@ const UpdatePasswordForm = (props) => {
               {errors.confirmNewPassword}
             </Form.Control.Feedback>
           </Form.Group>
-          <div>
+          <div className="text-center">
+            <Button
+              className="mr-2"
+              onClick={onCancelClicked}
+              variant="primary"
+            >
+              Cancel
+            </Button>
             <Button type="submit" variant="primary">
               Save
-            </Button>
-            <Button onClick={onCancelClicked} variant="primary">
-              Cancel
             </Button>
           </div>
         </Form>

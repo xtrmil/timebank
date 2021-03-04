@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Dashboard from "./pages/Dashboard";
 import NotFoundPage from "./pages/NotFoundPage";
 import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
 import VerifyLoginPage from "./pages/VerifyLoginPage"
 import BootstrapNavbar from "./components/navbar/Navbar";
 import PrivateRoute from "./components/utils/PrivateRoute";
@@ -20,7 +19,6 @@ function App() {
                <Route exact path="/"><Redirect to="/login"/></Route>
                <Route exact path="/login" component={LoginPage}/>
                <Route exact path="/verify" component={VerifyLoginPage}/>
-               <Route exact path="/register" component={RegisterPage}/>
                <PrivateRoute exact path="/home" component={Dashboard}/>
                <PrivateRoute exact path="/admin" component={AdminPage}/>
                <PrivateRoute exact path="/profile" component={ProfilePage}/>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import * as yup from "yup";
 import { Formik } from "formik";
 import { Button, Form } from "react-bootstrap";
@@ -7,7 +7,12 @@ import "./profilePage.scss";
 
 const ProfileForm = (props) => {
   const { loggedInUser } = useAuth();
-  const { onSubmitClicked, editDisabled, setEditDisabled ,setShowPasswordForm } = props;
+  const {
+    onSubmitClicked,
+    editDisabled,
+    setEditDisabled,
+    setShowPasswordForm,
+  } = props;
 
   const initialValues = {
     firstName: loggedInUser.firstName,
@@ -100,23 +105,33 @@ const ProfileForm = (props) => {
               {errors.email}
             </Form.Control.Feedback>
           </Form.Group>
-          <div>
+          <div className="justify-content-center text-center">
             {editDisabled && (
               <>
-                <Button onClick={onEditClicked} variant="primary">
+                <Button
+                  className="mr-2"
+                  variant="primary"
+                  onClick={onEditClicked}
+                >
                   Edit
                 </Button>
-                <Button onClick={()=> setShowPasswordForm(true)}>New Password</Button>
+                <Button onClick={() => setShowPasswordForm(true)}>
+                  New Password
+                </Button>
               </>
             )}
             {!editDisabled && (
               <>
+                <Button
+                  className="mr-2"
+                  onClick={onCancelClicked}
+                  variant="primary"
+                >
+                  Cancel
+                </Button>
                 <Button type="submit" variant="primary">
                   Save
                 </Button>
-                <Button onClick={onCancelClicked} variant="primary">
-                  Cancel
-                </Button>{" "}
               </>
             )}
           </div>

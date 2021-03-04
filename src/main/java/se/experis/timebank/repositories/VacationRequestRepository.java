@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface VacationRequestRepository extends JpaRepository<VacationRequest, Long> {
 
+    List<VacationRequest> findAllByUserIdOrderByStartDateDesc(Long userId);
     List<VacationRequest> findAllByUserId(Long userId);
     List<VacationRequest> findAllByStatusNot(RequestStatus status);
     List<VacationRequest> findAllByStatus(RequestStatus status);

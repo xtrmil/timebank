@@ -15,8 +15,8 @@ const getVacationRequestById = (id) => {
     return Api.get("/request");
 }
 
-const getAllVacationRequestsByUser = (id) => {
-    return Api.get(`/request/user/${id}`,
+const getAllVacationRequestsByUser = () => {
+    return Api.get(`/request/user`,
     {
         headers: {
             Authorization: `Bearer ${cookies.get("session_token")} `
