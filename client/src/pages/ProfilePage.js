@@ -4,17 +4,17 @@ import { updateUser } from "../api/user";
 import {getAllVacationRequestsByUser} from '../api/vacationRequest'
 import ProfileInfo from "../components/profile/ProfileInfo";
 import ProfileNav from "../components/profile/ProfileNav";
-
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import VacationRequestTable from '../components/profile/VacationRequestTable'
+import { Container } from "react-bootstrap";
 import '../components/profile/profilePage.scss';
-
+import {getAllCommentsByRequestId} from '../api/comment'
 
 const ProfilePage = (props) => {
   const { updateToken, loggedInUser } = useAuth();
   const [editDisabled, setEditDisabled] = useState(true);
   const [selectedView, setSelectedView] = useState(1);
   const [vacationRequests, setVacationRequest] = useState([]);
-
+  const [showDetails, setShowDetails] = useState(false);
   useEffect(() => {
     const fetchVacationRequestsByUser = async() =>{
       let response =  await getAllVacationRequestsByUser();
@@ -34,11 +34,15 @@ const ProfilePage = (props) => {
     }
   };
 
+  const onViewCommentClicked = async(requestId) =>{
+   const response = await getAllCommentsByRequestId(requestId);
+
+  }
+
   return (
     <>
-      <div className="profile-banner mb-4">
-        <h1 className="text-center mt-5">Profile </h1>
-        <h4 className="text-center mb-3"> Welcome {loggedInUser.firstName}</h4>
+      <div className="profile-banner my-4 justify-content-center">
+        <h3 className="text-center py-3"> Welcome {loggedInUser.firstName}</h3>
         <ProfileNav setSelectedView={setSelectedView}/>
     </div>
 
@@ -49,7 +53,11 @@ const ProfilePage = (props) => {
           setEditDisabled={setEditDisabled}
           updateProfileInfo={updateProfileInfo}/>
       }
-      {selectedView === 2 && "myvacation"}
+      {selectedView === 2 && <VacationRequestTable
+       vacationRequests={vacationRequests}
+       showDetails={showDetails}
+       setShowDetails={setShowDetails}
+       />}
 
     </Container>
     </>

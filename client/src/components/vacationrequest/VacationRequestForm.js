@@ -14,7 +14,7 @@ const VacationRequestForm = (props) => {
         title: yup.string().required("Please enter a title."),
         startDate: yup.date("Invalid date").required("Start date is required."),
         endDate: yup.date("Invalid date").required("End date is required."),
-        comment: yup.string()
+        description: yup.string()
     });
 
     return(
@@ -83,29 +83,28 @@ const VacationRequestForm = (props) => {
 
                     <Form.Group>
                         <Form.Label>
-                            <strong>Comment:</strong>
+                            <strong>Description:</strong>
                         </Form.Label>
                         <Form.Control type="text"
                                       as = "textarea"
-                                      maxLength={200}
-                                      name="comment"
-                                      value={values.comment}
+                                      maxLength={255}
+                                      name="description"
+                                      value={values.description}
                                       onChange={handleChange}
                                       onBlur={handleBlur}
-                                      isInvalid={!!errors.comment && touched.comment}/>
+                                      isInvalid={!!errors.description && touched.description}/>
                         <Form.Control.Feedback
                             type="invalid" >
-                            {errors.comment}
+                            {errors.description}
                         </Form.Control.Feedback>
                     </Form.Group>
 
                     <div className="text-center mt-5">
-                        <Button type="submit" variant="primary">Save</Button>
-                        <Button className="ml-2" variant="secondary" onClick={onClickClose}>
+                    <Button className="mr-2" variant="secondary" onClick={onClickClose}>
                             Cancel
                         </Button>
+                        <Button type="submit" variant="primary">Save</Button>
                     </div>
-                    <pre> {JSON.stringify(values, null, 2)} </pre>
                 </Form>
             )}
         </Formik>

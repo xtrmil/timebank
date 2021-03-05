@@ -16,7 +16,8 @@ const EditVacationRequestModal = (props) => {
   const initialValues = {
     title: request.title,
     startDate: request.startDate,
-    endDate: request.endDate
+    endDate: request.endDate,
+    description: request.description
   }
 
   const editVacationRequest = (data) => {

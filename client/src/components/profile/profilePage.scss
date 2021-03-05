@@ -1,7 +1,19 @@
 .form-container {
-    width: 40%;
+    width: 60%;
 }
 
 .profile-banner{
+    width: 80%;
+    margin: auto;
     background-color: cadetblue;
+}
+
+@media screen and(max-width:930px){
+    .form-container{
+        padding: 0;
+        width: 100%;
+    }
+    .mobile-col{
+        width: 10%;
+    }
 }
