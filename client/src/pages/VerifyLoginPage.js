@@ -5,7 +5,7 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import "./VerifyLoginPage.scss";
 import * as yup from "yup";
-import { useStyles } from "../forms/styles";
+import { useStyles } from "../components/forms/styles";
 import { verifyLogin } from "../api/auth";
 import MobileStoreButton from "react-mobile-store-button";
 import {Cookies} from 'react-cookie'
