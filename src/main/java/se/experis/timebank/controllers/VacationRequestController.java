@@ -20,8 +20,8 @@ public class VacationRequestController {
     VacationRequestService vacationRequestService;
 
     @PostMapping("")
-    public ResponseEntity<CommonResponse> createVacationRequest(@RequestBody VacationRequest vacationRequest){
-        return vacationRequestService.createVacationRequest(vacationRequest);
+    public ResponseEntity<CommonResponse> createVacationRequest(@AuthenticationPrincipal UserCredentials userCredentials, @RequestBody VacationRequest vacationRequest){
+        return vacationRequestService.createVacationRequest(userCredentials,vacationRequest);
     }
 
     @GetMapping("/all")

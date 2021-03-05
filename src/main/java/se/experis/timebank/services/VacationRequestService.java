@@ -12,6 +12,7 @@ import se.experis.timebank.repositories.UserRepository;
 import se.experis.timebank.repositories.VacationRequestRepository;
 import se.experis.timebank.utils.Validations;
 
+import javax.swing.text.html.Option;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -33,17 +34,24 @@ public class VacationRequestService {
      */
     private Validations validation = new Validations();
 
-    public ResponseEntity<CommonResponse> createVacationRequest(VacationRequest vacationRequest) {
+    public ResponseEntity<CommonResponse> createVacationRequest(UserCredentials userCredentials,VacationRequest vacationRequest) {
         CommonResponse cr = new CommonResponse();
         long requestedLength = validation.validatePeriodLength(vacationRequest.getStartDate(), vacationRequest.getEndDate());
 
         if (requestedLength >= 0 && requestedLength <= maxPeriod) {
-            User user = userRepository.findById(vacationRequest.getUser().getId()).get();
-            vacationRequest.setUser(user);
-            vacationRequestRepository.save(vacationRequest);
-            cr.data = vacationRequest;
-            cr.msg = "vacationRequest created successfully";
-            cr.status = HttpStatus.CREATED;
+            Optional<User> optionalUser = userRepository.findById(userCredentials.getId());
+            if(optionalUser.isPresent()){
+                User user = optionalUser.get();
+                vacationRequest.setUser(user);
+                vacationRequestRepository.save(vacationRequest);
+                cr.data = vacationRequest;
+                cr.msg = "vacationRequest created successfully";
+                cr.status = HttpStatus.CREATED;
+            }else{
+                cr.msg = "User not found";
+                cr.status = HttpStatus.NOT_FOUND;
+            }
+
         } else {
             if (requestedLength > 0) {
                 cr.msg = "VacationRequest length (" + requestedLength + ") exceeds max length (" + maxPeriod + ")";
@@ -77,7 +85,7 @@ public class VacationRequestService {
         Optional<User> optionalUser = userRepository.findById(userCredentials.getId());
 
         if (optionalUser.isPresent()) {
-            cr.data = vacationRequestRepository.findAllByUserIdOrderByStartDateDesc(optionalUser.get().getId());
+            cr.data = vacationRequestRepository.findAllByUserIdOrderByStartDateAsc(optionalUser.get().getId());
             cr.msg = "VacationRequest with id:" + optionalUser.get().getId() + " was found.";
             cr.status = HttpStatus.OK;
         } else {
