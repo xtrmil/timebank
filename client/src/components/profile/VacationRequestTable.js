@@ -4,6 +4,8 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 import React, { useState } from "react";
 import { Table, Row, Button, Card, Col } from "react-bootstrap";
 import { getAllCommentsByRequestId } from "../../api/comment";
+import VacationRequestDetails from "./VacationRequestDetails";
+
 const VacationRequestTable = (props) => {
   const { vacationRequests, showDetails, setShowDetails } = props;
   const [selectedRequest, setSelectedRequest] = useState({});
@@ -54,25 +56,11 @@ const VacationRequestTable = (props) => {
           <tbody>{table}</tbody>
         </Table>
       )}
-      {showDetails && selectedRequest && (
-        <>
-          <Button onClick={() => setShowDetails(false)}>Back</Button>
-          <Row noGutters>
-            <Col xs={12}>
-              <Card>
-                <Card.Body>
-                  <div>{selectedRequest.title}</div>
-                  <div>Comments ({comments.length})</div>
-                  <div>{comments.map(comment =>{
-                      return(
-                      <div key={comment.id}>{comment.message}</div>)
-                  })}</div>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
-        </>
-      )}
+      <VacationRequestDetails
+          selectedRequest={selectedRequest}
+          showDetails={showDetails}
+          setShowDetails={setShowDetails}
+          comments={comments}/>
     </>
   );
 };

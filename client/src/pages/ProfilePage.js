@@ -53,7 +53,8 @@ const ProfilePage = (props) => {
           setEditDisabled={setEditDisabled}
           updateProfileInfo={updateProfileInfo}/>
       }
-      {selectedView === 2 && <VacationRequestTable
+      {selectedView === 2 &&
+      <VacationRequestTable
        vacationRequests={vacationRequests}
        showDetails={showDetails}
        setShowDetails={setShowDetails}

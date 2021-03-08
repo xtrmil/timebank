@@ -26,7 +26,8 @@ const ProfileForm = (props) => {
     email: yup.string().email().required(),
   });
 
-  const onCancelClicked = () => {
+  const onCancelClicked = (resetForm) => {
+    resetForm();
     setEditDisabled(true);
   };
 
@@ -41,12 +42,13 @@ const ProfileForm = (props) => {
       onSubmit={(data) => onSubmitClicked(data)}
     >
       {({
-        values,
-        errors,
-        touched,
-        handleSubmit,
-        handleChange,
-        handleBlur,
+          values,
+          resetForm,
+          errors,
+          touched,
+          handleSubmit,
+          handleChange,
+          handleBlur,
       }) => (
         <Form onSubmit={handleSubmit} noValidate>
           <Form.Group>
@@ -124,7 +126,7 @@ const ProfileForm = (props) => {
               <>
                 <Button
                   className="mr-2"
-                  onClick={onCancelClicked}
+                  onClick={() => onCancelClicked(resetForm)}
                   variant="primary"
                 >
                   Cancel

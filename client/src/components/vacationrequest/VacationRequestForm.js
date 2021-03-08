@@ -55,6 +55,7 @@ const VacationRequestForm = (props) => {
                         <Form.Control type="date"
                                       name="startDate"
                                       value={values.startDate}
+                                      max={values.endDate}
                                       onChange={handleChange}
                                       onBlur={handleBlur}
                                       isInvalid={!!errors.startDate && touched.startDate}/>
@@ -72,6 +73,7 @@ const VacationRequestForm = (props) => {
                         <Form.Control type="date"
                                       name="endDate"
                                       value={values.endDate}
+                                      min={values.startDate}
                                       onChange={handleChange}
                                       onBlur={handleBlur}
                                       isInvalid={!!errors.endDate && touched.endDate}/>
