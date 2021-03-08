@@ -19,6 +19,12 @@ const VacationRequestTable = (props) => {
     setShowDetails(true);
   };
 
+  const loadComments = async (requestId) => {
+    let response = await getAllCommentsByRequestId(requestId);
+    console.log(response.data.data);
+    setComments(response.data.data);
+  }
+
   const table = vacationRequests.map((request, index) => {
     return (
       <tr className="text-center" key={index}>
@@ -60,7 +66,8 @@ const VacationRequestTable = (props) => {
           selectedRequest={selectedRequest}
           showDetails={showDetails}
           setShowDetails={setShowDetails}
-          comments={comments}/>
+          comments={comments}
+          loadComments={loadComments}/>
     </>
   );
 };

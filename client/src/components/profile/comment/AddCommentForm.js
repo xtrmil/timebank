@@ -2,14 +2,14 @@ import React from "react";
 import {Formik} from "formik";
 import {Form, Button} from "react-bootstrap";
 import * as yup from "yup";
-import {updateComment} from "../../api/comment";
+import {addComment} from "../../../api/comment";
 
-const UpdateCommentForm = (props) => {
+const AddCommentForm = (props) => {
     const {comment, setShowForm, loadComments, requestId} = props;
 
 
     const initialValues = {
-        message: comment.message
+        message: ""
     };
 
     const schema = yup.object().shape({
@@ -17,8 +17,9 @@ const UpdateCommentForm = (props) => {
     });
 
     const onSubmit = async (data) => {
+        console.log(data);
         try {
-            await updateComment(comment.id, data);
+            await addComment(requestId, data);
             setShowForm(false);
             loadComments(requestId);
         } catch (error) {
@@ -65,4 +66,4 @@ const UpdateCommentForm = (props) => {
     )
 }
 
-export default UpdateCommentForm;
+export default AddCommentForm;

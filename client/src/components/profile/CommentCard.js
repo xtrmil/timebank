@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from "react";
 import moment from "moment";
 import UpdateCommentForm from "./UpdateCommentForm";
+import {Button} from "react-bootstrap";
 
 const CommentCard = (props) => {
-    const {comment} = props;
+    const {loadComments,requestId, comment} = props;
     const [isEditable, setEditable] = useState(false);
     const [showForm, setShowForm] = useState(false);
 
@@ -16,7 +17,6 @@ const CommentCard = (props) => {
         }
     }, []);
 
-
     const onEditClicked = () => {
         setShowForm(true);
     }
@@ -24,7 +24,7 @@ const CommentCard = (props) => {
     return(
         <div className=" border-top mb-2">
             { isEditable &&
-                <button className="btn btn-info btn-sm float-right mt-2" onClick={onEditClicked}>Edit</button>
+                <Button className="btn btn-info btn-sm float-right mt-2" onClick={onEditClicked}>Edit Comment</Button>
             }
             <p className="mt-2"><strong>Last edited: </strong>
                 {moment(comment.lastEditedAt).format("YYYY-MM-DD HH:mm")}
@@ -40,7 +40,10 @@ const CommentCard = (props) => {
             {showForm &&
                <UpdateCommentForm
                    setShowForm={setShowForm}
-                   comment={comment}/>
+                   comment={comment}
+                   loadComments={loadComments}
+                   requestId= {requestId}
+                   />
             }
 
 
