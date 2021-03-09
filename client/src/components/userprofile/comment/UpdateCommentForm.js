@@ -2,7 +2,7 @@ import React from "react";
 import {Formik} from "formik";
 import {Form, Button} from "react-bootstrap";
 import * as yup from "yup";
-import {updateComment} from "../../api/comment";
+import {updateComment} from "../../../api/comment";
 
 const UpdateCommentForm = (props) => {
     const {comment, setShowForm, loadComments, requestId} = props;

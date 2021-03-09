@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import moment from "moment";
-import CommentCard from "./CommentCard";
-import AddCommentForm from "./comment/AddCommentForm";
+import CommentCard from "../userprofile/comment/CommentCard";
+import AddCommentForm from "../userprofile/comment/AddCommentForm";
 
 
 import { Button, Card, Col, Row } from "react-bootstrap";
@@ -34,7 +34,8 @@ const VacationRequestDetails = (props) => {
                                         <strong>Comments ({comments.length}) </strong>
                                         <Button className="btn-sm" onClick={onAddClicked}><FontAwesomeIcon icon={faPlusCircle} /></Button>
                                     </div>
-                                    {showForm && <AddCommentForm
+                                    {showForm &&
+                                    <AddCommentForm
                                         setShowForm={setShowForm}
                                         loadComments={loadComments}
                                         requestId={selectedRequest.id} />}

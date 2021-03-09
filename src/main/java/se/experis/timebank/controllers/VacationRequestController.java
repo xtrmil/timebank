@@ -1,7 +1,6 @@
 package se.experis.timebank.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -30,9 +29,14 @@ public class VacationRequestController {
     }
 
     @GetMapping("/user")
-    public ResponseEntity<CommonResponse> getAllVacationRequestByUserId(@AuthenticationPrincipal UserCredentials userCredentials)
+    public ResponseEntity<CommonResponse> getAllVacationRequestByUserToken(@AuthenticationPrincipal UserCredentials userCredentials)
     {
-        return vacationRequestService.getAllVacationRequestByUserId(userCredentials);
+        return vacationRequestService.getAllVacationRequestsByUserToken(userCredentials);
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<CommonResponse> getAllVacationRequestByUserId(@AuthenticationPrincipal UserCredentials userCredentials, @PathVariable Long userId){
+        return vacationRequestService.getAllVacationRequestsByUserId(userCredentials, userId);
     }
 
     @PutMapping("/{requestId}")
@@ -46,14 +50,7 @@ public class VacationRequestController {
 
         return vacationRequestService.deleteVacationRequestById(requestId);
     }
-    @GetMapping("/test")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<CommonResponse> test(@AuthenticationPrincipal UserCredentials userCredentials){
-        CommonResponse cr = new CommonResponse();
-        cr.data = userCredentials.getAuthorities();
-        return new ResponseEntity<>(cr, HttpStatus.OK);
 
-    }
 
 //    @GetMapping("")
 //    public ResponseEntity<CommonResponse> getVacationRequest(){ // token

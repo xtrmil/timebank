@@ -1,16 +1,19 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import {useHistory} from "react-router-dom";
 import { Button } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faGlobeEurope } from "@fortawesome/free-solid-svg-icons";
+import {useAuth} from "../../context/Context";
 
 const ProfileNav = (props) => {
-  const { setSelectedView } = props;
+    const {loggedInUser} = useAuth();
+    const history = useHistory();
 
   return (
     <div className="row justify-content-center">
       <Button
         className="btn-light btn-sm mr-2 mb-1"
-        onClick={() => setSelectedView(1)}
+        onClick={() => history.push("/profile")}
       >
         <FontAwesomeIcon
           className="mr-1"
@@ -21,7 +24,7 @@ const ProfileNav = (props) => {
       </Button>
       <Button
         className="btn-light btn-sm mb-1"
-        onClick={() => setSelectedView(2)}
+        onClick={() => history.push({pathname: `/request/user/${loggedInUser.id}`, state: {user: loggedInUser}})}
       >
         <FontAwesomeIcon
           className="mr-1"

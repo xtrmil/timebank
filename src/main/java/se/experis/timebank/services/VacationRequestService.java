@@ -79,7 +79,7 @@ public class VacationRequestService {
         return new ResponseEntity<>(cr, cr.status);
     }
 
-    public ResponseEntity<CommonResponse> getAllVacationRequestByUserId(UserCredentials userCredentials) {
+    public ResponseEntity<CommonResponse> getAllVacationRequestsByUserToken(UserCredentials userCredentials) {
         CommonResponse cr = new CommonResponse();
 
         Optional<User> optionalUser = userRepository.findById(userCredentials.getId());
@@ -93,6 +93,27 @@ public class VacationRequestService {
             cr.status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
         return new ResponseEntity<>(cr, cr.status);
+    }
+
+    public ResponseEntity<CommonResponse> getAllVacationRequestsByUserId(UserCredentials userCredentials, Long userId){
+        CommonResponse cr = new CommonResponse();
+
+        Optional<User> optionalUser = userRepository.findById(userId);
+
+        if (optionalUser.isPresent()) {
+            if(userCredentials.isAdmin()){
+                cr.data = vacationRequestRepository.findAllByUserId(userId);
+            }else {
+                cr.data = vacationRequestRepository.findAllByUserIdAndStatusOrderByStartDateAsc(optionalUser.get().getId(), RequestStatus.APPROVED);
+            }
+            cr.msg = "VacationRequest with id:" + optionalUser.get().getId() + " was found.";
+            cr.status = HttpStatus.OK;
+        } else {
+            cr.msg = " Currently unable to get request";
+            cr.status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        return new ResponseEntity<>(cr, cr.status);
+
     }
 
     public ResponseEntity<CommonResponse> getAllVacationRequests(UserCredentials userCredentials){

@@ -1,8 +1,8 @@
 import React from "react";
-import AddVacationRequestModal from "./vacationrequest/AddVacationRequestModal";
-import {useAuth} from '../context/Context'
+import AddVacationRequestModal from "./calendarvacationrequest/AddVacationRequestModal";
+import {useAuth} from '../../context/Context'
 import {Button} from 'react-bootstrap'
-import AddIneligiblePeriod from '../components/ineligibleperiod/AddIneligiblePeriod';
+import AddIneligiblePeriod from '../ineligibleperiod/AddIneligiblePeriod';
 
 function CalendarNavigation(props) {
   const {isAdmin} = useAuth();
