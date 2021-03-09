@@ -1,10 +1,12 @@
 package se.experis.timebank.controllers;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import se.experis.timebank.models.RequestStatus;
 import se.experis.timebank.models.UserCredentials;
 import se.experis.timebank.models.VacationRequest;
 import se.experis.timebank.services.CommonResponse;
@@ -39,17 +41,24 @@ public class VacationRequestController {
         return vacationRequestService.getAllVacationRequestsByUserId(userCredentials, userId);
     }
 
-    @PutMapping("/{requestId}")
+    @PutMapping("update/{requestId}")
     public ResponseEntity<CommonResponse> updateVacationRequest(@AuthenticationPrincipal UserCredentials userCredentials,
                                                                 @PathVariable Long requestId, @RequestBody VacationRequest vacationRequest){
         return vacationRequestService.updateVacationRequest(userCredentials,requestId,vacationRequest);
     }
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("update/status/{requestId}")
+    public ResponseEntity<CommonResponse> updateVacationRequestStatus(@AuthenticationPrincipal UserCredentials userCredentials, @PathVariable Long requestId, @RequestBody ObjectNode status){
+        return vacationRequestService.updateVacationRequestStatus(userCredentials,requestId, status.get("status").asText());
+    }
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{requestId}")
     public ResponseEntity<CommonResponse> deleteVacationRequest(@PathVariable Long requestId){
 
         return vacationRequestService.deleteVacationRequestById(requestId);
     }
+
 
 
 //    @GetMapping("")

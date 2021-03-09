@@ -19,6 +19,10 @@ const Navbar = () => {
     history.push("/profile");
   };
 
+  const onCalendarClicked = () => {
+    history.push("/home");
+  };
+
   const handleLogout = () => {
     auth.logout();
     history.go(0);
@@ -37,7 +41,7 @@ const Navbar = () => {
         <BootstrapNavbar.Collapse id="basic-navbar-nav">
           {auth.isLoggedIn && (
             <Nav className="mr-auto">
-              <Button className="btn btn-sm m-2">Calendar</Button>
+              <Button onClick={onCalendarClicked} className="btn btn-sm m-2">Calendar</Button>
               <Button onClick={onProfileClicked} className="btn btn-sm m-2">
                 Profile
               </Button>

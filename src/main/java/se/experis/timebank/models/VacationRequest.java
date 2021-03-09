@@ -1,8 +1,5 @@
 package se.experis.timebank.models;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 import javax.persistence.*;

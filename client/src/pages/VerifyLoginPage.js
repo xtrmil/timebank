@@ -5,7 +5,6 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import "./VerifyLoginPage.scss";
 import * as yup from "yup";
-import { useStyles } from "../components/forms/styles";
 import { verifyLogin } from "../api/auth";
 import MobileStoreButton from "react-mobile-store-button";
 import {Cookies} from 'react-cookie'
@@ -21,7 +20,6 @@ const schema = yup.object().shape({
 const VerifyLoginPage = (props) => {
   const history = useHistory();
   const auth = useAuth();
-  const classes = useStyles();
   const cookies = new Cookies();
 
   if (!props.location.state) {
@@ -43,7 +41,7 @@ const VerifyLoginPage = (props) => {
   };
   return (
     <Container component="main" maxWidth="xs" className="verify-container">
-      <div className={classes.paper}>
+      <div>
         {!verified && (
           <>
             <img src={qrSecret.qrUri} alt=""></img>
