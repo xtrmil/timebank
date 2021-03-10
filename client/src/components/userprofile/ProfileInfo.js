@@ -1,25 +1,52 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import ProfileForm from "./ProfileForm";
 import UpdatePasswordForm from "./UpdatePasswordForm";
 import { Button, Card, Col, Row } from "react-bootstrap";
 import { useAuth } from "../../context/Context";
-
+import {uploadImage,fetchImageByUser} from '../../api/user';
 const ProfileInfo = (props) => {
-  const { loggedInUser } = useAuth();
+  const { loggedInUser} = useAuth();
   const { editDisabled, setEditDisabled, updateProfileInfo } = props;
   const [showPasswordForm, setShowPasswordForm] = useState(false);
-  console.log(loggedInUser);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [image,setImage] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchImage =async()=>{
+      let response = await fetchImageByUser();
+      setImage(response.data.data)
+      setIsLoading(false);
+    };
+    fetchImage();
+  }, [])
+
+ const handleFileChange = (event)=>{
+  setSelectedFile(event.target.files[0]);
+ }
+
+ const OnClickUploadImage = async()=>{
+   if(selectedFile !==null){
+    let formData = new FormData();
+    formData.append('image', selectedFile);
+    let response  = await uploadImage(formData);
+    setImage(response.data.data)
+    
+   }
+ };
   return (
     <>
       <Row className="justify-content-center mb-3">
         <h5>My Profile</h5>
       </Row>
+      {!isLoading &&
       <Row>
-        <Col xs={6}>
+        <Col xs={4}>
           <Card>
-            <Card.Img variant="top" alt="someImg"></Card.Img>
+            <Card.Img variant="top" alt="someImg" src={image}></Card.Img>
             <Card.Body>
-              <Button>Change image</Button>
+              <input type="file" onChange={handleFileChange}/>
+              <Button onClick={OnClickUploadImage}>Change image</Button>
               <p>
                 <strong>Total Vacation Days:</strong> 25
               </p>
@@ -30,7 +57,7 @@ const ProfileInfo = (props) => {
             </Card.Body>
           </Card>
         </Col>
-        <Col xs={6}>
+        <Col xs={5}>
           {!showPasswordForm && (
             <ProfileForm
               setEditDisabled={setEditDisabled}
@@ -43,7 +70,7 @@ const ProfileInfo = (props) => {
             <UpdatePasswordForm setShowPasswordForm={setShowPasswordForm} />
           )}
         </Col>
-      </Row>
+      </Row>}
     </>
   );
 };

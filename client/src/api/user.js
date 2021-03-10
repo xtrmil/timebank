@@ -38,4 +38,25 @@ const updatePassword = (body)=>{
     });
 
 }
-export {addUser, updateUser, getUserById,updatePassword}
+
+const uploadImage = (formdata) =>{
+    return Api.post("/user/upload/image",
+    formdata, {
+        headers:{
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${cookies.get("session_token")} `
+        },
+    
+    });
+}
+
+const fetchImageByUser =() =>{
+    return Api.get("/user/get/image",
+    {
+        headers:{
+            Authorization: `Bearer ${cookies.get("session_token")} `
+        },
+    
+    });
+}
+export {addUser, updateUser, getUserById,updatePassword,uploadImage,fetchImageByUser}
