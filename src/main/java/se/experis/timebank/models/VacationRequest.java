@@ -1,8 +1,5 @@
 package se.experis.timebank.models;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 import javax.persistence.*;
@@ -31,6 +28,9 @@ public class VacationRequest {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private RequestStatus status = RequestStatus.PENDING;
+
+    @Column(nullable = false)
+    private String description = "";
 
     @ManyToOne
     @JoinColumn(name = "user_id")

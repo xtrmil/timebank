@@ -58,7 +58,6 @@ const useCreateAuthContext = () => {
 
 const isValidToken = (token) => {
   if (token.exp < Date.now() / 1000) {
-    console.log("expired token");
     return false;
   } else {
     return true;

@@ -8,20 +8,29 @@ const addVacationRequest = (body) => {
             headers: {
                 Authorization: `Bearer ${cookies.get("session_token")} `
             }
-        }
-        );
+        });
 }
+
 const getVacationRequestById = (id) => {
     return Api.get("/request");
 }
 
-const getAllVacationRequestsByUser = (id) => {
-    return Api.get(`/request/user/${id}`,
+const getAllVacationRequestsByToken = () => {
+    return Api.get(`/request/user`,
     {
         headers: {
             Authorization: `Bearer ${cookies.get("session_token")} `
         }
-    })
+    });
+}
+
+const getAllVacationRequestsByUserId = (id) => {
+    return Api.get(`/request/user/${id}`,
+        {
+            headers: {
+                Authorization: `Bearer ${cookies.get("session_token")} `
+            }
+        });
 }
 
 const updateVacationRequest = (id, body) => {
@@ -61,10 +70,11 @@ export {
     addVacationRequest,
     getVacationRequestById,
     getAllVacationRequests,
-    getAllVacationRequestsByUser,
+    getAllVacationRequestsByToken,
     updateVacationRequest,
     deleteVacationRequest,
-    getAllVacationRequestsByStatus
+    getAllVacationRequestsByStatus,
+    getAllVacationRequestsByUserId
 };
 
 

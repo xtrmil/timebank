@@ -32,12 +32,9 @@ const AddIneligiblePeriod = () => {
         const startDate = new Date (data.startDate);
         const endDate = new Date (data.endDate);
         if (startDate.getTime() < endDate.getTime()){
-            console.log("success");
-            console.log(data, "before api call");
             addIneligiblePeriod(data);
             onClickClose();
         }else { 
-            console.log("fail");
         }
     }
 
@@ -98,10 +95,10 @@ const AddIneligiblePeriod = () => {
 
 
                                 <div className="text-center mt-5">
-                                    <Button type="submit" variant="primary">Add</Button>
-                                    <Button className="ml-2" variant="secondary" onClick={onClickClose}>
+                                <Button className="mr-2" variant="secondary" onClick={onClickClose}>
                                         Cancel
                                     </Button>
+                                    <Button type="submit" variant="primary">Add</Button>
                                 </div>
                                 <pre> {JSON.stringify(values, null, 2)} </pre>
                             </Form>

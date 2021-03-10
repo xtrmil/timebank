@@ -4,10 +4,10 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./dashboard.scss";
-import CalendarNavigation from "../components/CalendarNavigation";
+import CalendarNavigation from "../components/calendar/CalendarNavigation";
 import { getAllVacationRequestsByStatus } from "../api/vacationRequest";
 import { getAllVacationRequests } from "../api/vacationRequest";
-import EditVacationRequestModal from "../components/vacationrequest/EditVacationRequestModal";
+import EditVacationRequestModal from "../components/calendar/calendarvacationrequest/EditVacationRequestModal";
 import { useAuth } from "../context/Context";
 import {getAllIneligiblePeriods} from "../api/ineligiblePeriod";
 const localizer = momentLocalizer(moment);
@@ -50,7 +50,7 @@ const Dashboard = () => {
                   null,
                   "[]"
               )
-          ) != undefined;
+          ) !== undefined;
 
      return React.cloneElement(Children.only(children), {
         style: {
@@ -70,9 +70,9 @@ const Dashboard = () => {
                    null,
                    "[]"
                )
-           ) != undefined;
+           ) !== undefined;
        return (
-        <a style={highlightDate ? {color: "#c8cedb"} : null}>{label}</a>
+        <span style={highlightDate ? {color: "#c8cedb"} : null}>{label}</span>
       );
 }}
 

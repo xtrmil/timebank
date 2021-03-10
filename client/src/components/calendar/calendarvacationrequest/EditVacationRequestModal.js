@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
-import { useAuth } from "../../context/Context";
+import { useAuth } from "../../../context/Context";
 import VacationRequestForm from "./VacationRequestForm";
-import { addVacationRequest, updateVacationRequest } from "../../api/vacationRequest";
-import { useHistory } from "react-router-dom";
+import { addVacationRequest, updateVacationRequest } from "../../../api/vacationRequest";
+import {Link, useHistory} from "react-router-dom";
 
 const EditVacationRequestModal = (props) => {
   const { showModal, setShowModal, request } = props;
@@ -16,7 +16,8 @@ const EditVacationRequestModal = (props) => {
   const initialValues = {
     title: request.title,
     startDate: request.startDate,
-    endDate: request.endDate
+    endDate: request.endDate,
+    description: request.description
   }
 
   const editVacationRequest = (data) => {
@@ -51,7 +52,11 @@ const EditVacationRequestModal = (props) => {
               initialValues={initialValues} />
             : <div>{request.user &&
               <>
-                <p><strong>Name: </strong>{request.user.firstName} {request.user.lastName}</p>
+                <p><strong>Name: </strong>
+                  <Link to={ {pathname:`/request/user/${request.user.id}`, state: {user: request.user}}}>
+                    {request.user.firstName} {request.user.lastName}
+                  </Link>
+                </p>
                 <p><strong>Dates: </strong>{request.startDate} - {request.endDate}</p>
                 <p><strong>Approved by: </strong>{request.admin.firstName} {request.admin.lastName}</p>
               </>

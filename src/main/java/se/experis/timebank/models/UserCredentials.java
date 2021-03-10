@@ -21,6 +21,7 @@ public class UserCredentials implements UserDetails {
     private String secret;
     private boolean isVerified;
     private boolean isAdmin;
+    private int currentVacationDays;
     private List<GrantedAuthority> authorities;
 
     public UserCredentials(User user){
@@ -32,6 +33,7 @@ public class UserCredentials implements UserDetails {
         this.secret = user.getSecret();
         this.isVerified = user.getIsVerified();
         this.isAdmin = user.getIsAdmin();
+        this.currentVacationDays = user.getCurrentVacationDays();
         if(user.getIsAdmin()){
             this.authorities = Collections.singletonList( new SimpleGrantedAuthority("ROLE_ADMIN"));
         }else{
@@ -80,6 +82,8 @@ public class UserCredentials implements UserDetails {
     }
 
     public Boolean isAdmin(){ return isAdmin; }
+
+    public Integer getCurrentVacationDays() { return currentVacationDays; }
 
     @Override
     @JsonIgnore

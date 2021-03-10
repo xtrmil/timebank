@@ -3,7 +3,7 @@ import { Cookies } from 'react-cookie'
 const cookies = new Cookies();
 
 const addComment = (requestId, body) => {
-    return Api.post(`/comment/${requestId}/comment`,
+    return Api.post(`/comment/${requestId}`,
         { ...body }, {
         headers: {
             Authorization: `Bearer ${cookies.get("session_token")} `

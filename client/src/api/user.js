@@ -29,4 +29,34 @@ const updateUser = (body) => {
         });
 }
 
-export {addUser, updateUser, getUserById}
+const updatePassword = (body)=>{
+    return Api.put("/user/password",
+    {...body}, {
+        headers:{
+            Authorization: `Bearer ${cookies.get("session_token")} `
+        }
+    });
+
+}
+
+const uploadImage = (formdata) =>{
+    return Api.post("/user/upload/image",
+    formdata, {
+        headers:{
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${cookies.get("session_token")} `
+        },
+    
+    });
+}
+
+const fetchImageByUser =() =>{
+    return Api.get("/user/get/image",
+    {
+        headers:{
+            Authorization: `Bearer ${cookies.get("session_token")} `
+        },
+    
+    });
+}
+export {addUser, updateUser, getUserById,updatePassword,uploadImage,fetchImageByUser}

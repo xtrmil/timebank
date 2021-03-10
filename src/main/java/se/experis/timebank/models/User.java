@@ -37,6 +37,9 @@ public class User {
     private String profileImg;
 
     @Column
+    private int currentVacationDays = 25;
+
+    @Column
     @JsonProperty(access = Access.WRITE_ONLY)
     String secret;
 

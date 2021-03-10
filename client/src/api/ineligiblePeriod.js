@@ -12,7 +12,6 @@ const getAllIneligiblePeriods = () => {
 }
 
 const addIneligiblePeriod = (body) => {
-    console.log(body);
     return Api.post("/ineligible",
         {...body},{
             headers:{

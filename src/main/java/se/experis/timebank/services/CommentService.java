@@ -57,7 +57,7 @@ public class CommentService {
                 commentRepository.save(newComment);
 
                 cr.data = newComment;
-                cr.msg = "New Comment added. ";
+                cr.msg = "New CommentCard added. ";
                 cr.status = HttpStatus.CREATED;
             } else {
                 cr.msg = "Unauthorized operation";
@@ -84,14 +84,14 @@ public class CommentService {
                     comment.setMessage(newComment.getMessage());
                 }
                 cr.data = commentRepository.save(comment);
-                cr.msg = "Comment with id " + commentId + " was updated";
+                cr.msg = "CommentCard with id " + commentId + " was updated";
                 cr.status = HttpStatus.OK;
             } else {
                 cr.msg = "Unauthorized operation";
                 cr.status = HttpStatus.UNAUTHORIZED;
             }
         } else {
-            cr.msg = "Comment  with id " + commentId + " not found";
+            cr.msg = "CommentCard  with id " + commentId + " not found";
             cr.status = HttpStatus.NOT_FOUND;
         }
         return new ResponseEntity<>(cr, cr.status);
@@ -106,13 +106,13 @@ public class CommentService {
             if (optionalComment.get().getUser().getId() == userCredentials.getId()) {
                 commentRepository.deleteById(id);
                 cr.status = HttpStatus.OK;
-                cr.msg = "Comment with id: " + id + " successfully deleted";
+                cr.msg = "CommentCard with id: " + id + " successfully deleted";
             } else {
                 cr.msg = "Unauthorized operation";
                 cr.status = HttpStatus.UNAUTHORIZED;
             }
         } else {
-            cr.msg = "Comment with id: " + id + " not found";
+            cr.msg = "CommentCard with id: " + id + " not found";
             cr.status = HttpStatus.NOT_FOUND;
         }
         return new ResponseEntity<>(cr, cr.status);
@@ -120,13 +120,13 @@ public class CommentService {
 
 //    public ResponseEntity<CommonResponse> getCommentById(Long id) {
 //        CommonResponse cr = new CommonResponse();
-//        Optional<Comment> commentOptional = commentRepository.findById(id);
+//        Optional<CommentCard> commentOptional = commentRepository.findById(id);
 //        if (commentOptional.isPresent()) {
 //            cr.data = commentOptional.get();
-//            cr.msg = "Comment found with id: " + id;
+//            cr.msg = "CommentCard found with id: " + id;
 //            cr.status = HttpStatus.OK;
 //        } else {
-//            cr.msg = "No Comment found with id: " + id;
+//            cr.msg = "No CommentCard found with id: " + id;
 //            cr.status = HttpStatus.NOT_FOUND;
 //        }
 //        return new ResponseEntity<>(cr, cr.status);

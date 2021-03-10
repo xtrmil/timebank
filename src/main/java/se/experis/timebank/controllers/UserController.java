@@ -5,10 +5,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import se.experis.timebank.models.User;
 import se.experis.timebank.models.UserCredentials;
 import se.experis.timebank.services.CommonResponse;
 import se.experis.timebank.services.UserService;
+import se.experis.timebank.utils.web.UpdatePasswordRequest;
 
 import java.io.IOException;
 
@@ -46,8 +48,19 @@ public class UserController {
 //        return userService.getUserById(userId);
 //    }
 
-//    @PutMapping("/{userId}")
-//    public ResponseEntity<CommonResponse> updatePasswordById(@RequestBody User user, @PathVariable Long userId){
-//        return null;
-//    }
+    @PutMapping("/password")
+    public ResponseEntity<CommonResponse> updatePasswordById(@AuthenticationPrincipal UserCredentials userCredentials, @RequestBody UpdatePasswordRequest updatePasswordRequest){
+
+        return userService.updatePassword(userCredentials,updatePasswordRequest);
+    }
+
+    @PostMapping(value = "/upload/image", consumes = "multipart/form-data")
+    public ResponseEntity<CommonResponse> uploadImage(@AuthenticationPrincipal UserCredentials userCredentials, @RequestParam("image") MultipartFile multipartFile){
+        return userService.uploadImage(userCredentials,multipartFile);
+    }
+    @GetMapping("/get/image")
+    public ResponseEntity<CommonResponse> getImageByToken(@AuthenticationPrincipal UserCredentials userCredentials){
+        return userService.getImageByToken(userCredentials);
+
+    }
 }

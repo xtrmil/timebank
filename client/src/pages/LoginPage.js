@@ -1,5 +1,5 @@
 import React from "react";
-import LoginForm from "../forms/LoginForm";
+import LoginForm from "../components/login/LoginForm";
 import {useAuth} from '../context/Context'
 import { Redirect } from "react-router-dom";
 

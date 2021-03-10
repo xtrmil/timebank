@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Formik} from "formik";
 import { Redirect } from 'react-router-dom';
 import * as yup from "yup";
-import { login } from "../api/auth";
+import { login } from "../../api/auth";
 
 const schema = yup.object().shape({
   email: yup.string().email().required("Email is required"),
