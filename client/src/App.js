@@ -9,7 +9,7 @@ import BootstrapNavbar from "./components/navbar/Navbar";
 import PrivateRoute from "./components/utils/PrivateRoute";
 import AdminPage from "./pages/AdminPage";
 import ProfilePage from "./pages/ProfilePage";
-import VacationRequestPage from "./pages/VacationRequestPage";
+import UserProfilePage from "./pages/UserProfilePage";
 
 function App() {
   return (
@@ -23,7 +23,7 @@ function App() {
                <PrivateRoute exact path="/home" component={Dashboard}/>
                <PrivateRoute exact path="/admin" component={AdminPage}/>
                <PrivateRoute exact path="/profile" component={ProfilePage}/>
-               <PrivateRoute exact path="/request/user/:id" component={VacationRequestPage}/>
+               <PrivateRoute exact path="/user/:id" component={UserProfilePage}/>
                <Route path="*" component={NotFoundPage}/>
            </Switch>
         </div>

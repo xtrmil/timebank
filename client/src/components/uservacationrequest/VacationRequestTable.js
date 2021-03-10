@@ -1,24 +1,17 @@
 import React, { useState } from "react";
-import {useHistory, useParams} from "react-router-dom";
 import { getAllCommentsByRequestId } from "../../api/comment";
 import VacationRequestDetails from "./VacationRequestDetails";
-import {useAuth} from "../../context/Context";
-import { Table, Row, Button, Card, Col } from "react-bootstrap";
+import { Table, Row, Button} from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 
-const VacationRequestTable = (props) => {
-  const { vacationRequests, showDetails, setShowDetails} = props;
+const VacationRequestTable = ({vacationRequests,isViewable,user}) => {
+  const [showDetails, setShowDetails] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState({});
   const [comments, setComments] = useState([]);
-  const {loggedInUser, isAdmin} = useAuth();
-  const history = useHistory();
-  const {user} = history.location.state;
-  const {id} = useParams();
 
   const onViewDetailsClick = async (request) => {
     let response = await getAllCommentsByRequestId(request.id);
-    console.log(response.data.data);
     setComments(response.data.data);
     setSelectedRequest(request);
     setShowDetails(true);
@@ -42,7 +35,7 @@ const VacationRequestTable = (props) => {
         <td>{request.endDate}</td>
         <td>{request.status}</td>
         <td>
-            {(isAdmin || loggedInUser.id == id)
+            {isViewable
                 ? <Button
                 className="btn-sm"
                 onClick={() => onViewDetailsClick(request)}
