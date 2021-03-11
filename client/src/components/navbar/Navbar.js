@@ -11,17 +11,7 @@ import "./navbar.scss";
 const Navbar = () => {
   const auth = useAuth();
   const history = useHistory();
-  const onAdminOverviewClicked = () => {
-    history.push("/admin");
-  };
 
-  const onProfileClicked = () => {
-    history.push("/profile");
-  };
-
-  const onCalendarClicked = () => {
-    history.push("/home");
-  };
 
   const handleLogout = () => {
     auth.logout();
@@ -40,25 +30,24 @@ const Navbar = () => {
         <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
         <BootstrapNavbar.Collapse id="basic-navbar-nav">
           {auth.isLoggedIn && (
-            <Nav className="mr-auto">
-              <Button onClick={onCalendarClicked} className="btn btn-sm m-2">Calendar</Button>
-              <Button onClick={onProfileClicked} className="btn btn-sm m-2">
-                Profile
-              </Button>
+            <Nav className="ml-auto">
+
+              <Nav.Link href="/home">
+                <div className="item">Calendar</div>
+              </Nav.Link>
+
+              <Nav.Link href="/profile">
+                <div className="item">Profile</div>
+              </Nav.Link >
+
               {auth.isAdmin && (
-                <Button
-                  onClick={onAdminOverviewClicked}
-                  className="btn btn-sm m-2"
-                >
-                  Admin Overview
-                </Button>
+                <Nav.Link href="/admin">
+                  <div className="item">Admin Overview</div>
+                </Nav.Link>
               )}
 
-              <Button
-                onClick={handleLogout}
-                className="logout btn btn-sm m-2 d-inline-block"
-              >
-                Logout
+              <Button className="btn-dark btn-sm" onClick={handleLogout}>
+                <div className="item">Logout</div>
               </Button>
             </Nav>
           )}

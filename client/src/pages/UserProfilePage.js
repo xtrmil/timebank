@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Col, Card, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../context/Context";
 import VacationRequestTable from "../components/uservacationrequest/VacationRequestTable";
@@ -19,13 +20,31 @@ const UserProfilePage = (props) => {
   }, [user]);
 
   return (
-    <div>
-      <VacationRequestTable
-        vacationRequests={vacationRequests}
-        isViewable={isViewable}
-        user={user}
-      />
-    </div>
+    <>
+    <Row className="mt-2">
+      <Col xs={4}>
+        <Card>
+          <Card.Img variant="top" alt="someImg" src={user.profileImg}></Card.Img>
+        </Card>
+        
+      </Col>
+      <Col>
+            <h2>
+              <strong>{user.firstName} {user.lastName}</strong>
+            </h2>
+            <p>
+            <strong>email: {user.email}</strong>
+            </p>
+      </Col>
+      </Row>
+      <div>
+        <VacationRequestTable
+          vacationRequests={vacationRequests}
+          isViewable={isViewable}
+          user={user}
+        />
+      </div>
+    </>
   );
 };
 

@@ -51,7 +51,7 @@ const VacationRequestTable = ({vacationRequests,isViewable,user}) => {
   return (
     <>
       <Row className="justify-content-center mb-3">
-        <h5>{user.firstName} {user.lastName}s Vacation Requests</h5>
+        <h5>Vacation Requests</h5>
       </Row>
       {!showDetails && (
         <Table responsive striped>
