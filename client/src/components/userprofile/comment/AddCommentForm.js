@@ -5,7 +5,7 @@ import * as yup from "yup";
 import {addComment} from "../../../api/comment";
 
 const AddCommentForm = (props) => {
-    const {comment, setShowForm, loadComments, requestId} = props;
+    const {comment, setShowCommentForm, loadComments, requestId} = props;
 
 
     const initialValues = {
@@ -20,7 +20,7 @@ const AddCommentForm = (props) => {
         console.log(data);
         try {
             await addComment(requestId, data);
-            setShowForm(false);
+            setShowCommentForm(false);
             loadComments(requestId);
         } catch (error) {
             console.log(error.response.data.msg);
@@ -28,7 +28,7 @@ const AddCommentForm = (props) => {
     }
 
     const onCancelClicked = () => {
-        setShowForm(false);
+        setShowCommentForm(false);
     }
 
     return(

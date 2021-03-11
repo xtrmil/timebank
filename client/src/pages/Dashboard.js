@@ -10,6 +10,7 @@ import { getAllVacationRequests } from "../api/vacationRequest";
 import EditVacationRequestModal from "../components/calendar/calendarvacationrequest/EditVacationRequestModal";
 import { useAuth } from "../context/Context";
 import {getAllIneligiblePeriods} from "../api/ineligiblePeriod";
+import {useHistory} from "react-router-dom";
 const localizer = momentLocalizer(moment);
 
 const Dashboard = () => {
@@ -18,7 +19,11 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedEvent, setSelectedEvent] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const history = useHistory();
 
+  const afterUpdate = () => {
+    history.go(0);
+  }
   const fetchVacationRequests = async () => {
     try {
       let result = await getAllVacationRequests();
@@ -124,6 +129,7 @@ const Dashboard = () => {
             onSelectEvent={(event) => handleSelectEvent(event)}
           />
           <EditVacationRequestModal
+            afterUpdate={afterUpdate}
             request={selectedEvent}
             showModal={showModal}
             setShowModal={setShowModal}

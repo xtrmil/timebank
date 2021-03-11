@@ -23,6 +23,14 @@ const getAllVacationRequestsByToken = () => {
         }
     });
 }
+const getAllVacationRequestAdminView = () => {
+    return Api.get("/request/all/admin",
+    {
+        headers: {
+            Authorization: `Bearer ${cookies.get("session_token")} `
+        }
+    });
+}
 
 const getAllVacationRequestsByUserId = (id) => {
     return Api.get(`/request/user/${id}`,
@@ -74,7 +82,8 @@ export {
     updateVacationRequest,
     deleteVacationRequest,
     getAllVacationRequestsByStatus,
-    getAllVacationRequestsByUserId
+    getAllVacationRequestsByUserId,
+    getAllVacationRequestAdminView
 };
 
 
