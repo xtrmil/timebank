@@ -34,7 +34,7 @@ const getAllVacationRequestsByUserId = (id) => {
 }
 
 const updateVacationRequest = (id, body) => {
-    return Api.put(`/request/${id}`,
+    return Api.put(`/request/update/${id}`,
         {...body},
         {
             headers: {

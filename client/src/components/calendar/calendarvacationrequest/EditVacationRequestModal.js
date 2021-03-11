@@ -53,7 +53,7 @@ const EditVacationRequestModal = (props) => {
             : <div>{request.user &&
               <>
                 <p><strong>Name: </strong>
-                  <Link to={ {pathname:`/request/user/${request.user.id}`, state: {user: request.user}}}>
+                  <Link to={ {pathname:`/user/${request.user.id}`, state: {user: request.user}}}>
                     {request.user.firstName} {request.user.lastName}
                   </Link>
                 </p>

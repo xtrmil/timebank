@@ -3,17 +3,14 @@ import {useHistory} from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faGlobeEurope } from "@fortawesome/free-solid-svg-icons";
-import {useAuth} from "../../context/Context";
 
-const ProfileNav = (props) => {
-    const {loggedInUser} = useAuth();
-    const history = useHistory();
+const ProfileNav = ({setView}) => {
 
   return (
     <div className="row justify-content-center">
       <Button
         className="btn-light btn-sm mr-2 mb-1"
-        onClick={() => history.push("/profile")}
+        onClick={() => setView(1)}
       >
         <FontAwesomeIcon
           className="mr-1"
@@ -24,7 +21,7 @@ const ProfileNav = (props) => {
       </Button>
       <Button
         className="btn-light btn-sm mb-1"
-        onClick={() => history.push({pathname: `/request/user/${loggedInUser.id}`, state: {user: loggedInUser}})}
+        onClick={() =>setView(2)}
       >
         <FontAwesomeIcon
           className="mr-1"

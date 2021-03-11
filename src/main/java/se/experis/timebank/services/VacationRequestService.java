@@ -149,10 +149,6 @@ public class VacationRequestService {
 
             if (userCredentials.isAdmin() || userCredentials.getId() == request.getUser().getId()) {
 
-                if (newVacationRequest.getStatus() != null) {
-                    request.setStatus(newVacationRequest.getStatus());
-                }
-
                 if (newVacationRequest.getStartDate() != null) {
                     request.setStartDate(newVacationRequest.getStartDate());
                 }
