@@ -132,8 +132,9 @@ public class VacationRequestService {
             requests = new HashSet<>(vacationRequestRepository.findAllByStatusNot(RequestStatus.DENIED));
         } else {
             requests = new HashSet<>(vacationRequestRepository.findAllByStatus(RequestStatus.APPROVED));
-            requests.addAll(new HashSet<>(vacationRequestRepository.findAllByUserId(userCredentials.getId())));
+
         }
+        requests.addAll(new HashSet<>(vacationRequestRepository.findAllByUserId(userCredentials.getId())));
         cr.data = requests;
         cr.status = HttpStatus.OK;
         return new ResponseEntity<>(cr, cr.status);

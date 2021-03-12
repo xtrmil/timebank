@@ -54,7 +54,7 @@ const VacationRequestDetails = (props) => {
                                     <p><strong>Start date: </strong>{selectedRequest.startDate}</p>
                                     <p><strong>End date: </strong>{selectedRequest.endDate}</p>
                                     <p><strong>Status: </strong>{selectedRequest.status}
-                                        {!isApproved && isAdmin && <Button className="ml-1" onClick={onEditStatusClicked}>Edit Status</Button>
+                                        {!isApproved && isAdmin && <Button className="ml-1 btn-sm" onClick={onEditStatusClicked}>Edit Status</Button>
                                         }</p>
 
                                     <p><strong>Description: </strong>{selectedRequest.description}</p>

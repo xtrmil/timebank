@@ -25,10 +25,11 @@ public class VacationRequestController {
         return vacationRequestService.createVacationRequest(userCredentials,vacationRequest);
     }
 
-    @GetMapping("/all/")
+    @GetMapping("/all")
     public ResponseEntity<CommonResponse> getAllVacationRequests(@AuthenticationPrincipal UserCredentials userCredentials){
         return vacationRequestService.getAllVacationRequests(userCredentials);
     }
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/all/admin")
     public ResponseEntity<CommonResponse> getAllVacationRequestsAdminview(){
