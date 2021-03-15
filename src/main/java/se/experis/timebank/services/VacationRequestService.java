@@ -129,13 +129,20 @@ public class VacationRequestService {
         Set<VacationRequest> requests;
 
         if (userCredentials.isAdmin()) {
-
             requests = new HashSet<>(vacationRequestRepository.findAllByStatusNot(RequestStatus.DENIED));
         } else {
             requests = new HashSet<>(vacationRequestRepository.findAllByStatus(RequestStatus.APPROVED));
-            requests.addAll(new HashSet<>(vacationRequestRepository.findAllByUserId(userCredentials.getId())));
+
         }
+        requests.addAll(new HashSet<>(vacationRequestRepository.findAllByUserId(userCredentials.getId())));
         cr.data = requests;
+        cr.status = HttpStatus.OK;
+        return new ResponseEntity<>(cr, cr.status);
+    }
+
+    public ResponseEntity<CommonResponse> getAllVacationRequestsAdminview() {
+        CommonResponse cr = new CommonResponse();
+        cr.data = vacationRequestRepository.findAll();
         cr.status = HttpStatus.OK;
         return new ResponseEntity<>(cr, cr.status);
     }
@@ -222,7 +229,8 @@ public class VacationRequestService {
         }
         return new ResponseEntity<>(cr, cr.status);
     }
-    private boolean overlapsIneligblePeriod(VacationRequest vacationRequest){
+
+    private boolean overlapsIneligblePeriod(VacationRequest vacationRequest) {
         List<IneligiblePeriod> ineligiblePeriods = ineligibleRepository.findAll();
         LocalDateRange requestPeriod = LocalDateRange.ofClosed(vacationRequest.getStartDate(), vacationRequest.getEndDate());
 

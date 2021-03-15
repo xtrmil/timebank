@@ -1,7 +1,7 @@
 import React from "react";
 import * as yup from "yup";
 import {Formik} from "formik";
-import {Button, Form, Modal} from "react-bootstrap";
+import {Button, Form} from "react-bootstrap";
 
 const VacationRequestForm = (props) => {
     const {setShowModal, initialValues, onSubmitClicked} = props;

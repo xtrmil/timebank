@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { getAllCommentsByRequestId } from "../../api/comment";
 import VacationRequestDetails from "./VacationRequestDetails";
-import { Table, Row, Button} from "react-bootstrap";
+import { Table, Row, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 
-const VacationRequestTable = ({vacationRequests,isViewable,user}) => {
+const VacationRequestTable = ({ vacationRequests, isViewable, updateVacationRequestList }) => {
   const [showDetails, setShowDetails] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState({});
   const [comments, setComments] = useState([]);
@@ -18,13 +18,13 @@ const VacationRequestTable = ({vacationRequests,isViewable,user}) => {
   };
 
   const loadComments = async (requestId) => {
-      try{
-          let response = await getAllCommentsByRequestId(requestId);
-          console.log(response.data.data);
-          setComments(response.data.data);
-      }catch (error) {
-          console.log(error.response.data.msg);
-      }
+    try {
+      let response = await getAllCommentsByRequestId(requestId);
+      console.log(response.data.data);
+      setComments(response.data.data);
+    } catch (error) {
+      console.log(error.response.data.msg);
+    }
   }
 
   const table = vacationRequests.map((request, index) => {
@@ -35,15 +35,15 @@ const VacationRequestTable = ({vacationRequests,isViewable,user}) => {
         <td>{request.endDate}</td>
         <td>{request.status}</td>
         <td>
-            {isViewable
-                ? <Button
-                className="btn-sm"
-                onClick={() => onViewDetailsClick(request)}
-                >
-                <FontAwesomeIcon icon={faEye} /> View
+          {isViewable
+            ? <Button
+              className="btn-sm"
+              onClick={() => onViewDetailsClick(request)}
+            >
+              <FontAwesomeIcon icon={faEye} /> View
                 </Button>
-                : "-"
-            }
+            : "-"
+          }
         </td>
       </tr>
     );
@@ -68,11 +68,13 @@ const VacationRequestTable = ({vacationRequests,isViewable,user}) => {
         </Table>
       )}
       <VacationRequestDetails
-          selectedRequest={selectedRequest}
-          showDetails={showDetails}
-          setShowDetails={setShowDetails}
-          comments={comments}
-          loadComments={loadComments}/>
+        setSelectedRequest={setSelectedRequest}
+        updateVacationRequestList={updateVacationRequestList}
+        selectedRequest={selectedRequest}
+        showDetails={showDetails}
+        setShowDetails={setShowDetails}
+        comments={comments}
+        loadComments={loadComments} />
     </>
   );
 };

@@ -11,12 +11,18 @@ const UserProfilePage = (props) => {
   const isViewable = isAdmin || loggedInUser.id === user.id;
   const [vacationRequests, setVacationRequests] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
+  const updateVacationRequestList = async () => {
+    try {
       let response = await getAllVacationRequestsByUserId(user.id);
       setVacationRequests(response.data.data);
-    };
-    fetchData();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    updateVacationRequestList();
+
   }, [user]);
 
   return (
@@ -39,6 +45,7 @@ const UserProfilePage = (props) => {
       </Row>
       <div>
         <VacationRequestTable
+          updateVacationRequestList={updateVacationRequestList}
           vacationRequests={vacationRequests}
           isViewable={isViewable}
           user={user}

@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { Modal, Button } from "react-bootstrap";
+import React from "react";
+import { Modal} from "react-bootstrap";
 import { useAuth } from "../../../context/Context";
 import VacationRequestForm from "./VacationRequestForm";
-import { addVacationRequest, updateVacationRequest } from "../../../api/vacationRequest";
-import {Link, useHistory} from "react-router-dom";
+import {updateVacationRequest } from "../../../api/vacationRequest";
+import {Link} from "react-router-dom";
 
 const EditVacationRequestModal = (props) => {
-  const { showModal, setShowModal, request } = props;
+  const { showModal, setShowModal, request, afterUpdate } = props;
   const { loggedInUser, isAdmin } = useAuth();
-  const history = useHistory();
+
 
   //Kolla om loggedInUser är admin eller ägaren till request
   //Visa då upp edit fälten.
@@ -20,13 +20,15 @@ const EditVacationRequestModal = (props) => {
     description: request.description
   }
 
-  const editVacationRequest = (data) => {
+  const editVacationRequest = async (data) => {
     try {
       const startDate = new Date(data.startDate);
       const endDate = new Date(data.endDate);
       if (startDate.getTime() < endDate.getTime()) {
-        updateVacationRequest(request.id, data);
-        history.go(0);
+
+        let response = await updateVacationRequest(request.id, data);
+        afterUpdate(response.data.data);
+
       }
     } catch (error) {
     }

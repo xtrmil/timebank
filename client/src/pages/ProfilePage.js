@@ -24,17 +24,16 @@ const ProfilePage = (props) => {
       setEditDisabled(true);
     }
   };
-
+  const updateVacationRequestList = async () => {
+    try {
+      let response = await getAllVacationRequestsByToken();
+      setVacationRequests(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let response = await getAllVacationRequestsByToken();
-        setVacationRequests(response.data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
+    updateVacationRequestList();
   }, []);
 
   return (
@@ -55,9 +54,9 @@ const ProfilePage = (props) => {
 
         {view === 2 && (
           <VacationRequestTable
+          updateVacationRequestList={updateVacationRequestList}
             vacationRequests={vacationRequests}
             isViewable={true}
-            user={loggedInUser}
           />
         )}
       </Container>

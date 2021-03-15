@@ -23,6 +23,14 @@ const getAllVacationRequestsByToken = () => {
         }
     });
 }
+const getAllVacationRequestAdminView = () => {
+    return Api.get("/request/all/admin",
+    {
+        headers: {
+            Authorization: `Bearer ${cookies.get("session_token")} `
+        }
+    });
+}
 
 const getAllVacationRequestsByUserId = (id) => {
     return Api.get(`/request/user/${id}`,
@@ -31,21 +39,6 @@ const getAllVacationRequestsByUserId = (id) => {
                 Authorization: `Bearer ${cookies.get("session_token")} `
             }
         });
-}
-
-const updateVacationRequest = (id, body) => {
-    return Api.put(`/request/update/${id}`,
-        {...body},
-        {
-            headers: {
-                Authorization: `Bearer ${cookies.get("session_token")} `
-            }
-        });
-}
-
-const deleteVacationRequest = (id) => {
-    return Api.delete(`/request/${id}`,
-        );
 }
 
 const getAllVacationRequestsByStatus = (status) => {
@@ -66,6 +59,33 @@ const getAllVacationRequests = () => {
         })
 }
 
+const updateVacationRequest = (id, body) => {
+    return Api.put(`/request/update/${id}`,
+        {...body},
+        {
+            headers: {
+                Authorization: `Bearer ${cookies.get("session_token")} `
+            }
+        });
+}
+
+const updateVacationRequestStatus = (id, status) => {
+    return Api.put(`/request/update/status/${id}`,
+        {status},
+        {
+            headers: {
+                Authorization: `Bearer ${cookies.get("session_token")} `
+            }
+        });
+}
+
+const deleteVacationRequest = (id) => {
+    return Api.delete(`/request/${id}`,
+        );
+}
+
+
+
 export {
     addVacationRequest,
     getVacationRequestById,
@@ -74,7 +94,9 @@ export {
     updateVacationRequest,
     deleteVacationRequest,
     getAllVacationRequestsByStatus,
-    getAllVacationRequestsByUserId
+    getAllVacationRequestsByUserId,
+    getAllVacationRequestAdminView,
+    updateVacationRequestStatus
 };
 
 

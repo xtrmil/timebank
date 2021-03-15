@@ -30,6 +30,13 @@ public class VacationRequestController {
         return vacationRequestService.getAllVacationRequests(userCredentials);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/all/admin")
+    public ResponseEntity<CommonResponse> getAllVacationRequestsAdminview(){
+        return vacationRequestService.getAllVacationRequestsAdminview();
+    }
+
+
     @GetMapping("/user")
     public ResponseEntity<CommonResponse> getAllVacationRequestByUserToken(@AuthenticationPrincipal UserCredentials userCredentials)
     {
