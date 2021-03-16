@@ -12,7 +12,11 @@ const addVacationRequest = (body) => {
 }
 
 const getVacationRequestById = (id) => {
-    return Api.get("/request");
+    return Api.get(`/request/${id}`, {
+        headers: {
+            Authorization: `Bearer ${cookies.get("session_token")} `
+        }
+    });
 }
 
 const getAllVacationRequestsByToken = () => {

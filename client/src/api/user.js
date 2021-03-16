@@ -11,8 +11,8 @@ const addUser = (body) => {
         });
 }
 
-const getUserById = () => {
-    return Api.get("/user",
+const getUserById = (id) => {
+    return Api.get(`/user/${id}`,
     {
         headers:{
             Authorization: `Bearer ${cookies.get("session_token")} `

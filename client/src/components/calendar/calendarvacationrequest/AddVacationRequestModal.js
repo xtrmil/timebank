@@ -3,9 +3,11 @@ import {Button, Form, Modal} from "react-bootstrap";
 import {addVacationRequest} from "../../../api/vacationRequest";
 import VacationRequestForm from "./VacationRequestForm";
 import {useAuth} from "../../../context/Context"
+import { useHistory } from "react-router";
 const AddVacationRequestModal = () => {
 
     const auth = useAuth();
+    const history = useHistory();
     const [showModal, setShowModal] = useState(false);
 
     const onClickAddVacationRequest = () =>{
@@ -19,13 +21,14 @@ const AddVacationRequestModal = () => {
         description:""
     }
 
-    const onFormSubmit = (data) => {
+    const onFormSubmit = async(data) => {
         const startDate = new Date (data.startDate);
         const endDate = new Date (data.endDate);
         try {
             if(startDate.getTime() < endDate.getTime()){
-                addVacationRequest(data);
-                setShowModal(false);
+               const response =  await addVacationRequest(data);
+                const request = response.data.data;
+                history.push({pathname:`/request/${request.id}`,state:{request,from:history.location}})
                 }
             }catch(error) {
             console.log("fail", error);

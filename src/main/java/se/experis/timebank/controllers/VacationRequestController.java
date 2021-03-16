@@ -84,8 +84,8 @@ public class VacationRequestController {
 //        return null;
 //    }
 
-//    @GetMapping("/{requestId}")
-//    public ResponseEntity<CommonResponse> getVacationRequestById(@PathVariable Long requestId) {    // behövs?
-//        return vacationRequestService.getVacationRequestById(requestId);
-//    }
+    @GetMapping("/{requestId}")
+   public ResponseEntity<CommonResponse> getVacationRequestById(@PathVariable Long requestId) {    // behövs?
+       return vacationRequestService.getVacationRequestById(requestId);
+   }
 }

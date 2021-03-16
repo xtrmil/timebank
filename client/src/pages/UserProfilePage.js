@@ -1,31 +1,42 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useCallback} from "react";
 import { Col, Card, Row } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useAuth } from "../context/Context";
 import VacationRequestTable from "../components/uservacationrequest/VacationRequestTable";
 import { getAllVacationRequestsByUserId } from "../api/vacationRequest";
+import{ getUserById } from '../api/user';
 const UserProfilePage = (props) => {
   const history = useHistory();
   const { loggedInUser, isAdmin } = useAuth();
-  const { user } = history.location.state;
+  const  [user, setUser] =useState( history?.location?.state?.user);
   const isViewable = isAdmin || loggedInUser.id === user.id;
   const [vacationRequests, setVacationRequests] = useState([]);
-
-  const updateVacationRequestList = async () => {
+  const {id} = useParams();
+  const updateVacationRequestList = useCallback(async () => {
     try {
-      let response = await getAllVacationRequestsByUserId(user.id);
+      let response = await getAllVacationRequestsByUserId(id);
       setVacationRequests(response.data.data);
     } catch (error) {
       console.log(error);
     }
-  };
+  },[id]);
 
   useEffect(() => {
+    const fetchUser = async()=>{
+    let response = await getUserById(id);
+     setUser(response.data.data);
+
+    }
+    if(!user){
+      fetchUser();
+    }
     updateVacationRequestList();
 
-  }, [user]);
+  }, [user,updateVacationRequestList,id]);
 
   return (
+    <>
+    {user &&
     <>
     <Row className="mt-2">
       <Col xs={4}>
@@ -51,6 +62,8 @@ const UserProfilePage = (props) => {
           user={user}
         />
       </div>
+      
+    </>}
     </>
   );
 };
