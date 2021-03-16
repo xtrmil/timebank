@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getAllVacationRequestAdminView } from "../api/vacationRequest";
 import VacationRequestTable from "../components/uservacationrequest/VacationRequestTable";
+import IneligiblePeriodTable from "../components/ineligibleperiod/IneligiblePeriodTable";
 
 const AdminPage = () => {
     const [vacationRequests, setVacationRequests] = useState([]);
