@@ -1,32 +1,11 @@
-import React, { useState } from "react";
-import { getAllCommentsByRequestId } from "../../api/comment";
-import VacationRequestDetails from "./VacationRequestDetails";
+import React from "react";
 import { Table, Row, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { useHistory } from "react-router";
 
-const VacationRequestTable = ({ vacationRequests, isViewable, updateVacationRequestList }) => {
-  const [showDetails, setShowDetails] = useState(false);
-  const [selectedRequest, setSelectedRequest] = useState({});
-  const [comments, setComments] = useState([]);
-
-  const onViewDetailsClick = async (request) => {
-    let response = await getAllCommentsByRequestId(request.id);
-    setComments(response.data.data);
-    setSelectedRequest(request);
-    setShowDetails(true);
-  };
-
-  const loadComments = async (requestId) => {
-    try {
-      let response = await getAllCommentsByRequestId(requestId);
-      console.log(response.data.data);
-      setComments(response.data.data);
-    } catch (error) {
-      console.log(error.response.data.msg);
-    }
-  }
-
+const VacationRequestTable = ({ vacationRequests, isViewable }) => {
+  const history = useHistory();
   const table = vacationRequests.map((request, index) => {
     return (
       <tr className="text-center" key={index}>
@@ -35,15 +14,21 @@ const VacationRequestTable = ({ vacationRequests, isViewable, updateVacationRequ
         <td>{request.endDate}</td>
         <td>{request.status}</td>
         <td>
-          {isViewable
-            ? <Button
+          {isViewable ? (
+            <Button
               className="btn-sm"
-              onClick={() => onViewDetailsClick(request)}
+              onClick={() =>
+                history.push({
+                  pathname: `/request/${request.id}`,
+                  state: { request, from: history.location },
+                })
+              }
             >
               <FontAwesomeIcon icon={faEye} /> View
-                </Button>
-            : "-"
-          }
+            </Button>
+          ) : (
+            "-"
+          )}
         </td>
       </tr>
     );
@@ -53,28 +38,19 @@ const VacationRequestTable = ({ vacationRequests, isViewable, updateVacationRequ
       <Row className="justify-content-center mb-3">
         <h5>Vacation Requests</h5>
       </Row>
-      {!showDetails && (
-        <Table responsive striped>
-          <thead>
-            <tr className="text-center">
-              <th>Title</th>
-              <th>Start date</th>
-              <th>End Date</th>
-              <th>Status</th>
-              <th>Details</th>
-            </tr>
-          </thead>
-          <tbody>{table}</tbody>
-        </Table>
-      )}
-      <VacationRequestDetails
-        setSelectedRequest={setSelectedRequest}
-        updateVacationRequestList={updateVacationRequestList}
-        selectedRequest={selectedRequest}
-        showDetails={showDetails}
-        setShowDetails={setShowDetails}
-        comments={comments}
-        loadComments={loadComments} />
+
+      <Table responsive striped>
+        <thead>
+          <tr className="text-center">
+            <th>Title</th>
+            <th>Start date</th>
+            <th>End Date</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>{table}</tbody>
+      </Table>
     </>
   );
 };

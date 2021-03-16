@@ -167,6 +167,9 @@ public class VacationRequestService {
                 if (newVacationRequest.getTitle() != null) {
                     request.setTitle(newVacationRequest.getTitle());
                 }
+                if(newVacationRequest.getDescription().length() > 0){
+                    request.setDescription(newVacationRequest.getDescription());
+                }
                 Optional<User> admin = userRepository.findById(userCredentials.getId());
                 request.setAdmin(admin.get());
                 cr.data = vacationRequestRepository.save(request);

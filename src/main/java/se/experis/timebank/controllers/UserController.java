@@ -43,10 +43,10 @@ public class UserController {
         return userService.deleteUserById(userId);
     }
 
-//    @GetMapping("/{userId}")
-//    public ResponseEntity<CommonResponse> getUserById(@PathVariable Long userId) {
-//        return userService.getUserById(userId);
-//    }
+   @GetMapping("/{userId}")
+    public ResponseEntity<CommonResponse> getUserById(@PathVariable Long userId) {
+        return userService.getUserById(userId);
+    }
 
     @PutMapping("/password")
     public ResponseEntity<CommonResponse> updatePasswordById(@AuthenticationPrincipal UserCredentials userCredentials, @RequestBody UpdatePasswordRequest updatePasswordRequest){

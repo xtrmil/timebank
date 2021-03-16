@@ -10,6 +10,7 @@ import PrivateRoute from "./components/utils/PrivateRoute";
 import AdminPage from "./pages/AdminPage";
 import ProfilePage from "./pages/ProfilePage";
 import UserProfilePage from "./pages/UserProfilePage";
+import VacationRequestDetailsPage from './pages/VacationRequestDetailsPage'
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
                <PrivateRoute exact path="/admin" component={AdminPage}/>
                <PrivateRoute exact path="/profile" component={ProfilePage}/>
                <PrivateRoute exact path="/user/:id" component={UserProfilePage}/>
+               <PrivateRoute exact path="/request/:id" component={VacationRequestDetailsPage}/>
                <Route path="*" component={NotFoundPage}/>
            </Switch>
         </div>
