@@ -34,6 +34,7 @@ public class User {
     private Boolean isAdmin;
 
     @Column
+    @JsonProperty(access = Access.WRITE_ONLY)
     private String profileImg;
 
     @Column

@@ -163,7 +163,7 @@ public class VacationRequestService {
 
         return ResponseEntity
                 .ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=requests.json")
+                .header(HttpHeaders.CONTENT_DISPOSITION)
                 .contentType(MediaType.APPLICATION_JSON)
                 .contentLength(customerJsonBytes.length)
                 .body(customerJsonBytes);

@@ -19,10 +19,11 @@ const AdminPage = () => {
         const url = window.URL.createObjectURL(new Blob([JSON.stringify(response.data)]));
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', 'file.json');
+        const today = new Date();
+        const fileName = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate()+"-vacationrequests.json";
+        link.setAttribute('download', fileName);
         document.body.appendChild(link);
         link.click();
-        console.log(JSON.stringify(response.data));
     }
 
     useEffect(() => {
