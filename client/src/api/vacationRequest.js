@@ -4,11 +4,11 @@ const cookies = new Cookies();
 
 const addVacationRequest = (body) => {
     return Api.post("/request",
-        {...body}, {
-            headers: {
-                Authorization: `Bearer ${cookies.get("session_token")} `
-            }
-        });
+        { ...body }, {
+        headers: {
+            Authorization: `Bearer ${cookies.get("session_token")} `
+        }
+    });
 }
 
 const getVacationRequestById = (id) => {
@@ -17,19 +17,20 @@ const getVacationRequestById = (id) => {
 
 const getAllVacationRequestsByToken = () => {
     return Api.get(`/request/user`,
-    {
-        headers: {
-            Authorization: `Bearer ${cookies.get("session_token")} `
-        }
-    });
+        {
+            headers: {
+                Authorization: `Bearer ${cookies.get("session_token")} `
+            }
+            
+        });
 }
 const getAllVacationRequestAdminView = () => {
     return Api.get("/request/all/admin",
-    {
-        headers: {
-            Authorization: `Bearer ${cookies.get("session_token")} `
-        }
-    });
+        {
+            headers: {
+                Authorization: `Bearer ${cookies.get("session_token")} `
+            }
+        });
 }
 
 const getAllVacationRequestsByUserId = (id) => {
@@ -59,9 +60,18 @@ const getAllVacationRequests = () => {
         })
 }
 
+const exportAllVacationRequests = () => {
+    return Api.get(`/request/all/export`,
+        {
+            headers: {
+                Authorization: `Bearer ${cookies.get("session_token")} `
+            }
+        })
+}
+
 const updateVacationRequest = (id, body) => {
     return Api.put(`/request/update/${id}`,
-        {...body},
+        { ...body },
         {
             headers: {
                 Authorization: `Bearer ${cookies.get("session_token")} `
@@ -71,7 +81,7 @@ const updateVacationRequest = (id, body) => {
 
 const updateVacationRequestStatus = (id, status) => {
     return Api.put(`/request/update/status/${id}`,
-        {status},
+        { status },
         {
             headers: {
                 Authorization: `Bearer ${cookies.get("session_token")} `
@@ -81,7 +91,7 @@ const updateVacationRequestStatus = (id, status) => {
 
 const deleteVacationRequest = (id) => {
     return Api.delete(`/request/${id}`,
-        );
+    );
 }
 
 
@@ -96,7 +106,8 @@ export {
     getAllVacationRequestsByStatus,
     getAllVacationRequestsByUserId,
     getAllVacationRequestAdminView,
-    updateVacationRequestStatus
+    updateVacationRequestStatus,
+    exportAllVacationRequests
 };
 
 

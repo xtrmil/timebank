@@ -36,6 +36,17 @@ public class VacationRequestController {
         return vacationRequestService.getAllVacationRequestsAdminview();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/all/export")
+    public ResponseEntity<byte[]> exportAllVacationRequestsToJSON(){
+        return vacationRequestService.exportAllVacationRequestsToJSON();
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/import")
+    public ResponseEntity<CommonResponse> importVacationRequestsFromJSON(){
+        return vacationRequestService.importVacationRequestsFromJSON();
+    }
 
     @GetMapping("/user")
     public ResponseEntity<CommonResponse> getAllVacationRequestByUserToken(@AuthenticationPrincipal UserCredentials userCredentials)

@@ -1,7 +1,11 @@
 package se.experis.timebank.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.threeten.extra.LocalDateRange;
@@ -9,6 +13,7 @@ import se.experis.timebank.models.*;
 import se.experis.timebank.repositories.IneligibleRepository;
 import se.experis.timebank.repositories.UserRepository;
 import se.experis.timebank.repositories.VacationRequestRepository;
+import se.experis.timebank.utils.JsonExporter;
 import se.experis.timebank.utils.Validations;
 
 import java.util.HashSet;
@@ -30,6 +35,9 @@ public class VacationRequestService {
 
     @Autowired
     private IneligibleRepository ineligibleRepository;
+
+    @Autowired
+    JsonExporter jsonExporter;
 
     /**
      * Se över variabelnamn
@@ -144,7 +152,27 @@ public class VacationRequestService {
         CommonResponse cr = new CommonResponse();
         cr.data = vacationRequestRepository.findAll();
         cr.status = HttpStatus.OK;
+
+
+
         return new ResponseEntity<>(cr, cr.status);
+    }
+
+    public ResponseEntity<byte[]> exportAllVacationRequestsToJSON(){
+        byte[] customerJsonBytes = jsonExporter.export(vacationRequestRepository.findAll()).getBytes();
+
+        return ResponseEntity
+                .ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=requests.json")
+                .contentType(MediaType.APPLICATION_JSON)
+                .contentLength(customerJsonBytes.length)
+                .body(customerJsonBytes);
+    }
+
+    public ResponseEntity<CommonResponse> importVacationRequestsFromJSON(){
+        CommonResponse cr = new CommonResponse();
+        cr.status = HttpStatus.OK;
+        return new ResponseEntity<>(cr,cr.status);
     }
 
     public ResponseEntity<CommonResponse> updateVacationRequest(UserCredentials userCredentials, Long requestId, VacationRequest newVacationRequest) {
