@@ -7,8 +7,7 @@ import UpdateIneligiblePeriodModal from "./UpdateIneligiblePeriodModal";
 import DeleteIneligiblePeriodModal from "./DeleteIneligiblePeriodModal";
 
 
-const IneligiblePeriodTable = () => {
-
+const IneligiblePeriodTable = (props) => {
     const [ineligiblePeriods, setIneligiblePeriods] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
