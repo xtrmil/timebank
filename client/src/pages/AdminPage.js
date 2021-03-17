@@ -5,6 +5,7 @@ import AdminNav from "../components/adminprofile/AdminNav";
 import {useAuth} from "../context/Context";
 import {Container} from "react-bootstrap";
 import IneligiblePeriodPage from "./IneligiblePeriodPage";
+import EmployeePage from "./EmployeePage";
 
 const AdminPage = () => {
     const {loggedInUser} = useAuth();
@@ -31,7 +32,7 @@ const AdminPage = () => {
                 <AdminNav setView={setView} />
             </div>
             <Container>
-                {view === 1 && (<div>Manage user page</div>)}
+                {view === 1 && (<EmployeePage/>)}
 
                 {view === 2 && (
                     <VacationRequestTable
@@ -40,9 +41,7 @@ const AdminPage = () => {
                         isViewable={true}/>
                     )}
 
-                {view === 3 && (
-                    <IneligiblePeriodPage/>
-                    )}
+                {view === 3 && (<IneligiblePeriodPage/>)}
             </Container>
         </>
     );

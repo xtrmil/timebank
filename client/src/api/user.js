@@ -11,6 +11,14 @@ const addUser = (body) => {
         });
 }
 
+const getAllUsers = () => {
+    return Api.get("/user", {
+        headers: {
+            Authorization: `Bearer ${cookies.get("session_token")} `
+        }
+    })
+}
+
 const getUserById = (id) => {
     return Api.get(`/user/${id}`,
     {

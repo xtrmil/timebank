@@ -16,7 +16,8 @@ const ProfileNav = ({setView}) => {
           className="mr-1"
           icon={faUser}
           color="black"
-        ></FontAwesomeIcon>
+          size="lg"
+        />
         My Profile
       </Button>
       <Button
@@ -27,7 +28,8 @@ const ProfileNav = ({setView}) => {
           className="mr-1"
           icon={faGlobeEurope}
           color="black"
-        ></FontAwesomeIcon>
+          size="lg"
+        />
         My Vacation Requests
       </Button>
     </div>
