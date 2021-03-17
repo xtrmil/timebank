@@ -24,7 +24,7 @@ const VacationRequestTable = ({ vacationRequests, isViewable }) => {
                 })
               }
             >
-              <FontAwesomeIcon icon={faEye} /> View
+              <FontAwesomeIcon icon={faEye} />
             </Button>
           ) : (
             "-"
