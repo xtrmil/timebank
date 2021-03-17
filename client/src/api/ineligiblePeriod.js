@@ -30,9 +30,9 @@ const getIneligiblePeriodById = (id) => {
         });
 }
 
-const updateIneligbilePeriod = (id, body) => {
+const updateIneligiblePeriod = (id, body) => {
     return Api.put(`/ineligible/${id}`,
-        {body}, {
+        {...body}, {
             headers:{
                 Authorization: `Bearer ${cookies.get("session_token")} `
             }
@@ -41,7 +41,7 @@ const updateIneligbilePeriod = (id, body) => {
 }
 
 const deleteIneligiblePeriodById = (id) => {
-    return Api.get(`/ineligible/${id}`,
+    return Api.delete(`/ineligible/${id}`,
         {
             headers:{
                 Authorization: `Bearer ${cookies.get("session_token")} `
@@ -53,5 +53,5 @@ export {
     getAllIneligiblePeriods,
     addIneligiblePeriod,
     getIneligiblePeriodById,
-    updateIneligbilePeriod,
+    updateIneligiblePeriod,
     deleteIneligiblePeriodById};

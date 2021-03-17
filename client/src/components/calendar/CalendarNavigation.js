@@ -2,7 +2,7 @@ import React from "react";
 import AddVacationRequestModal from "./calendarvacationrequest/AddVacationRequestModal";
 import {useAuth} from '../../context/Context'
 import {Button} from 'react-bootstrap'
-import AddIneligiblePeriod from '../ineligibleperiod/AddIneligiblePeriod';
+import AddIneligiblePeriodModal from '../ineligibleperiod/AddIneligiblePeriodModal';
 
 function CalendarNavigation(props) {
   const {isAdmin} = useAuth();
@@ -20,7 +20,7 @@ function CalendarNavigation(props) {
             <button type="button" onClick={() => navigate('NEXT')}>Next</button>
           </span>
            { <AddVacationRequestModal/>}
-           {isAdmin && <AddIneligiblePeriod/>}
+           {isAdmin && <AddIneligiblePeriodModal/>}
         </div>
     );
 }
