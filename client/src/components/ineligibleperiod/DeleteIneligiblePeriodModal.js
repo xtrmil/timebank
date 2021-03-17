@@ -1,36 +1,22 @@
-import React, {useState} from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTrashAlt} from "@fortawesome/free-solid-svg-icons";
-import {Modal, Button, Form} from "react-bootstrap";
-import {deleteIneligiblePeriodById} from "../../api/ineligiblePeriod";
+import React from "react";
+import {Modal, Button} from "react-bootstrap";
 
-const DeleteIneligiblePeriodModal = ({period}) => {
-    const [showModal, setShowModal] = useState(false);
 
-    const onDeletePeriodClicked = () => {
-        try{
-            deleteIneligiblePeriodById(period.id);
-            setShowModal(false);
+const DeleteIneligiblePeriodModal = (props) => {
+    const {period, onDeletePeriodClicked, showDeleteModal, setShowDeleteModal} = props;
 
-        }catch (error) {
-            console.log(error.response.data.msg);
-        }
-    }
-    const onDeleteModalClicked = () => {
-        setShowModal(true)
+    const onDeleteClicked = () => {
+        onDeletePeriodClicked(period.id);
+        setShowDeleteModal(false);
     }
 
     const onCloseClicked = () => {
-        setShowModal(false);
+        setShowDeleteModal(false);
     }
 
     return(
         <>
-            <Button onClick={onDeleteModalClicked}
-                    className="btn btn-danger btn-sm">
-                <FontAwesomeIcon icon={faTrashAlt}/>
-            </Button>
-            <Modal show={showModal}>
+            <Modal show={showDeleteModal}>
                 <Modal.Body className="text-center">
                     <h4>Delete Ineligible Period</h4>
                     <div className="m-4">
@@ -47,7 +33,7 @@ const DeleteIneligiblePeriodModal = ({period}) => {
                             Cancel
                         </Button>
                         <Button
-                            onClick={onDeletePeriodClicked}
+                            onClick={onDeleteClicked}
                             className="btn btn-danger">
                             Delete
                         </Button>

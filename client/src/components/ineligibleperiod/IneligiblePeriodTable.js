@@ -1,58 +1,50 @@
-import React, {useState, useEffect} from "react";
-import {getAllIneligiblePeriods} from "../../api/ineligiblePeriod";
-import {Row, Table, Button } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faPencilAlt, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
+import React, {useState} from "react";
+import {Button, Table} from "react-bootstrap";
 import UpdateIneligiblePeriodModal from "./UpdateIneligiblePeriodModal";
 import DeleteIneligiblePeriodModal from "./DeleteIneligiblePeriodModal";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPencilAlt, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
 
 
 const IneligiblePeriodTable = (props) => {
-    const [ineligiblePeriods, setIneligiblePeriods] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
 
-    const fetchIneligiblePeriods = async () => {
-        try{
-            let response = await getAllIneligiblePeriods();
-            console.log(response);
-            setIneligiblePeriods(response.data.data);
-        }catch(error) {
-            console.log(error);
-        } finally{
-            setIsLoading(false);
-        }
+    const {isLoading, ineligiblePeriods, onDeletePeriodClicked, onUpdateIneligiblePeriodClicked} = props;
+    const [period, setPeriod] = useState({});
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showUpdateModal, setShowUpdateModal] = useState(false);
+
+    const onShowUpdateModalClicked = (period) => {
+        setPeriod(period);
+        setShowUpdateModal(true);
     }
 
-    useEffect( () => {
-        fetchIneligiblePeriods();
-    }, []);
+    const onShowDeleteModalClicked = (period) => {
+        setPeriod(period);
+        setShowDeleteModal(true);
+    }
 
-
-   const table = ineligiblePeriods.map((period, id) => {
+    const table = ineligiblePeriods.map((period, id) => {
         return (
             <tr className="text-center" key={period.id}>
                 <td>{period.startDate}</td>
                 <td>{period.endDate}</td>
                 <td>{period.createdBy.firstName} {period.createdBy.lastName}</td>
                 <td>
-                    <UpdateIneligiblePeriodModal
-                        period={period}
-                    />
-                    <DeleteIneligiblePeriodModal
-                        period={period}
-                    />
-
+                    <Button onClick={() => onShowUpdateModalClicked(period)}
+                            className="btn btn-info btn-sm mr-2">
+                        <FontAwesomeIcon icon={faPencilAlt}/>
+                    </Button>
+                    <Button onClick={() => onShowDeleteModalClicked(period)}
+                            className="btn btn-danger btn-sm">
+                        <FontAwesomeIcon icon={faTrashAlt}/>
+                    </Button>
                 </td>
             </tr>
         );
     })
 
-
     return(
         <>
-            <Row className="justify-content-center mb-3">
-                <h5>All Ineligible Periods</h5>
-            </Row>
             <Table responsive striped>
                 <thead>
                     <tr className="text-center">
@@ -69,8 +61,21 @@ const IneligiblePeriodTable = (props) => {
                     }
                 </tbody>
             </Table>
-        </>
 
+            <UpdateIneligiblePeriodModal
+                period={period}
+                showUpdateModal={showUpdateModal}
+                setShowUpdateModal={setShowUpdateModal}
+                onUpdateIneligiblePeriodClicked={onUpdateIneligiblePeriodClicked}
+            />
+
+            <DeleteIneligiblePeriodModal
+                period={period}
+                showDeleteModal={showDeleteModal}
+                setShowDeleteModal={setShowDeleteModal}
+                onDeletePeriodClicked={onDeletePeriodClicked}
+            />
+        </>
     );
 };
 

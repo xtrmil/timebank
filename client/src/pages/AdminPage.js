@@ -4,14 +4,14 @@ import VacationRequestTable from "../components/uservacationrequest/VacationRequ
 import AdminNav from "../components/adminprofile/AdminNav";
 import {useAuth} from "../context/Context";
 import {Container} from "react-bootstrap";
-import IneligiblePeriodTable from "../components/ineligibleperiod/IneligiblePeriodTable";
+import IneligiblePeriodPage from "./IneligiblePeriodPage";
 
 const AdminPage = () => {
     const {loggedInUser} = useAuth();
     const [view, setView] = useState(2);
     const [vacationRequests, setVacationRequests] = useState([]);
 
-    const updateVacationRequestList = async () => {
+    const fetchVacationRequests = async () => {
         try {
             let response = await getAllVacationRequestAdminView();
             setVacationRequests(response.data.data);
@@ -21,7 +21,7 @@ const AdminPage = () => {
     };
 
     useEffect(() => {
-        updateVacationRequestList();
+        fetchVacationRequests();
     }, []);
 
     return (
@@ -35,19 +35,17 @@ const AdminPage = () => {
 
                 {view === 2 && (
                     <VacationRequestTable
-                        updateVacationRequestList={updateVacationRequestList}
+                        updateVacationRequestList={fetchVacationRequests}
                         vacationRequests={vacationRequests}
                         isViewable={true}/>
                     )}
 
-                {view === 3 && (<IneligiblePeriodTable/>)}
-
+                {view === 3 && (
+                    <IneligiblePeriodPage/>
+                    )}
             </Container>
-
-
-          />
         </>
-    )
-}
+    );
+};
 
 export default AdminPage;
