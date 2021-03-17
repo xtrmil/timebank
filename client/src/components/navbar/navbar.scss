@@ -1,17 +1,33 @@
 .nav-container {
   padding: 1% 1% 1% 1%;
-  background-color: black;
+  //background-color: black;
   overflow: hidden;
+
 }
 
+.custom-navbar{
+  background: linear-gradient(180deg,#345f9a,#1c3e6b);
+}
 h3 {
   color: white;
   font-size: 1.5rem;
 }
 
 a {
+  font-weight:bold;
   text-decoration: none;
 }
 .item {
   color: white;
+  &:hover {
+    color:#fd7e14;
+
+  }
+}
+
+#logout-button {
+  font-size: 16px;
+  font-weight: bold;
+  background-color: transparent;
+  border: none;
 }

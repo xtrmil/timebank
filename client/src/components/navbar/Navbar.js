@@ -20,7 +20,7 @@ const Navbar = () => {
 
   return (
     <div>
-      <BootstrapNavbar bg="dark" expand="lg">
+      <BootstrapNavbar className="custom-navbar" expand="lg">
         <BootstrapNavbar.Brand href="/home">
           <h3>
             <FontAwesomeIcon size="lg" color={"white"} icon={faClock} />{" "}
@@ -46,7 +46,7 @@ const Navbar = () => {
                 </Nav.Link>
               )}
 
-              <Button className="btn-dark btn-sm" onClick={handleLogout}>
+              <Button onClick={handleLogout} className=" btn-sm" id="logout-button">
                 <div className="item">Logout</div>
               </Button>
             </Nav>
