@@ -27,6 +27,12 @@ public class UserController {
         return userService.createUser(user);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/all")
+    public ResponseEntity<CommonResponse> getAllUsers(){
+        return userService.getAllUsers();
+    }
+
     @GetMapping("")
     public ResponseEntity<CommonResponse> getUser(@AuthenticationPrincipal UserCredentials userCredentials) {
         return userService.getUserById(userCredentials.getId());

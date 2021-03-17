@@ -41,7 +41,7 @@ const IneligiblePeriodTable = (props) => {
                 </td>
             </tr>
         );
-    })
+    });
 
     return(
         <>

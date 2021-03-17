@@ -67,6 +67,15 @@ public class UserService {
         return new ResponseEntity<>(cr, cr.status);
     }
 
+    public ResponseEntity<CommonResponse> getAllUsers(){
+        CommonResponse cr = new CommonResponse();
+        cr.data = userRepository.findAll();
+        cr.status = HttpStatus.OK;
+        cr.msg = "List of all users.";
+
+        return new ResponseEntity<>(cr, cr.status);
+    }
+
     public ResponseEntity<CommonResponse> updateUserById(Long userId, User userToUpdate){
         CommonResponse cr = new CommonResponse();
 

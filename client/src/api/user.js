@@ -12,7 +12,7 @@ const addUser = (body) => {
 }
 
 const getAllUsers = () => {
-    return Api.get("/user", {
+    return Api.get("/user/all", {
         headers: {
             Authorization: `Bearer ${cookies.get("session_token")} `
         }
@@ -67,4 +67,10 @@ const fetchImageByUser =() =>{
     
     });
 }
-export {addUser, updateUser, getUserById,updatePassword,uploadImage,fetchImageByUser}
+export {addUser,
+    updateUser,
+    getAllUsers,
+    getUserById,
+    updatePassword,
+    uploadImage,
+    fetchImageByUser}
