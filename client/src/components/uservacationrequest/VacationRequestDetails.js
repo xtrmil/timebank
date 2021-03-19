@@ -7,7 +7,7 @@ import { useAuth } from "../../context/Context";
 import { Button, Card, Col, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
-import { useHistory } from "react-router";
+import { useHistory,Link } from "react-router-dom";
 
 const VacationRequestDetails = (props) => {
   const {
@@ -21,7 +21,8 @@ const VacationRequestDetails = (props) => {
   const [showEditRequestForm, setShowEditRequestForm] = useState(false);
   const [showEditStatusModal, setShowEditStatusModal] = useState(false);
   const isApproved = selectedRequest.status === "APPROVED" ? true : false;
-  const { isAdmin } = useAuth();
+  const { loggedInUser, isAdmin } = useAuth();
+  const isOwner = selectedRequest.user.id === loggedInUser.id;
   const history = useHistory();
   const backUrl = history?.location?.state?.from?.pathname
     ? history.location.state.from.pathname
@@ -68,6 +69,12 @@ const VacationRequestDetails = (props) => {
                     {selectedRequest.title}
                   </Card.Title>
                   <p>
+                    <strong>Created by: </strong>
+                    <Link to={ {pathname:`/user/${selectedRequest.user.id}`, state: {user: selectedRequest.user}}}>
+                    {selectedRequest.user.firstName} {selectedRequest.user.lastName}
+                  </Link>
+                  </p>
+                  <p>
                     <strong>Start date: </strong>
                     {selectedRequest.startDate}
                   </p>
@@ -78,7 +85,7 @@ const VacationRequestDetails = (props) => {
                   <p>
                     <strong>Status: </strong>
                     {selectedRequest.status}
-                    {!isApproved && isAdmin && (
+                    {!isApproved && isAdmin && !isOwner && (
                       <Button
                         className="ml-1 btn-sm"
                         onClick={onEditStatusClicked}
@@ -94,29 +101,12 @@ const VacationRequestDetails = (props) => {
                   </p>
                   <div className="mb-3">
                     <strong>Comments ({comments.length}) </strong>
-                    {!isApproved && (
+                     
                       <Button className="btn-sm" onClick={onAddCommentClicked}>
                         <FontAwesomeIcon icon={faPlusCircle} />
                       </Button>
-                    )}
+                    
                   </div>
-
-                  {showEditStatusModal && (
-                    <EditVacationRequestStatusModal
-                      request={selectedRequest}
-                      showModal={showEditStatusModal}
-                      setShowModal={setShowEditStatusModal}
-                    />
-                  )}
-
-                  {showEditRequestForm && !isApproved && (
-                    <EditVacationRequestModal
-                      afterUpdate={afterUpdate}
-                      showModal={showEditRequestForm}
-                      setShowModal={setShowEditRequestForm}
-                      request={selectedRequest}
-                    />
-                  )}
 
                   {showCommentForm && (
                     <AddCommentForm
@@ -138,6 +128,23 @@ const VacationRequestDetails = (props) => {
                       );
                     })}
                   </div>
+
+                  {showEditStatusModal && (
+                    <EditVacationRequestStatusModal
+                      request={selectedRequest}
+                      showModal={showEditStatusModal}
+                      setShowModal={setShowEditStatusModal}
+                    />
+                  )}
+
+                  {showEditRequestForm && !isApproved && (
+                    <EditVacationRequestModal
+                      afterUpdate={afterUpdate}
+                      showModal={showEditRequestForm}
+                      setShowModal={setShowEditRequestForm}
+                      request={selectedRequest}
+                    />
+                  )}
                 </Card.Body>
               </Card>
             </Col>

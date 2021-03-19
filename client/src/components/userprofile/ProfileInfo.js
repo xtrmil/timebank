@@ -26,7 +26,7 @@ const ProfileInfo = (props) => {
  }
 
  const OnClickUploadImage = async()=>{
-   if(selectedFile !==null){
+   if(!!selectedFile){
     let formData = new FormData();
     formData.append('image', selectedFile);
     let response  = await uploadImage(formData);
@@ -40,13 +40,13 @@ const ProfileInfo = (props) => {
         <h5>My Profile</h5>
       </Row>
       {!isLoading &&
-      <Row>
-        <Col xs={4}>
+      <Row className="justify-content-center">
+        <Col xs={8} md={4}>
           <Card>
             <Card.Img variant="top" alt="someImg" src={image}></Card.Img>
             <Card.Body>
-              <input type="file" onChange={handleFileChange}/>
-              <Button onClick={OnClickUploadImage}>Change image</Button>
+              <input className="w-100 mb-2" type="file" onChange={handleFileChange}/>
+              <Button className="mb-2" onClick={OnClickUploadImage}>Change image</Button>
               <p>
                 <strong>Total Vacation Days:</strong> 25
               </p>
@@ -57,7 +57,7 @@ const ProfileInfo = (props) => {
             </Card.Body>
           </Card>
         </Col>
-        <Col xs={5}>
+        <Col xs={8} md={5}>
           {!showPasswordForm && (
             <ProfileForm
               setEditDisabled={setEditDisabled}

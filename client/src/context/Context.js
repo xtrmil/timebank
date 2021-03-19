@@ -32,7 +32,7 @@ const useCreateAuthContext = () => {
   };
 
   const logout = () => {
-    cookies.remove("session_token");
+    cookies.remove("session_token", {path:"/", domain:""});
   }
 
   const updateToken = (token) => {

@@ -1,15 +1,17 @@
 import React, { useEffect, useState ,useCallback} from "react";
-import { Col, Card, Row } from "react-bootstrap";
+import { Col, Card, Row, Container } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import { useAuth } from "../context/Context";
 import VacationRequestTable from "../components/uservacationrequest/VacationRequestTable";
 import { getAllVacationRequestsByUserId } from "../api/vacationRequest";
 import{ getUserById } from '../api/user';
+import './UserProfilePage.css';
+
 const UserProfilePage = (props) => {
   const history = useHistory();
   const { loggedInUser, isAdmin } = useAuth();
   const  [user, setUser] =useState( history?.location?.state?.user);
-  const isViewable = isAdmin || loggedInUser.id === user.id;
+  const isViewable = isAdmin || loggedInUser.id === user?.id;
   const [vacationRequests, setVacationRequests] = useState([]);
   const {id} = useParams();
   const updateVacationRequestList = useCallback(async () => {
@@ -38,9 +40,10 @@ const UserProfilePage = (props) => {
     <>
     {user &&
     <>
+    <Container>
     <Row className="mt-2">
-      <Col xs={4}>
-        <Card>
+      <Col xs={4} className="justify-content-center d-flex">
+        <Card className="card-img-wrapper border-0">
           <Card.Img variant="top" alt="someImg" src={user.profileImg}></Card.Img>
         </Card>
         
@@ -54,7 +57,7 @@ const UserProfilePage = (props) => {
             </p>
       </Col>
       </Row>
-      <div>
+      <div className="mt-3">
         <VacationRequestTable
           updateVacationRequestList={updateVacationRequestList}
           vacationRequests={vacationRequests}
@@ -62,8 +65,9 @@ const UserProfilePage = (props) => {
           user={user}
         />
       </div>
-      
+      </Container>
     </>}
+    
     </>
   );
 };
