@@ -31,8 +31,7 @@ const EditVacationRequestModal = (props) => {
   };
 
   const isEditable =
-    request.user &&
-    (request.user.id === loggedInUser.id || isAdmin) &&
+    (request?.user?.id === loggedInUser.id || isAdmin) &&
     request.status === "PENDING"
       ? true
       : false;
@@ -46,7 +45,7 @@ const EditVacationRequestModal = (props) => {
       {showModal && (
         <Modal show={showModal} onHide={handleClose}>
           <Modal.Body>
-            <h4 className="text-center">{request.title}</h4>
+            <h4 className="text-center">{ isEditable ?<Link to={{pathname: `/request/${request.id}`,state:{request}}} >{request.title}</Link> : request.title}</h4>
             <p>
               <strong>Name: </strong>
               <Link

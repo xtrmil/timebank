@@ -109,9 +109,11 @@ public class VacationRequestService {
         Optional<User> optionalUser = userRepository.findById(userId);
 
         if (optionalUser.isPresent()) {
-            if (userCredentials.isAdmin()) {
+            if (userCredentials.isAdmin() || optionalUser.get().getId().equals(userCredentials.getId())) {
                 cr.data = vacationRequestRepository.findAllByUserId(userId);
-            } else {
+            }
+            else
+             {
                 cr.data = vacationRequestRepository.findAllByUserIdAndStatusOrderByStartDateAsc(optionalUser.get().getId(), RequestStatus.APPROVED);
             }
             cr.msg = "VacationRequest with id:" + optionalUser.get().getId() + " was found.";
