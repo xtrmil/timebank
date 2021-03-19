@@ -28,13 +28,22 @@ const getUserById = (id) => {
     });
 }
  
-const updateUser = (body) => {
-    return Api.put("/user",
+const updateUser = (id, body) => {
+    return Api.put(`user/${id}`,
         {...body}, {
             headers:{
                 Authorization: `Bearer ${cookies.get("session_token")} `
             }
         });
+}
+
+const deleteUser = (id) => {
+    return Api.delete(`user/${id}`,
+        {
+            headers:{
+                Authorization: `Bearer ${cookies.get("session_token")} `
+            }
+    });
 }
 
 const updatePassword = (body)=>{
@@ -71,6 +80,7 @@ export {addUser,
     updateUser,
     getAllUsers,
     getUserById,
+    deleteUser,
     updatePassword,
     uploadImage,
     fetchImageByUser}

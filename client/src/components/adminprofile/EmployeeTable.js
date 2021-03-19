@@ -2,10 +2,12 @@ import React, {useState} from "react";
 import {Button, Table} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPencilAlt, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
+import UpdateEmployeeModal from "./UpdateEmployeeModal";
+import DeleteEmployeeModal from "./DeleteEmployeeModal";
 
 const EmployeeTable = (props) => {
 
-    const {isLoading, employees} = props;
+    const {isLoading, employees, onUpdateEmployeeClicked, onDeleteEmployeeClicked} = props;
     console.log(employees)
 
     const [employee, setEmployee] = useState({});
@@ -29,7 +31,7 @@ const EmployeeTable = (props) => {
                 <td>{employee.firstName} {employee.lastName}</td>
                 <td>{employee.email}</td>
                 <td>{employee.isAdmin}</td>
-                <td>
+                <td className="d-flex">
                     <Button onClick={() => onShowUpdateModalClicked(employee)}
                             className="btn btn-info btn-sm mr-2">
                         <FontAwesomeIcon icon={faPencilAlt}/>
@@ -62,6 +64,20 @@ const EmployeeTable = (props) => {
                 }
                 </tbody>
             </Table>
+
+            <UpdateEmployeeModal
+                employee={employee}
+                showUpdateModal={showUpdateModal}
+                setShowUpdateModal={setShowUpdateModal}
+                onUpDateEmployeeClicked={onUpdateEmployeeClicked}
+            />
+
+            <DeleteEmployeeModal
+                employee={employee}
+                showDeleteModal={showDeleteModal}
+                setShowDeleteModal={setShowDeleteModal}
+                onDeleteEmployeeClicked={onDeleteEmployeeClicked}
+            />
         </>
     );
 };

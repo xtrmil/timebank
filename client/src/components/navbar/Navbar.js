@@ -23,7 +23,7 @@ const Navbar = () => {
       <BootstrapNavbar className="custom-navbar" expand="lg">
         <BootstrapNavbar.Brand href="/home">
           <h3 className="logo">
-            <FontAwesomeIcon size="lg" color={"white"} icon={faClock} />{" "}
+            <FontAwesomeIcon size="lg" color={"#82ab9b"} icon={faClock} />{" "}
             Timebank
           </h3>
         </BootstrapNavbar.Brand>

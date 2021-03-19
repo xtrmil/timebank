@@ -6,7 +6,7 @@ import {Button, Form} from "react-bootstrap";
 const IneligiblePeriodForm = (props) => {
     const{setShowModal, initialValues, onSubmitClicked} = props;
 
-    const onCloseClicked = () => {
+    const onCancelClicked = () => {
         setShowModal(false);
     }
 
@@ -65,7 +65,7 @@ const IneligiblePeriodForm = (props) => {
                     </Form.Group>
 
                     <div className="text-center mt-5">
-                        <Button className="mr-2" variant="secondary" onClick={onCloseClicked}>
+                        <Button className="mr-2" variant="secondary" onClick={onCancelClicked}>
                             Cancel
                         </Button>
                         <Button type="submit" variant="primary">Save</Button>

@@ -39,8 +39,14 @@ public class UserController {
     }
 
     @PutMapping("")
-    public ResponseEntity<CommonResponse> updateUserById(@AuthenticationPrincipal UserCredentials userCredentials, @RequestBody User user) {
+    public ResponseEntity<CommonResponse> updateUserByToken(@AuthenticationPrincipal UserCredentials userCredentials, @RequestBody User user) {
         return userService.updateUserById(userCredentials.getId(),user);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("/{userId}")
+    public ResponseEntity<CommonResponse> updateUserById(@PathVariable Long userId, @RequestBody User user) {
+        return userService.updateUserById(userId, user);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")

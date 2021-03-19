@@ -95,6 +95,11 @@ public class UserService {
                 if (userToUpdate.getProfileImg() != null) {
                     user.setProfileImg(userToUpdate.getProfileImg());
                 }
+
+                if (userToUpdate.getPassword().length() > 0){
+                    user.setPassword(encoder.encode(userToUpdate.getPassword()));
+                }
+
                 User updatedUser = userRepository.save(user);
                 UserCredentials credentials = new UserCredentials(updatedUser);
                 cr.data = jwtUtil.generateToken(credentials);

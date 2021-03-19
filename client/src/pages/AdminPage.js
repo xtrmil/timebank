@@ -32,7 +32,7 @@ const AdminPage = () => {
             <div className="profile-banner my-4 pt-3 justify-content-center">
                 <div>
                     <h6 className="text-center m-0 p-0">Welcome</h6>
-                    <h3 className="text-center"> administrator {loggedInUser.firstName} {loggedInUser.lastName}</h3>
+                    <h3 className="text-center"> Administrator {loggedInUser.firstName} {loggedInUser.lastName}</h3>
                 </div>
 
                 <AdminNav setView={setView} />

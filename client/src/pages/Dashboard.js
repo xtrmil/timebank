@@ -92,7 +92,7 @@ const Dashboard = () => {
   }, []);
 
   const eventColorStyle = (event, start, end, isSelected) => {
-    let backgroundColor = "#ff0300";
+    let backgroundColor = "#d12a2a";
     if (event.status === "APPROVED") {
       backgroundColor = "#a5d6b8";
     } else if (event.status === "PENDING") {
@@ -115,7 +115,7 @@ const Dashboard = () => {
     <Container>
       {!isLoading && (
         <>
-          <h1>Home</h1>
+          <h3 className="calendar-heading text-center my-4">Calendar Overview</h3>
           <Calendar
             eventPropGetter={eventColorStyle}
             components={{ toolbar: CalendarNavigation, dateCellWrapper: blockedDateCellWrapper, month: blockedDateStyle}}
