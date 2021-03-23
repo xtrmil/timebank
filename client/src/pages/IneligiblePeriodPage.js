@@ -27,7 +27,6 @@ const IneligiblePeriodPage = () => {
                 await updateIneligiblePeriod(id, data);
                 await fetchIneligiblePeriods();
             }
-
         }catch (error){
             console.log(error.response.data.msg);
         }

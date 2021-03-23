@@ -5,6 +5,8 @@ import AdminNav from "../components/adminprofile/AdminNav";
 import {useAuth} from "../context/Context";
 import {Container} from "react-bootstrap";
 import IneligiblePeriodPage from "./IneligiblePeriodPage";
+import EmployeePage from "./EmployeePage";
+import "./adminPage.scss";
 
 const AdminPage = () => {
     const {loggedInUser} = useAuth();
@@ -26,12 +28,16 @@ const AdminPage = () => {
 
     return (
         <>
-            <div className="profile-banner my-4 justify-content-center">
-                <h3 className="text-center py-3"> Welcome administrator {loggedInUser.firstName}</h3>
+            <div className="profile-banner my-4 pt-3 justify-content-center">
+                <div>
+                    <h6 className="text-center m-0 p-0">Welcome</h6>
+                    <h3 className="text-center"> Administrator {loggedInUser.firstName} {loggedInUser.lastName}</h3>
+                </div>
+
                 <AdminNav setView={setView} />
             </div>
             <Container>
-                {view === 1 && (<div>Manage user page</div>)}
+                {view === 1 && (<EmployeePage/>)}
 
                 {view === 2 && (
                     <VacationRequestTable
@@ -40,9 +46,7 @@ const AdminPage = () => {
                         isViewable={true}/>
                     )}
 
-                {view === 3 && (
-                    <IneligiblePeriodPage/>
-                    )}
+                {view === 3 && (<IneligiblePeriodPage/>)}
             </Container>
         </>
     );

@@ -1,8 +1,6 @@
 import React from "react";
-
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../../context/Context";
-
 import { Navbar as BootstrapNavbar, Nav, Button } from "react-bootstrap";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,10 +18,10 @@ const Navbar = () => {
 
   return (
     <div>
-      <BootstrapNavbar bg="dark" expand="lg">
+      <BootstrapNavbar className="custom-navbar" expand="lg">
         <BootstrapNavbar.Brand href="/home">
-          <h3>
-            <FontAwesomeIcon size="lg" color={"white"} icon={faClock} />{" "}
+          <h3 className="logo">
+            <FontAwesomeIcon size="lg" color={"#82ab9b"} icon={faClock} />{" "}
             Timebank
           </h3>
         </BootstrapNavbar.Brand>
@@ -32,8 +30,8 @@ const Navbar = () => {
           {auth.isLoggedIn && (
             <Nav className="ml-auto">
 
-              <Nav.Link href="/home">
-                <div className="item">Calendar</div>
+              <Nav.Link className="link-styling" href="/home">
+                <span className="item">Calendar</span>
               </Nav.Link>
 
               <Nav.Link href="/profile">
@@ -46,7 +44,7 @@ const Navbar = () => {
                 </Nav.Link>
               )}
 
-              <Button className="btn-dark btn-sm" onClick={handleLogout}>
+              <Button onClick={handleLogout} className=" btn-sm" id="logout-button">
                 <div className="item">Logout</div>
               </Button>
             </Nav>

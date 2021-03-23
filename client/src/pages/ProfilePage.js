@@ -4,7 +4,7 @@ import { updateUser } from "../api/user";
 import ProfileInfo from "../components/userprofile/ProfileInfo";
 import ProfileNav from "../components/userprofile/ProfileNav";
 import { Container } from "react-bootstrap";
-import "../components/userprofile/profilePage.scss";
+import "./profilePage.scss";
 import VacationRequestTable from "../components/uservacationrequest/VacationRequestTable";
 import { getAllVacationRequestsByToken } from "../api/vacationRequest";
 
@@ -38,8 +38,9 @@ const ProfilePage = (props) => {
 
   return (
     <>
-      <div className="profile-banner my-4 justify-content-center">
-        <h3 className="text-center py-3"> Welcome {loggedInUser.firstName}</h3>
+      <div className="profile-banner my-4 pt-3 justify-content-center">
+        <h6 className="text-center m-0 p-0">Welcome</h6>
+        <h3 className="text-center">{loggedInUser.firstName} {loggedInUser.lastName}</h3>
         <ProfileNav setView={setView} />
       </div>
 

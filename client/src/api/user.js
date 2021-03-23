@@ -11,6 +11,14 @@ const addUser = (body) => {
         });
 }
 
+const getAllUsers = () => {
+    return Api.get("/user/all", {
+        headers: {
+            Authorization: `Bearer ${cookies.get("session_token")} `
+        }
+    })
+}
+
 const getUserById = (id) => {
     return Api.get(`/user/${id}`,
     {
@@ -20,13 +28,22 @@ const getUserById = (id) => {
     });
 }
  
-const updateUser = (body) => {
-    return Api.put("/user",
+const updateUser = (id, body) => {
+    return Api.put(`user/${id}`,
         {...body}, {
             headers:{
                 Authorization: `Bearer ${cookies.get("session_token")} `
             }
         });
+}
+
+const deleteUser = (id) => {
+    return Api.delete(`user/${id}`,
+        {
+            headers:{
+                Authorization: `Bearer ${cookies.get("session_token")} `
+            }
+    });
 }
 
 const updatePassword = (body)=>{
@@ -59,4 +76,11 @@ const fetchImageByUser =() =>{
     
     });
 }
-export {addUser, updateUser, getUserById,updatePassword,uploadImage,fetchImageByUser}
+export {addUser,
+    updateUser,
+    getAllUsers,
+    getUserById,
+    deleteUser,
+    updatePassword,
+    uploadImage,
+    fetchImageByUser}

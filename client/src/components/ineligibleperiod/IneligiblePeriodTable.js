@@ -29,7 +29,7 @@ const IneligiblePeriodTable = (props) => {
                 <td>{period.startDate}</td>
                 <td>{period.endDate}</td>
                 <td>{period.createdBy.firstName} {period.createdBy.lastName}</td>
-                <td>
+                <td className="d-flex">
                     <Button onClick={() => onShowUpdateModalClicked(period)}
                             className="btn btn-info btn-sm mr-2">
                         <FontAwesomeIcon icon={faPencilAlt}/>
@@ -41,7 +41,7 @@ const IneligiblePeriodTable = (props) => {
                 </td>
             </tr>
         );
-    })
+    });
 
     return(
         <>

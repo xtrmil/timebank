@@ -3,9 +3,11 @@
 }
 
 .profile-banner{
-    width: 80%;
+    width: 85%;
     margin: auto;
-    background-color: cadetblue;
+    background: linear-gradient(180deg,#345f9a,#1c3e6b);
+    //background-color: #82ab9b;
+            //alt. #6d8f82;
 }
 
 @media screen and(max-width:930px){

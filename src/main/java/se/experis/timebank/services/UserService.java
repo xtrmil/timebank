@@ -67,6 +67,15 @@ public class UserService {
         return new ResponseEntity<>(cr, cr.status);
     }
 
+    public ResponseEntity<CommonResponse> getAllUsers(){
+        CommonResponse cr = new CommonResponse();
+        cr.data = userRepository.findAll();
+        cr.status = HttpStatus.OK;
+        cr.msg = "List of all users.";
+
+        return new ResponseEntity<>(cr, cr.status);
+    }
+
     public ResponseEntity<CommonResponse> updateUserById(Long userId, User userToUpdate){
         CommonResponse cr = new CommonResponse();
 
@@ -86,6 +95,11 @@ public class UserService {
                 if (userToUpdate.getProfileImg() != null) {
                     user.setProfileImg(userToUpdate.getProfileImg());
                 }
+
+                if (userToUpdate.getPassword().length() > 0){
+                    user.setPassword(encoder.encode(userToUpdate.getPassword()));
+                }
+
                 User updatedUser = userRepository.save(user);
                 UserCredentials credentials = new UserCredentials(updatedUser);
                 cr.data = jwtUtil.generateToken(credentials);

@@ -11,8 +11,8 @@ const UpdateIneligiblePeriodModal = (props) => {
         endDate: period.endDate
     }
 
-    const onUpdateClicked = async (data) => {
-        await onUpdateIneligiblePeriodClicked(period.id, data);
+    const onUpdateClicked = (data) => {
+        onUpdateIneligiblePeriodClicked(period.id, data);
         setShowUpdateModal(false);
     }
 
@@ -27,7 +27,7 @@ const UpdateIneligiblePeriodModal = (props) => {
                         onSubmitClicked={onUpdateClicked}/>
                 </Modal.Body>
             </Modal>
-    </>
+        </>
     );
 };
 
