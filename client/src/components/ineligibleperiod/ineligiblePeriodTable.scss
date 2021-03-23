@@ -1,0 +1,23 @@
+.table-styling{
+  background-color: white;
+  //border: #fcfcfc;
+  border-radius: 10px;
+}
+
+.delete-button {
+  background-color: #d12a2a;
+  border: none;
+  &:hover{
+    background-color: #a32121 ;
+
+  }
+}
+
+.edit-button {
+  border: black;
+  background-color: #82ab9b;
+  &:hover{
+    background-color:#668a7c;
+
+  }
+}

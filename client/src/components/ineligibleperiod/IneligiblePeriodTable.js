@@ -4,7 +4,7 @@ import UpdateIneligiblePeriodModal from "./UpdateIneligiblePeriodModal";
 import DeleteIneligiblePeriodModal from "./DeleteIneligiblePeriodModal";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPencilAlt, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
-
+import "./ineligiblePeriodTable.scss";
 
 const IneligiblePeriodTable = (props) => {
 
@@ -29,13 +29,13 @@ const IneligiblePeriodTable = (props) => {
                 <td>{period.startDate}</td>
                 <td>{period.endDate}</td>
                 <td>{period.createdBy.firstName} {period.createdBy.lastName}</td>
-                <td className="d-flex">
+                <td className="d-flex justify-content-center">
                     <Button onClick={() => onShowUpdateModalClicked(period)}
-                            className="btn btn-info btn-sm mr-2">
+                            className="btn edit-button btn-sm mr-2">
                         <FontAwesomeIcon icon={faPencilAlt}/>
                     </Button>
                     <Button onClick={() => onShowDeleteModalClicked(period)}
-                            className="btn btn-danger btn-sm">
+                            className="btn delete-button btn-sm">
                         <FontAwesomeIcon icon={faTrashAlt}/>
                     </Button>
                 </td>
@@ -45,8 +45,8 @@ const IneligiblePeriodTable = (props) => {
 
     return(
         <>
-            <Table responsive className="table-hover table-borderless table-styling">
-                <thead>
+            <Table responsive className="table-hover table-sm table-styling">
+                <thead className="table-secondary">
                     <tr className="text-center">
                         <th>Start date</th>
                         <th>End Date</th>
