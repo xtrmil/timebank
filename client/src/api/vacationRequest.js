@@ -64,6 +64,16 @@ const getAllVacationRequests = () => {
         })
 }
 
+const importRequestsFromJson = (body) => {
+    return Api.post("/request/import",
+     body, {
+    headers: {
+        Authorization: `Bearer ${cookies.get("session_token")} `,
+        'Content-Type': 'multipart/form-data'
+    }
+});
+}
+
 const exportAllVacationRequests = () => {
     return Api.get(`/request/all/export`,
         {
@@ -111,7 +121,8 @@ export {
     getAllVacationRequestsByUserId,
     getAllVacationRequestAdminView,
     updateVacationRequestStatus,
-    exportAllVacationRequests
+    exportAllVacationRequests,
+    importRequestsFromJson
 };
 
 

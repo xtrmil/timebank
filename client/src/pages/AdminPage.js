@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { getAllVacationRequestAdminView, exportAllVacationRequests } from "../api/vacationRequest";
+import { getAllVacationRequestAdminView } from "../api/vacationRequest";
 import VacationRequestTable from "../components/uservacationrequest/VacationRequestTable";
+import AdminJsonForm from "../components/admin/AdminJsonForm";
 
 const AdminPage = () => {
+
     const [vacationRequests, setVacationRequests] = useState([]);
     const updateVacationRequestList = async () => {
         try {
@@ -13,19 +15,6 @@ const AdminPage = () => {
         }
     };
 
-    const exportRequests = async () => {
-
-        let response = await exportAllVacationRequests()
-        const url = window.URL.createObjectURL(new Blob([JSON.stringify(response.data)]));
-        const link = document.createElement('a');
-        link.href = url;
-        const today = new Date();
-        const fileName = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate()+"-vacationrequests.json";
-        link.setAttribute('download', fileName);
-        document.body.appendChild(link);
-        link.click();
-    }
-
     useEffect(() => {
         updateVacationRequestList();
     }, []);
@@ -34,6 +23,8 @@ const AdminPage = () => {
             <div>
                 <h1>Admin Page</h1>
             </div>
+                <AdminJsonForm/>
+                
             <div>Add user</div>
             <div>List requests</div>
             <VacationRequestTable
@@ -42,13 +33,6 @@ const AdminPage = () => {
                 isViewable={true}
 
             />
-
-            <div id="container">
-
-                <button onClick={exportRequests}>Download Json</button>
-                <p />
-
-            </div>
         </>
     )
 }

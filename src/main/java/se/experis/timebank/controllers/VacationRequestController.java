@@ -6,7 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import se.experis.timebank.models.RequestStatus;
+import org.springframework.web.multipart.MultipartFile;
+import se.experis.timebank.models.SingleVacationLimit;
 import se.experis.timebank.models.UserCredentials;
 import se.experis.timebank.models.VacationRequest;
 import se.experis.timebank.services.CommonResponse;
@@ -43,9 +44,9 @@ public class VacationRequestController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/import")
-    public ResponseEntity<CommonResponse> importVacationRequestsFromJSON(){
-        return vacationRequestService.importVacationRequestsFromJSON();
+    @PostMapping(value="/import", consumes="multipart/form-data")
+    public ResponseEntity<CommonResponse> importVacationRequestsFromJSON(@RequestParam("file") MultipartFile requests){
+        return vacationRequestService.importVacationRequestsFromJSON(requests);
     }
 
     @GetMapping("/user")
@@ -75,6 +76,17 @@ public class VacationRequestController {
     public ResponseEntity<CommonResponse> deleteVacationRequest(@PathVariable Long requestId){
 
         return vacationRequestService.deleteVacationRequestById(requestId);
+    }
+
+    @GetMapping("/get/singlevacationlimit/")
+    public ResponseEntity<CommonResponse> getSingleVacationLimit(){
+        return vacationRequestService.getSingleVacationLimit();
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("/update/singlevacationlimit/")
+    public ResponseEntity<CommonResponse> updateSingleVacationLimit(@RequestBody SingleVacationLimit limit){
+        return vacationRequestService.updateSingleVacationLimit(limit.getLength());
     }
 
 
