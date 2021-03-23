@@ -30,23 +30,23 @@ const Navbar = () => {
           {auth.isLoggedIn && (
             <Nav className="ml-auto">
 
-              <Nav.Link className="link-styling" href="/home">
+              <Nav.Link href="/profile">
+                <span className="item">{auth.loggedInUser.firstName} {auth.loggedInUser.lastName}</span>
+              </Nav.Link >
+
+              <Nav.Link href="/home">
                 <span className="item">Calendar</span>
               </Nav.Link>
 
-              <Nav.Link href="/profile">
-                <div className="item">Profile</div>
-              </Nav.Link >
-
               {auth.isAdmin && (
                 <Nav.Link href="/admin">
-                  <div className="item">Admin Overview</div>
+                  <span className="item">Admin Overview</span>
                 </Nav.Link>
               )}
 
-              <Button onClick={handleLogout} className=" btn-sm" id="logout-button">
-                <div className="item">Logout</div>
-              </Button>
+              <Nav.Link onClick={handleLogout}>
+                <span className="item">Logout</span>
+              </Nav.Link>
             </Nav>
           )}
         </BootstrapNavbar.Collapse>

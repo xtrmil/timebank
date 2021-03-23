@@ -22,6 +22,7 @@ h3 {
 }
 
 .item {
+  position: relative;
   font-size: 16px;
   font-weight: bold;
   color: black;
@@ -31,20 +32,18 @@ h3 {
 
 }
 
-.item:after {
+.item::after{
+  display: block;
+  position: absolute;
   content: "";
-  width: 0px;
+  background-color: #c25700;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
   height: 2px;
   transition: .25s ease-in-out;
-  text-decoration-color: #c25700;
-  text-decoration-line: underline;
 }
-
-.item:hover:after{
-  width:100%;
-}
-
-#logout-button {
-  background-color: transparent;
-  border: none;
+.item:hover::after{
+  width: 100%;
 }

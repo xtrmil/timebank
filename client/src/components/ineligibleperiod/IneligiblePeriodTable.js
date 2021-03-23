@@ -45,7 +45,7 @@ const IneligiblePeriodTable = (props) => {
 
     return(
         <>
-            <Table responsive striped>
+            <Table responsive className="table-hover table-borderless table-styling">
                 <thead>
                     <tr className="text-center">
                         <th>Start date</th>

@@ -114,7 +114,7 @@ const Dashboard = () => {
   };
 
   return (
-    <Container>
+    <>
       {!isLoading && (
         <>
           <div className="profile-banner my-4 pt-3 justify-content-center">
@@ -124,18 +124,21 @@ const Dashboard = () => {
               <CalendarNav/>
             </div>
           </div>
-          <Calendar
-            eventPropGetter={eventColorStyle}
-            components={{ toolbar: CalendarToolbar, dateCellWrapper: blockedDateCellWrapper, month: blockedDateStyle}}
-            views={["month"]}
-            localizer={localizer}
-            events={requests}
-            startAccessor="startDate"
-            endAccessor="endDate"
-            style={{ height: 1000 }}
-            popup
-            onSelectEvent={(event) => handleSelectEvent(event)}
-          />
+          <Container>
+
+            <Calendar
+              eventPropGetter={eventColorStyle}
+              components={{ toolbar: CalendarToolbar, dateCellWrapper: blockedDateCellWrapper, month: blockedDateStyle}}
+              views={["month"]}
+              localizer={localizer}
+              events={requests}
+              startAccessor="startDate"
+              endAccessor="endDate"
+              style={{ height: 1000 }}
+              popup
+              onSelectEvent={(event) => handleSelectEvent(event)}
+            />
+          </Container>
           <EditVacationRequestModal
             afterUpdate={afterUpdate}
             request={selectedEvent}
@@ -143,8 +146,10 @@ const Dashboard = () => {
             setShowModal={setShowModal}
           />
         </>
+
       )}
-    </Container>
+    </>
+
   );
 };
 
