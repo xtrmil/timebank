@@ -1,5 +1,5 @@
 import React,{useState} from "react";
-import {Container,Button,Form} from "react-bootstrap";
+import {Button,Form,Container} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Formik} from "formik";
 import { Redirect } from 'react-router-dom';
@@ -40,10 +40,8 @@ const LoginForm = () => {
     );
   }
   return (
-    
-    <Container>
-      <div>
-        <h2>
+  <Container>
+        <h2 className="text-center">
           Sign In
         </h2>
         <Formik
@@ -77,7 +75,7 @@ const LoginForm = () => {
                 <Form.Control.Feedback type="invalid" >{errors.password} </Form.Control.Feedback>
               </Form.Group>
 
-              <Button type="submit" variant= "success">
+              <Button className="mr-2" type="submit" variant= "success" >
                 Sign In
               </Button>
 
@@ -88,8 +86,7 @@ const LoginForm = () => {
             </Form>
           )}
         </Formik>
-      </div>
-    </Container>
+        </Container>
   );
 };
 
