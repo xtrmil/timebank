@@ -1,8 +1,6 @@
 import React from "react";
-
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../../context/Context";
-
 import { Navbar as BootstrapNavbar, Nav, Button } from "react-bootstrap";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -32,8 +30,8 @@ const Navbar = () => {
           {auth.isLoggedIn && (
             <Nav className="ml-auto">
 
-              <Nav.Link href="/home">
-                <div className="item">Calendar</div>
+              <Nav.Link className="link-styling" href="/home">
+                <span className="item">Calendar</span>
               </Nav.Link>
 
               <Nav.Link href="/profile">

@@ -1,18 +1,12 @@
- import React, {useState} from "react";
-import {Button, Form, Modal} from "react-bootstrap";
+ import React from "react";
+import {Modal} from "react-bootstrap";
 import {addVacationRequest} from "../../../api/vacationRequest";
 import VacationRequestForm from "./VacationRequestForm";
-import {useAuth} from "../../../context/Context"
 import { useHistory } from "react-router";
-const AddVacationRequestModal = () => {
 
-    const auth = useAuth();
+const AddVacationRequestModal = ({showAddRequestModal, setShowAddRequestModal}) => {
+
     const history = useHistory();
-    const [showModal, setShowModal] = useState(false);
-
-    const onClickAddVacationRequest = () =>{
-        setShowModal(true);
-    }
 
     const initialValues = {
         title: "",
@@ -37,13 +31,12 @@ const AddVacationRequestModal = () => {
 
     return (
         <div>
-            <Button className="ml-3" onClick={onClickAddVacationRequest}>Add Vacation Request</Button>
-            <Modal show={showModal}>
+            <Modal show={showAddRequestModal}>
                 <Modal.Body>
                     <h4 className="text-center">Add Vacation Request</h4>
                     <VacationRequestForm
                         initialValues={initialValues}
-                        setShowModal={setShowModal}
+                        setShowModal={setShowAddRequestModal}
                         onSubmitClicked={onFormSubmit}/>
                 </Modal.Body>
             </Modal>

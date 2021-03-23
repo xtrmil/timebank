@@ -4,13 +4,15 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./dashboard.scss";
-import CalendarNavigation from "../components/calendar/CalendarNavigation";
+import CalendarToolbar from "../components/calendar/CalendarToolbar";
 import { getAllVacationRequestsByStatus } from "../api/vacationRequest";
 import { getAllVacationRequests } from "../api/vacationRequest";
 import EditVacationRequestModal from "../components/calendar/calendarvacationrequest/EditVacationRequestModal";
 import { useAuth } from "../context/Context";
 import {getAllIneligiblePeriods} from "../api/ineligiblePeriod";
 import {useHistory} from "react-router-dom";
+import AdminNav from "../components/adminprofile/AdminNav";
+import CalendarNav from "../components/calendar/CalendarNav";
 const localizer = momentLocalizer(moment);
 
 const Dashboard = () => {
@@ -115,10 +117,16 @@ const Dashboard = () => {
     <Container>
       {!isLoading && (
         <>
-          <h3 className="calendar-heading text-center my-4">Calendar Overview</h3>
+          <div className="profile-banner my-4 pt-3 justify-content-center">
+            <div>
+              <h6 className="text-center m-0 p-0">Welcome</h6>
+              <h3 className="text-center"> Calendar Overview</h3>
+              <CalendarNav/>
+            </div>
+          </div>
           <Calendar
             eventPropGetter={eventColorStyle}
-            components={{ toolbar: CalendarNavigation, dateCellWrapper: blockedDateCellWrapper, month: blockedDateStyle}}
+            components={{ toolbar: CalendarToolbar, dateCellWrapper: blockedDateCellWrapper, month: blockedDateStyle}}
             views={["month"]}
             localizer={localizer}
             events={requests}

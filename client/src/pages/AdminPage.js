@@ -6,7 +6,6 @@ import {useAuth} from "../context/Context";
 import {Container} from "react-bootstrap";
 import IneligiblePeriodPage from "./IneligiblePeriodPage";
 import EmployeePage from "./EmployeePage";
-
 import "./adminPage.scss";
 
 const AdminPage = () => {

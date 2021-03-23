@@ -21,7 +21,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+
     @PostMapping("")
     public ResponseEntity<CommonResponse> createUser(@RequestBody User user) throws IOException {
         return userService.createUser(user);

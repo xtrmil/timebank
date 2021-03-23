@@ -28,6 +28,20 @@ h3 {
   &:hover {
     color:#c25700;
   }
+
+}
+
+.item:after {
+  content: "";
+  width: 0px;
+  height: 2px;
+  transition: .25s ease-in-out;
+  text-decoration-color: #c25700;
+  text-decoration-line: underline;
+}
+
+.item:hover:after{
+  width:100%;
 }
 
 #logout-button {
