@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { useAuth } from "../../context/Context";
+import { useAuth } from "../../contexts/AuthContext";
 import { Navbar as BootstrapNavbar, Nav, Button } from "react-bootstrap";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

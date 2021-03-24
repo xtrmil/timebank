@@ -30,14 +30,14 @@ const IneligiblePeriodTable = (props) => {
                 <td>{period.endDate}</td>
                 <td>{period.createdBy.firstName} {period.createdBy.lastName}</td>
                 <td className="d-flex justify-content-center">
-                    <Button onClick={() => onShowUpdateModalClicked(period)}
+                    <button onClick={() => onShowUpdateModalClicked(period)}
                             className="btn edit-button btn-sm mr-2">
-                        <FontAwesomeIcon icon={faPencilAlt}/>
-                    </Button>
-                    <Button onClick={() => onShowDeleteModalClicked(period)}
+                        <FontAwesomeIcon color={"white"} icon={faPencilAlt}/>
+                    </button>
+                    <button onClick={() => onShowDeleteModalClicked(period)}
                             className="btn delete-button btn-sm">
-                        <FontAwesomeIcon icon={faTrashAlt}/>
-                    </Button>
+                        <FontAwesomeIcon color={"white"} icon={faTrashAlt}/>
+                    </button>
                 </td>
             </tr>
         );

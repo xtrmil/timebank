@@ -5,19 +5,30 @@
 }
 
 .delete-button {
-  background-color: #d12a2a;
   border: none;
+  background-color: #d12a2a;
   &:hover{
-    background-color: #a32121 ;
-
+    border-color:#a32121;
+    background-color:#a32121;
+  }
+  &:focus {
+    outline: none;
+    box-shadow: none;
+    background-color:#a32121;
   }
 }
 
 .edit-button {
-  border: black;
+  border: none;
   background-color: #82ab9b;
   &:hover{
+    border-color: #668a7c;
     background-color:#668a7c;
-
+  }
+  &:focus {
+    outline: none;
+    box-shadow: none;
+    background-color: #668a7c;
   }
 }
+

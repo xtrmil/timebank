@@ -2,9 +2,11 @@ import React, {useEffect, useState} from "react";
 import {deleteIneligiblePeriodById, getAllIneligiblePeriods, updateIneligiblePeriod} from "../api/ineligiblePeriod";
 import IneligiblePeriodTable from "../components/ineligibleperiod/IneligiblePeriodTable";
 import {Row} from "react-bootstrap";
+import {useToast} from "../contexts/ToastContext";
 
 const IneligiblePeriodPage = () => {
 
+    const {setToastHeader, setToastMsg, setToast} = useToast();
     const [ineligiblePeriods, setIneligiblePeriods] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -13,7 +15,9 @@ const IneligiblePeriodPage = () => {
             let response = await getAllIneligiblePeriods();
             setIneligiblePeriods(response.data.data);
         }catch(error) {
-            console.log(error);
+            setToastHeader("Error");
+            setToastMsg(error.message);
+            setToast(true);
         } finally{
             setIsLoading(false);
         }
@@ -23,29 +27,37 @@ const IneligiblePeriodPage = () => {
         try{
             const startDate = new Date(data.startDate);
             const endDate = new Date(data.endDate);
-            if(startDate.getTime() < endDate.getTime()){
-                await updateIneligiblePeriod(id, data);
+            if(startDate.getTime() <= endDate.getTime()){
+                let response = await updateIneligiblePeriod(id, data);
+                setToastHeader("Success");
+                setToastMsg(response.data.msg);
+                setToast(true);
                 await fetchIneligiblePeriods();
             }
         }catch (error){
-            console.log(error.response.data.msg);
+            setToastHeader("Error");
+            setToastMsg(error.message);
+            setToast(true);
         }
     }
 
     const onDeletePeriodClicked = async (id) => {
         try{
-            await deleteIneligiblePeriodById(id);
+            let response = await deleteIneligiblePeriodById(id);
+            setToastHeader("Success");
+            setToastMsg(response.data.msg);
+            setToast(true);
             await fetchIneligiblePeriods();
-
         }catch (error) {
-            console.log(error.response.data.msg);
+            setToastHeader("Error");
+            setToastMsg(error.message);
+            setToast(true);
         }
     }
 
     useEffect(() => {
         fetchIneligiblePeriods();
     }, []);
-
 
     return(
         <>

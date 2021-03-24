@@ -2,7 +2,7 @@ import React, { useState,useEffect } from "react";
 import ProfileForm from "./ProfileForm";
 import UpdatePasswordForm from "./UpdatePasswordForm";
 import { Button, Card, Col, Row } from "react-bootstrap";
-import { useAuth } from "../../context/Context";
+import { useAuth } from "../../contexts/AuthContext";
 import {uploadImage,fetchImageByUser} from '../../api/user';
 const ProfileInfo = (props) => {
   const { loggedInUser} = useAuth();

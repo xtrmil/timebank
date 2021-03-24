@@ -1,19 +1,20 @@
 import React, { useEffect, useState ,useCallback} from "react";
 import { Col, Card, Row, Container } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
-import { useAuth } from "../context/Context";
+import { useAuth } from "../contexts/AuthContext";
 import VacationRequestTable from "../components/uservacationrequest/VacationRequestTable";
 import { getAllVacationRequestsByUserId } from "../api/vacationRequest";
 import{ getUserById } from '../api/user';
 import './UserProfilePage.css';
 
-const UserProfilePage = (props) => {
+const UserProfilePage = () => {
   const history = useHistory();
   const { loggedInUser, isAdmin } = useAuth();
   const  [user, setUser] =useState( history?.location?.state?.user);
   const isViewable = isAdmin || loggedInUser.id === user?.id;
   const [vacationRequests, setVacationRequests] = useState([]);
   const {id} = useParams();
+
   const updateVacationRequestList = useCallback(async () => {
     try {
       let response = await getAllVacationRequestsByUserId(id);
