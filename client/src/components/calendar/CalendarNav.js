@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCalendarTimes, faGlobeEurope} from "@fortawesome/free-solid-svg-icons";
 import {Button} from "react-bootstrap";
-import AddVacationRequestModal from "./calendarvacationrequest/AddVacationRequestModal";
+import AddVacationRequestModal from "../vacationrequest/AddVacationRequestModal";
 import AddIneligiblePeriodModal from "../ineligibleperiod/AddIneligiblePeriodModal";
 import {useAuth} from "../../contexts/AuthContext";
 

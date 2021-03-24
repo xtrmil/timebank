@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { updateUser } from "../api/user";
-import ProfileInfo from "../components/userprofile/ProfileInfo";
-import ProfileNav from "../components/userprofile/ProfileNav";
+import ProfileInfo from "../components/myprofile/ProfileInfo";
+import ProfileNav from "../components/myprofile/ProfileNav";
 import { Container } from "react-bootstrap";
-import "./profilePage.scss";
-import VacationRequestTable from "../components/uservacationrequest/VacationRequestTable";
+import "./myProfilePage.scss";
+import VacationRequestTable from "../components/vacationrequest/VacationRequestTable";
 import { getAllVacationRequestsByToken } from "../api/vacationRequest";
 import {useToast} from "../contexts/ToastContext";
 
-const ProfilePage = () => {
+const MyProfilePage = () => {
+
   const {setToastHeader, setToastMsg, setToast} = useToast();
   const { updateToken, loggedInUser } = useAuth();
   const [editDisabled, setEditDisabled] = useState(true);
@@ -74,4 +75,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default MyProfilePage;

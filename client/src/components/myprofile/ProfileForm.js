@@ -3,7 +3,7 @@ import * as yup from "yup";
 import { Formik } from "formik";
 import { Button, Form } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
-import "../../pages/profilePage.scss";
+import "../../pages/myProfilePage.scss";
 
 const ProfileForm = (props) => {
   const { loggedInUser } = useAuth();

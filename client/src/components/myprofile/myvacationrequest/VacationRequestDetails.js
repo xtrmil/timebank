@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import CommentCard from "../userprofile/comment/CommentCard";
-import AddCommentForm from "../userprofile/comment/AddCommentForm";
-import EditVacationRequestModal from "../calendar/calendarvacationrequest/EditVacationRequestModal";
-import EditVacationRequestStatusModal from "../calendar/calendarvacationrequest/EditVacationRequestStatusModal";
-import { useAuth } from "../../contexts/AuthContext";
+import CommentCard from "../mycomment/CommentCard";
+import AddCommentForm from "../mycomment/AddCommentForm";
+import EditVacationRequestModal from "../../vacationrequest/EditVacationRequestModal";
+import EditVacationRequestStatusModal from "../../vacationrequest/EditVacationRequestStatusModal";
+import { useAuth } from "../../../contexts/AuthContext";
 import { Button, Card, Col, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";

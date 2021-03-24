@@ -6,9 +6,9 @@ import NotFoundPage from "./pages/NotFoundPage";
 import LoginPage from "./pages/LoginPage";
 import VerifyLoginPage from "./pages/VerifyLoginPage"
 import BootstrapNavbar from "./components/navbar/Navbar";
-import PrivateRoute from "./components/utils/PrivateRoute";
+import PrivateRoute from "./utils/PrivateRoute";
 import AdminPage from "./pages/AdminPage";
-import ProfilePage from "./pages/ProfilePage";
+import MyProfilePage from "./pages/MyProfilePage";
 import UserProfilePage from "./pages/UserProfilePage";
 import VacationRequestDetailsPage from './pages/VacationRequestDetailsPage'
 import Toaster from "./components/toast/Toaster";
@@ -34,7 +34,7 @@ function App() {
                <Route exact path="/verify" component={VerifyLoginPage}/>
                <PrivateRoute exact path="/home" component={Dashboard}/>
                <PrivateRoute exact path="/admin" component={AdminPage}/>
-               <PrivateRoute exact path="/profile" component={ProfilePage}/>
+               <PrivateRoute exact path="/profile" component={MyProfilePage}/>
                <PrivateRoute exact path="/user/:id" component={UserProfilePage}/>
                <PrivateRoute exact path="/request/:id" component={VacationRequestDetailsPage}/>
                <Route path="*" component={NotFoundPage}/>

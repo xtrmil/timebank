@@ -2,7 +2,7 @@ import React from "react";
 import * as yup from "yup";
 import { Formik } from "formik";
 import { Button, Form } from "react-bootstrap";
-import "../../pages/profilePage.scss";
+import "../../pages/myProfilePage.scss";
 import { updatePassword } from "../../api/user";
 
 const UpdatePasswordForm = (props) => {

@@ -2,12 +2,14 @@ import React, { useEffect, useState ,useCallback} from "react";
 import { Col, Card, Row, Container } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import VacationRequestTable from "../components/uservacationrequest/VacationRequestTable";
+import VacationRequestTable from "../components/vacationrequest/VacationRequestTable";
 import { getAllVacationRequestsByUserId } from "../api/vacationRequest";
 import{ getUserById } from '../api/user';
 import './UserProfilePage.css';
+import {useToast} from "../contexts/ToastContext";
 
 const UserProfilePage = () => {
+  const {setToastHeader, setToastMsg, setToast} = useToast();
   const history = useHistory();
   const { loggedInUser, isAdmin } = useAuth();
   const  [user, setUser] =useState( history?.location?.state?.user);
@@ -20,7 +22,9 @@ const UserProfilePage = () => {
       let response = await getAllVacationRequestsByUserId(id);
       setVacationRequests(response.data.data);
     } catch (error) {
-      console.log(error);
+      setToastHeader("Error");
+      setToastMsg(error.message);
+      setToast(true);
     }
   },[id]);
 
@@ -28,7 +32,6 @@ const UserProfilePage = () => {
     const fetchUser = async()=>{
     let response = await getUserById(id);
      setUser(response.data.data);
-
     }
     if(!user){
       fetchUser();

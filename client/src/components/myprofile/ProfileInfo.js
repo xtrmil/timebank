@@ -4,13 +4,16 @@ import UpdatePasswordForm from "./UpdatePasswordForm";
 import { Button, Card, Col, Row } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import {uploadImage,fetchImageByUser} from '../../api/user';
+import {useToast} from "../../contexts/ToastContext";
+
 const ProfileInfo = (props) => {
-  const { loggedInUser} = useAuth();
-  const { editDisabled, setEditDisabled, updateProfileInfo } = props;
-  const [showPasswordForm, setShowPasswordForm] = useState(false);
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [image,setImage] = useState();
-  const [isLoading, setIsLoading] = useState(true);
+    const {setToastHeader, setToastMsg, setToast} = useToast();
+    const { loggedInUser} = useAuth();
+    const { editDisabled, setEditDisabled, updateProfileInfo } = props;
+    const [showPasswordForm, setShowPasswordForm] = useState(false);
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [image,setImage] = useState();
+    const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchImage =async()=>{
@@ -26,13 +29,22 @@ const ProfileInfo = (props) => {
  }
 
  const OnClickUploadImage = async()=>{
-   if(!!selectedFile){
-    let formData = new FormData();
-    formData.append('image', selectedFile);
-    let response  = await uploadImage(formData);
-    setImage(response.data.data)
-    
-   }
+      try{
+          if(!!selectedFile){
+              let formData = new FormData();
+              formData.append('image', selectedFile);
+              let response  = await uploadImage(formData);
+              setImage(response.data.data);
+              setToastHeader("Success");
+              setToastMsg(response.data.msg);
+              setToast(true);
+          };
+      }catch (error){
+          setToastHeader("Error");
+          setToastMsg(error.message);
+          setToast(true);
+      }
+
  };
   return (
     <>

@@ -4,19 +4,33 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
-import DeleteVacationRequestModal from "../calendar/calendarvacationrequest/DeleteVacationRequestModal";
+import DeleteVacationRequestModal from "./DeleteVacationRequestModal";
 import {deleteVacationRequest} from '../../api/vacationRequest';
 import './VacationRequestTable.scss'
-const VacationRequestTable = ({ vacationRequests, isViewable, updateVacationRequestList}) => {
-  const history = useHistory();
-  const { loggedInUser, isAdmin } = useAuth();
-  const [request, setRequest] = useState({});
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
+import {useToast} from "../../contexts/ToastContext";
 
-  const onDeleteRequestClicked = async(requestId) => {
-    await deleteVacationRequest(requestId);
-    await updateVacationRequestList();
+const VacationRequestTable = ({ vacationRequests, isViewable, updateVacationRequestList}) => {
+    const {setToastHeader, setToastMsg, setToast} = useToast();
+    const history = useHistory();
+    const { loggedInUser, isAdmin } = useAuth();
+    const [request, setRequest] = useState({});
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+    const onDeleteRequestClicked = async(requestId) => {
+      try {
+          let response = await deleteVacationRequest(requestId);
+          setToastHeader("Success");
+          setToastMsg(response.data.msg);
+          setToast(true);
+          await updateVacationRequestList();
+      }catch(error){
+          setToastHeader("Error");
+          setToastMsg(error.message);
+          setToast(true);
+      }
+
   };
+
   const table = vacationRequests.map((request, index) => {
     const isOwner = loggedInUser.id === request.user.id;
     return (

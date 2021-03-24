@@ -17,7 +17,9 @@ const EmployeePage = () => {
             let response = await getAllUsers();
             setEmployees(response.data.data);
         }catch(error){
-            console.log(error);
+            setToastHeader("Error");
+            setToastMsg(error.message);
+            setToast(true);
         }finally {
             setIsLoading(false);
         }
