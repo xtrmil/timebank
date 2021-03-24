@@ -5,6 +5,7 @@ import { Button, Card, Col, Row } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import {uploadImage,fetchImageByUser} from '../../api/user';
 import {useToast} from "../../contexts/ToastContext";
+import "../commonButtonStyling.scss";
 
 const ProfileInfo = (props) => {
     const {setToastHeader, setToastMsg, setToast} = useToast();
@@ -51,21 +52,18 @@ const ProfileInfo = (props) => {
       <Row className="justify-content-center mb-3">
         <h5>My Profile</h5>
       </Row>
-      {!isLoading &&
+
+        {!isLoading &&
       <Row className="justify-content-center">
         <Col xs={8} md={4}>
-          <Card>
-            <Card.Img variant="top" alt="someImg" src={image}></Card.Img>
-            <Card.Body>
-              <input className="w-100 mb-2" type="file" onChange={handleFileChange}/>
-              <Button className="mb-2" onClick={OnClickUploadImage}>Change image</Button>
-              <p>
-                <strong>Total Vacation Days:</strong> 25
-              </p>
-              <p>
-                <strong>Remaining Vacation Days: </strong> {loggedInUser.currentVacationDays}
-                
-              </p>
+          <Card className="text-center">
+              <Card.Img variant="top" alt="someImg" src={image}></Card.Img>
+              <Card.Body>
+                  <input className="w-100 mb-2" type="file" onChange={handleFileChange}/>
+
+                  <p><strong>Total Vacation Days:</strong> 25</p>
+                  <p><strong>Remaining Vacation Days: </strong> {loggedInUser.currentVacationDays}</p>
+                <button className=" text-center edit-image-button mt-2 btn-sm" onClick={OnClickUploadImage}>Change image</button>
             </Card.Body>
           </Card>
         </Col>

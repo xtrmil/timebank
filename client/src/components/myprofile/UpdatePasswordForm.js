@@ -129,13 +129,13 @@ const UpdatePasswordForm = (props) => {
           </Form.Group>
           <div className="text-center">
             <Button
-              className="mr-2"
+              className="mr-2 btn-sm"
               onClick={onCancelClicked}
-              variant="primary"
+              variant="secondary"
             >
               Cancel
             </Button>
-            <Button type="submit" variant="primary">
+            <Button type="submit" className="btn-sm" variant="primary">
               Save
             </Button>
           </div>

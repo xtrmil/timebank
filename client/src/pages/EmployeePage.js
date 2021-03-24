@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from "react";
-import {Row, Button, Col} from "react-bootstrap";
+import {Row} from "react-bootstrap";
 import {addUser, deleteUser, getAllUsers, updateUser} from "../api/user";
 import EmployeeTable from "../components/adminprofile/EmployeeTable";
 import AddEmployeeModal from "../components/adminprofile/AddEmployeeModal";
 import {useToast} from "../contexts/ToastContext";
-import "./employeePage.scss";
+import "../components/commonButtonStyling.scss";
 
 const EmployeePage = () => {
 
@@ -94,7 +94,6 @@ const EmployeePage = () => {
                 setShowModal={setShowAddModal}
                 showModal={showAddModal}
                 onAddEmployeeClicked={onAddEmployeeClicked}/>
-
         </>
     );
 };

@@ -1,0 +1,29 @@
+.add-password-button, .add-period-button, .add-employee-button {
+  color: white;
+  border: none;
+  background-color: #345f9a;
+  &:hover{
+    border-color:#1c3e6b;
+    background-color:#1c3e6b;
+  }
+  &:focus {
+    outline: none;
+    box-shadow: none;
+    background-color:#1c3e6b;
+  }
+}
+
+.edit-profile-button, .edit-image-button {
+  border: none;
+  color: white;
+  background-color: #82ab9b;
+  &:hover{
+    border-color: #668a7c;
+    background-color:#668a7c;
+  }
+  &:focus {
+    outline: none;
+    box-shadow: none;
+    background-color: #668a7c;
+  }
+}
