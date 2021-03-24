@@ -13,6 +13,7 @@ import se.experis.timebank.repositories.UserRepository;
 import se.experis.timebank.repositories.VacationRequestRepository;
 
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -70,30 +71,34 @@ public class CommentService {
         return new ResponseEntity<>(cr, cr.status);
     }
 
-    /**
-     * TODO validate for edit within 24h
-     */
     public ResponseEntity<CommonResponse> updateCommentById(Long commentId, Comment newComment, UserCredentials userCredentials) {
         CommonResponse cr = new CommonResponse();
         Optional<Comment> optionalComment = commentRepository.findById(commentId);
 
-        if (optionalComment.isPresent()) {
-            if (optionalComment.get().getUser().getId() == userCredentials.getId()) {
-                Comment comment = optionalComment.get();
-                if (newComment.getMessage() != null) {
-                    comment.setMessage(newComment.getMessage());
+        if(LocalDateTime.now().isBefore(optionalComment.get().getCreatedAt().plusDays(1))) {
+            if (optionalComment.isPresent()) {
+                if (optionalComment.get().getUser().getId() == userCredentials.getId()) {
+                    Comment comment = optionalComment.get();
+                    if (newComment.getMessage() != null) {
+                        comment.setMessage(newComment.getMessage());
+                    }
+                    cr.data = commentRepository.save(comment);
+                    cr.msg = "CommentCard with id " + commentId + " was updated";
+                    cr.status = HttpStatus.OK;
+                } else {
+                    cr.msg = "Unauthorized operation";
+                    cr.status = HttpStatus.UNAUTHORIZED;
                 }
-                cr.data = commentRepository.save(comment);
-                cr.msg = "CommentCard with id " + commentId + " was updated";
-                cr.status = HttpStatus.OK;
             } else {
-                cr.msg = "Unauthorized operation";
-                cr.status = HttpStatus.UNAUTHORIZED;
+                cr.msg = "CommentCard  with id " + commentId + " not found";
+                cr.status = HttpStatus.NOT_FOUND;
             }
-        } else {
-            cr.msg = "CommentCard  with id " + commentId + " not found";
-            cr.status = HttpStatus.NOT_FOUND;
+        }else{
+            cr.msg = "Edit not allowed after 24h from creation";
+            cr.status = HttpStatus.BAD_REQUEST;
         }
+
+
         return new ResponseEntity<>(cr, cr.status);
     }
 
@@ -117,18 +122,4 @@ public class CommentService {
         }
         return new ResponseEntity<>(cr, cr.status);
     }
-
-//    public ResponseEntity<CommonResponse> getCommentById(Long id) {
-//        CommonResponse cr = new CommonResponse();
-//        Optional<CommentCard> commentOptional = commentRepository.findById(id);
-//        if (commentOptional.isPresent()) {
-//            cr.data = commentOptional.get();
-//            cr.msg = "CommentCard found with id: " + id;
-//            cr.status = HttpStatus.OK;
-//        } else {
-//            cr.msg = "No CommentCard found with id: " + id;
-//            cr.status = HttpStatus.NOT_FOUND;
-//        }
-//        return new ResponseEntity<>(cr, cr.status);
-//    }
 }
