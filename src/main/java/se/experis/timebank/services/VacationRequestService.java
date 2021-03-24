@@ -1,20 +1,31 @@
 package se.experis.timebank.services;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.threeten.extra.LocalDateRange;
 import se.experis.timebank.models.*;
 import se.experis.timebank.repositories.IneligibleRepository;
+import se.experis.timebank.repositories.SingleVacationLengthRepository;
 import se.experis.timebank.repositories.UserRepository;
 import se.experis.timebank.repositories.VacationRequestRepository;
+import se.experis.timebank.utils.JsonExporter;
 import se.experis.timebank.utils.Validations;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
+import org.apache.commons.io.IOUtils;
 
 @Service
 public class VacationRequestService {
@@ -30,6 +41,15 @@ public class VacationRequestService {
 
     @Autowired
     private IneligibleRepository ineligibleRepository;
+
+    @Autowired
+    private SingleVacationLengthRepository singleVacationLengthRepository;
+
+    @Autowired
+    JsonExporter jsonExporter;
+
+    @Autowired
+    ObjectMapper objectMapper;
 
     /**
      * Se över variabelnamn
@@ -134,7 +154,6 @@ public class VacationRequestService {
             requests = new HashSet<>(vacationRequestRepository.findAllByStatusNot(RequestStatus.DENIED));
         } else {
             requests = new HashSet<>(vacationRequestRepository.findAllByStatus(RequestStatus.APPROVED));
-
         }
         requests.addAll(new HashSet<>(vacationRequestRepository.findAllByUserId(userCredentials.getId())));
         cr.data = requests;
@@ -146,10 +165,48 @@ public class VacationRequestService {
         CommonResponse cr = new CommonResponse();
         cr.data = vacationRequestRepository.findAll();
         cr.status = HttpStatus.OK;
+
+
         return new ResponseEntity<>(cr, cr.status);
     }
 
-    public ResponseEntity<CommonResponse> updateVacationRequest(UserCredentials userCredentials, Long requestId, VacationRequest newVacationRequest) {
+    public ResponseEntity<CommonResponse> importVacationRequestsFromJSON(MultipartFile requests) {
+        CommonResponse cr = new CommonResponse();
+        try {
+            ByteArrayInputStream stream = new ByteArrayInputStream(requests.getBytes());
+            String input = IOUtils.toString(stream, "UTF-8");
+            if (input != null || input != "") {
+                List<VacationRequest> requestList = objectMapper.readValue(input, new TypeReference<>() {});
+                requestList.forEach(request -> {
+                    vacationRequestRepository.save(request);
+                    System.out.println(request.getTitle() + " added");
+                });
+                cr.status = HttpStatus.OK;
+                cr.msg = "Vacation requests successfully imported";
+            }
+            cr.status = HttpStatus.BAD_REQUEST;
+            cr.msg = "File not valid for import";
+
+        } catch (IOException e) {
+
+        }
+
+        return new ResponseEntity<>(cr, cr.status);
+    }
+
+    public ResponseEntity<byte[]> exportAllVacationRequestsToJSON() {
+        byte[] customerJsonBytes = jsonExporter.export(vacationRequestRepository.findAll()).getBytes();
+
+        return ResponseEntity
+                .ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION)
+                .contentType(MediaType.APPLICATION_JSON)
+                .contentLength(customerJsonBytes.length)
+                .body(customerJsonBytes);
+    }
+
+    public ResponseEntity<CommonResponse> updateVacationRequest(UserCredentials userCredentials, Long
+            requestId, VacationRequest newVacationRequest) {
         CommonResponse cr = new CommonResponse();
         Optional<VacationRequest> optionalRequest = vacationRequestRepository.findById(requestId);
 
@@ -169,7 +226,7 @@ public class VacationRequestService {
                 if (newVacationRequest.getTitle() != null) {
                     request.setTitle(newVacationRequest.getTitle());
                 }
-                if(newVacationRequest.getDescription().length() > 0){
+                if (newVacationRequest.getDescription().length() > 0) {
                     request.setDescription(newVacationRequest.getDescription());
                 }
                 Optional<User> admin = userRepository.findById(userCredentials.getId());
@@ -188,7 +245,8 @@ public class VacationRequestService {
         return new ResponseEntity<>(cr, cr.status);
     }
 
-    public ResponseEntity<CommonResponse> updateVacationRequestStatus(UserCredentials userCredentials, Long requestId, String status) {
+    public ResponseEntity<CommonResponse> updateVacationRequestStatus(UserCredentials userCredentials, Long
+            requestId, String status) {
         CommonResponse cr = new CommonResponse();
         Optional<VacationRequest> optionalRequest = vacationRequestRepository.findById(requestId);
 
@@ -235,6 +293,47 @@ public class VacationRequestService {
         return new ResponseEntity<>(cr, cr.status);
     }
 
+    public ResponseEntity<CommonResponse> getSingleVacationLimit(){
+        CommonResponse cr = new CommonResponse();
+        List<SingleVacationLimit> limit = singleVacationLengthRepository.findAll();
+
+            if (limit.size() > 0) {
+                cr.data = limit.get(0);
+                cr.msg = "current length limit is: " + limit.get(0).getLength();
+                cr.status = HttpStatus.OK;
+            } else {
+                SingleVacationLimit singleVacationLimit = new SingleVacationLimit();
+                singleVacationLengthRepository.save(singleVacationLimit);
+
+                cr.data = singleVacationLimit;
+                cr.msg = "current length limit is: " + singleVacationLimit;
+                cr.status = HttpStatus.BAD_REQUEST;
+            }
+
+        return new ResponseEntity<>(cr, cr.status);
+    }
+
+    public ResponseEntity<CommonResponse> updateSingleVacationLimit(int length){
+        CommonResponse cr = new CommonResponse();
+        List<SingleVacationLimit> limit = singleVacationLengthRepository.findAll();
+        if(limit.size() > 0 ){
+
+            SingleVacationLimit singleVacationLimit = limit.get(0);
+            singleVacationLimit.setLength(length);
+            singleVacationLengthRepository.save(singleVacationLimit);
+
+            cr.data = singleVacationLimit;
+            cr.msg = "new length limit for a single vacation set to: "+singleVacationLimit.getLength();
+            cr.status = HttpStatus.OK;
+        }else{
+            SingleVacationLimit singleVacationLimit = new SingleVacationLimit();
+            singleVacationLimit.setLength(length);
+            singleVacationLengthRepository.save(singleVacationLimit);
+            cr.msg = "not allowed";
+            cr.status = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<>(cr, cr.status);
+    }
     private boolean overlapsIneligblePeriod(VacationRequest vacationRequest) {
         List<IneligiblePeriod> ineligiblePeriods = ineligibleRepository.findAll();
         LocalDateRange requestPeriod = LocalDateRange.ofClosed(vacationRequest.getStartDate(), vacationRequest.getEndDate());

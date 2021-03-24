@@ -1,6 +1,6 @@
 
 import { Formik } from "formik";
-import { Form,Button,Container } from "react-bootstrap";
+import { Form,Button,Container,Card,Row } from "react-bootstrap";
 import React from "react";
 import { Redirect } from "react-router-dom";
 import "./VerifyLoginPage.scss";
@@ -40,11 +40,13 @@ const VerifyLoginPage = (props) => {
     history.replace("/home");
   };
   return (
-    <Container component="main" maxWidth="xs" className="verify-container">
-      <div>
+    <Container className="verify-container">
+      <Row className="justify-content-center">
+      <Card className="mt-5">
+        <Card.Body className="verify-card">
         {!verified && (
           <>
-            <img src={qrSecret.qrUri} alt=""></img>
+            <img className="qr-code" src={qrSecret.qrUri} alt=""></img>
             <h3>{qrSecret.configCode}</h3>
           </>
         )}
@@ -77,6 +79,7 @@ const VerifyLoginPage = (props) => {
             </Form>
           )}
         </Formik>
+        <div className="text-center justify-content-center mt-3">
         <MobileStoreButton
           store="ios"
           url={"https://apps.apple.com/se/app/google-authenticator/id388497605"}
@@ -87,7 +90,10 @@ const VerifyLoginPage = (props) => {
           url={"https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=sv&gl=US"}
           linkProps={{ title: "Android Store Button" }}
         />
-      </div>
+        </div>
+        </Card.Body>
+      </Card>
+      </Row>
     </Container>
   );
 };

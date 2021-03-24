@@ -6,7 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import se.experis.timebank.models.RequestStatus;
+import org.springframework.web.multipart.MultipartFile;
+import se.experis.timebank.models.SingleVacationLimit;
 import se.experis.timebank.models.UserCredentials;
 import se.experis.timebank.models.VacationRequest;
 import se.experis.timebank.services.CommonResponse;
@@ -36,6 +37,17 @@ public class VacationRequestController {
         return vacationRequestService.getAllVacationRequestsAdminview();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/all/export")
+    public ResponseEntity<byte[]> exportAllVacationRequestsToJSON(){
+        return vacationRequestService.exportAllVacationRequestsToJSON();
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping(value="/import", consumes="multipart/form-data")
+    public ResponseEntity<CommonResponse> importVacationRequestsFromJSON(@RequestParam("file") MultipartFile requests){
+        return vacationRequestService.importVacationRequestsFromJSON(requests);
+    }
 
     @GetMapping("/user")
     public ResponseEntity<CommonResponse> getAllVacationRequestByUserToken(@AuthenticationPrincipal UserCredentials userCredentials)
@@ -66,12 +78,17 @@ public class VacationRequestController {
         return vacationRequestService.deleteVacationRequestById(requestId);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/get/singlevacationlimit/")
+    public ResponseEntity<CommonResponse> getSingleVacationLimit(){
+        return vacationRequestService.getSingleVacationLimit();
+    }
 
-
-//    @GetMapping("")
-//    public ResponseEntity<CommonResponse> getVacationRequest(){ // token
-//        return null;
-//    }
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("/update/singlevacationlimit/")
+    public ResponseEntity<CommonResponse> updateSingleVacationLimit(@RequestBody SingleVacationLimit limit){
+        return vacationRequestService.updateSingleVacationLimit(limit.getLength());
+    }
 
     @GetMapping("/{requestId}")
    public ResponseEntity<CommonResponse> getVacationRequestById(@PathVariable Long requestId) {    // behövs?

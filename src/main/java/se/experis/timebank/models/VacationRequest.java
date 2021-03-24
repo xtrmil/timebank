@@ -1,5 +1,6 @@
 package se.experis.timebank.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 import javax.persistence.*;

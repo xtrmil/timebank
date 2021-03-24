@@ -9,8 +9,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import se.experis.timebank.models.SingleVacationLimit;
 import se.experis.timebank.models.User;
 import se.experis.timebank.models.UserCredentials;
+import se.experis.timebank.repositories.SingleVacationLengthRepository;
 import se.experis.timebank.repositories.UserRepository;
 import se.experis.timebank.utils.JwtUtil;
 import se.experis.timebank.utils.TotpManager;
@@ -24,6 +26,8 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+
 
     @Autowired
     private TotpManager totpManager;
@@ -193,4 +197,6 @@ public class UserService {
         }
         return new ResponseEntity<>(cr,cr.status);
     }
+
+
 }

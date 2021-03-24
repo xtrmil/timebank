@@ -3,6 +3,7 @@ import { Cookies } from "react-cookie";
 const cookies = new Cookies();
 
 const addVacationRequest = (body) => {
+
   return Api.post(
     "/request",
     { ...body },
@@ -23,6 +24,7 @@ const getVacationRequestById = (id) => {
 };
 
 const getAllVacationRequestsByToken = () => {
+
   return Api.get(`/request/user`, {
     headers: {
       Authorization: `Bearer ${cookies.get("session_token")} `,
@@ -62,6 +64,7 @@ const getAllVacationRequests = () => {
 };
 
 const updateVacationRequest = (id, body) => {
+
   return Api.put(
     `/request/update/${id}`,
     { ...body },
@@ -93,6 +96,25 @@ const deleteVacationRequest = (id) => {
   });
 };
 
+const importRequestsFromJson = (body) => {
+    return Api.post("/request/import",
+     body, {
+    headers: {
+        Authorization: `Bearer ${cookies.get("session_token")} `,
+        'Content-Type': 'multipart/form-data'
+    }
+});
+}
+
+const exportAllVacationRequests = () => {
+    return Api.get(`/request/all/export`,
+        {
+            headers: {
+                Authorization: `Bearer ${cookies.get("session_token")} `
+            }
+        })
+}
+
 export {
   addVacationRequest,
   getVacationRequestById,
@@ -104,4 +126,6 @@ export {
   getAllVacationRequestsByUserId,
   getAllVacationRequestAdminView,
   updateVacationRequestStatus,
+  exportAllVacationRequests,
+  importRequestsFromJson
 };
