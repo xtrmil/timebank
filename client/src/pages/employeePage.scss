@@ -1,0 +1,14 @@
+.add-employee-button {
+  color: white;
+  border: none;
+  background-color: #345f9a;
+  &:hover{
+    border-color:#1c3e6b;
+    background-color:#1c3e6b;
+  }
+  &:focus {
+    outline: none;
+    box-shadow: none;
+    background-color:#1c3e6b;
+  }
+}

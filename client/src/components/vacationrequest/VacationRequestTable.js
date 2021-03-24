@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Table, Row, Button } from "react-bootstrap";
+import { Table, Row} from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router";
@@ -44,8 +44,8 @@ const VacationRequestTable = ({ vacationRequests, isViewable, updateVacationRequ
         <td>{request.status}</td>
         <td className="d-flex justify-content-center">
           {isViewable ? (
-            <Button
-              className="btn-sm mr-2"
+            <button
+              className="edit-button btn-sm mr-2"
               onClick={() =>
                 history.push({
                   pathname: `/request/${request.id}`,
@@ -53,23 +53,23 @@ const VacationRequestTable = ({ vacationRequests, isViewable, updateVacationRequ
                 })
               }
             >
-              <FontAwesomeIcon icon={faEye} />
-            </Button>
+              <FontAwesomeIcon color={"white"} icon={faEye} />
+            </button>
           ) : (
             "-"
           )}
 
           {isAdmin && (
-            <Button
+            <button
               onClick={() => {
                 setRequest(request);
                 setShowDeleteModal(true);
               }}
               disabled={isOwner}
-              className="btn btn-danger btn-sm delete-button"
+              className="delete-button btn-sm"
             >
-              <FontAwesomeIcon icon={faTrashAlt} />
-            </Button>
+              <FontAwesomeIcon color={"white"} icon={faTrashAlt} />
+            </button>
           )}
         </td>
       </tr>
@@ -81,8 +81,8 @@ const VacationRequestTable = ({ vacationRequests, isViewable, updateVacationRequ
         <h5>Vacation Requests</h5>
       </Row>
 
-      <Table responsive striped>
-        <thead>
+      <Table responsive className="table-hover table-sm table-styling">
+        <thead className="table-secondary">
           <tr className="text-center">
             <th>Title</th>
             <th>Owner</th>

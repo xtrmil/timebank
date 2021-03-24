@@ -32,14 +32,14 @@ const EmployeeTable = (props) => {
                 <td>{employee.email}</td>
                 <td>{employee.isAdmin}</td>
                 <td className="d-flex justify-content-center">
-                    <Button onClick={() => onShowUpdateModalClicked(employee)}
-                            className="btn btn-info btn-sm mr-2">
-                        <FontAwesomeIcon icon={faPencilAlt}/>
-                    </Button>
-                    <Button onClick={() => onShowDeleteModalClicked(employee)}
-                            className="btn btn-danger btn-sm">
-                        <FontAwesomeIcon icon={faTrashAlt}/>
-                    </Button>
+                    <button onClick={() => onShowUpdateModalClicked(employee)}
+                            className="edit-button btn-sm mr-2">
+                        <FontAwesomeIcon color={"white"} icon={faPencilAlt}/>
+                    </button>
+                    <button onClick={() => onShowDeleteModalClicked(employee)}
+                            className="delete-button btn-sm">
+                        <FontAwesomeIcon color={"white"} icon={faTrashAlt}/>
+                    </button>
                 </td>
             </tr>
         );
@@ -47,8 +47,8 @@ const EmployeeTable = (props) => {
 
     return(
         <>
-            <Table responsive striped>
-                <thead>
+            <Table responsive className="table-hover table-sm table-styling">
+                <thead className="table-secondary">
                 <tr className="text-center">
                     <th>Employee id</th>
                     <th>Name</th>

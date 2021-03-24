@@ -69,18 +69,22 @@ const ProfileInfo = (props) => {
             </Card.Body>
           </Card>
         </Col>
+
         <Col xs={8} md={5}>
-          {!showPasswordForm && (
-            <ProfileForm
-              setEditDisabled={setEditDisabled}
-              editDisabled={editDisabled}
-              onSubmitClicked={updateProfileInfo}
-              setShowPasswordForm={setShowPasswordForm}
-            />
-          )}
-          {showPasswordForm && (
-            <UpdatePasswordForm setShowPasswordForm={setShowPasswordForm} />
-          )}
+            <Card className="p-4">
+                {!showPasswordForm && (
+                    <ProfileForm
+                        setEditDisabled={setEditDisabled}
+                        editDisabled={editDisabled}
+                        onSubmitClicked={updateProfileInfo}
+                        setShowPasswordForm={setShowPasswordForm}
+                    />
+                )}
+                {showPasswordForm && (
+                    <UpdatePasswordForm setShowPasswordForm={setShowPasswordForm} />
+                )}
+            </Card>
+
         </Col>
       </Row>}
     </>

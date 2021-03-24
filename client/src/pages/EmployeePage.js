@@ -4,6 +4,7 @@ import {addUser, deleteUser, getAllUsers, updateUser} from "../api/user";
 import EmployeeTable from "../components/adminprofile/EmployeeTable";
 import AddEmployeeModal from "../components/adminprofile/AddEmployeeModal";
 import {useToast} from "../contexts/ToastContext";
+import "./employeePage.scss";
 
 const EmployeePage = () => {
 
@@ -78,9 +79,9 @@ const EmployeePage = () => {
                 <h5>All Employees</h5>
             </Row>
             <Row className="mb-2 justify-content-end" noGutters>
-                <Button onClick={() => setShowAddModal(true)} className="btn btn-sm btn-info">
+                <button onClick={() => setShowAddModal(true)} className="add-employee-button btn-sm">
                     Add New Employee
-                </Button>
+                </button>
             </Row>
 
             <EmployeeTable

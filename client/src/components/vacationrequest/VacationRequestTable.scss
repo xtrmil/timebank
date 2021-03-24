@@ -1,4 +1,8 @@
-.delete-button:disabled{
+ .delete-button:disabled{
     background-color: lightgray;
     border: lightgray;
+     &:hover{
+         background-color: lightgray;
+         border: lightgray;
+     }
 }
