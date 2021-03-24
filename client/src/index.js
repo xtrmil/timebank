@@ -3,11 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {ContextProvider} from './context/Context'
+import {ContextProvider} from './contexts/AuthContext'
+import {ToastContextProvider} from "./contexts/ToastContext";
 
 ReactDOM.render(
   <ContextProvider>
-    <App />
+      <ToastContextProvider>
+          <App />
+      </ToastContextProvider>
     </ContextProvider>
   ,
   document.getElementById('root')

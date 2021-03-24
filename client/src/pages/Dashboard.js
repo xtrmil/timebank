@@ -8,14 +8,16 @@ import CalendarToolbar from "../components/calendar/CalendarToolbar";
 import { getAllVacationRequestsByStatus } from "../api/vacationRequest";
 import { getAllVacationRequests } from "../api/vacationRequest";
 import EditVacationRequestModal from "../components/calendar/calendarvacationrequest/EditVacationRequestModal";
-import { useAuth } from "../context/Context";
+import { useAuth } from "../contexts/AuthContext";
 import {getAllIneligiblePeriods} from "../api/ineligiblePeriod";
 import {useHistory} from "react-router-dom";
 import AdminNav from "../components/adminprofile/AdminNav";
 import CalendarNav from "../components/calendar/CalendarNav";
+import {useToast} from "../contexts/ToastContext";
 const localizer = momentLocalizer(moment);
 
 const Dashboard = () => {
+  const {setToastHeader, setToastMsg, setToast} = useToast();
   const [requests, setRequests] = useState([]);
   const [ineligiblePeriods, setIneligiblePeriods] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -31,7 +33,9 @@ const Dashboard = () => {
       let result = await getAllVacationRequests();
       setRequests(result.data.data);
     } catch (error) {
-      console.log(error);
+      setToastHeader("Error");
+      setToastMsg(error.message);
+      setToast(true);
     } finally {
       setIsLoading(false);
     }
@@ -42,7 +46,9 @@ const Dashboard = () => {
       let result = await getAllIneligiblePeriods();
       setIneligiblePeriods(result.data.data);
     }catch(error){
-        console.log("inside fetchInPeriods", error);
+      setToastHeader("Error");
+      setToastMsg(error.message);
+      setToast(true);
     }finally {
       setIsLoading(false);
     }
@@ -114,7 +120,7 @@ const Dashboard = () => {
   };
 
   return (
-    <Container>
+    <>
       {!isLoading && (
         <>
           <div className="profile-banner my-4 pt-3 justify-content-center">
@@ -124,18 +130,21 @@ const Dashboard = () => {
               <CalendarNav/>
             </div>
           </div>
-          <Calendar
-            eventPropGetter={eventColorStyle}
-            components={{ toolbar: CalendarToolbar, dateCellWrapper: blockedDateCellWrapper, month: blockedDateStyle}}
-            views={["month"]}
-            localizer={localizer}
-            events={requests}
-            startAccessor="startDate"
-            endAccessor="endDate"
-            style={{ height: 1000 }}
-            popup
-            onSelectEvent={(event) => handleSelectEvent(event)}
-          />
+          <Container>
+
+            <Calendar
+              eventPropGetter={eventColorStyle}
+              components={{ toolbar: CalendarToolbar, dateCellWrapper: blockedDateCellWrapper, month: blockedDateStyle}}
+              views={["month"]}
+              localizer={localizer}
+              events={requests}
+              startAccessor="startDate"
+              endAccessor="endDate"
+              style={{ height: 1000 }}
+              popup
+              onSelectEvent={(event) => handleSelectEvent(event)}
+            />
+          </Container>
           <EditVacationRequestModal
             afterUpdate={afterUpdate}
             request={selectedEvent}
@@ -143,8 +152,10 @@ const Dashboard = () => {
             setShowModal={setShowModal}
           />
         </>
+
       )}
-    </Container>
+    </>
+
   );
 };
 

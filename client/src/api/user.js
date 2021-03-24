@@ -29,6 +29,7 @@ const getUserById = (id) => {
 }
  
 const updateUser = (id, body) => {
+    console.log("call",id, body)
     return Api.put(`user/${id}`,
         {...body}, {
             headers:{

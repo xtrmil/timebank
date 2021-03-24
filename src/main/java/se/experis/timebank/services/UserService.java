@@ -99,8 +99,7 @@ public class UserService {
                 if (userToUpdate.getProfileImg() != null) {
                     user.setProfileImg(userToUpdate.getProfileImg());
                 }
-
-                if (userToUpdate.getPassword().length() > 0){
+                if (userToUpdate.getPassword() != null && userToUpdate.getPassword().length() > 0){
                     user.setPassword(encoder.encode(userToUpdate.getPassword()));
                 }
 

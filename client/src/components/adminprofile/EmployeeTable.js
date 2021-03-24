@@ -31,7 +31,7 @@ const EmployeeTable = (props) => {
                 <td>{employee.firstName} {employee.lastName}</td>
                 <td>{employee.email}</td>
                 <td>{employee.isAdmin}</td>
-                <td className="d-flex">
+                <td className="d-flex justify-content-center">
                     <Button onClick={() => onShowUpdateModalClicked(employee)}
                             className="btn btn-info btn-sm mr-2">
                         <FontAwesomeIcon icon={faPencilAlt}/>
