@@ -295,17 +295,19 @@ public class VacationRequestService {
         CommonResponse cr = new CommonResponse();
         List<SingleVacationLimit> limit = singleVacationLengthRepository.findAll();
 
-        if(limit.size() > 0){
-            cr.data = limit.get(0);
-            cr.msg = "current length limit is: "+limit.get(0).getLength();
-            cr.status = HttpStatus.OK;
-        }else{
-            SingleVacationLimit singleVacationLimit = new SingleVacationLimit();
-            singleVacationLengthRepository.save(singleVacationLimit);
-            cr.data = singleVacationLimit;
-            cr.msg = "current length limit is: "+ singleVacationLimit;
-            cr.status = HttpStatus.BAD_REQUEST;
-        }
+            if (limit.size() > 0) {
+                cr.data = limit.get(0);
+                cr.msg = "current length limit is: " + limit.get(0).getLength();
+                cr.status = HttpStatus.OK;
+            } else {
+                SingleVacationLimit singleVacationLimit = new SingleVacationLimit();
+                singleVacationLengthRepository.save(singleVacationLimit);
+
+                cr.data = singleVacationLimit;
+                cr.msg = "current length limit is: " + singleVacationLimit;
+                cr.status = HttpStatus.BAD_REQUEST;
+            }
+
         return new ResponseEntity<>(cr, cr.status);
     }
 
@@ -313,9 +315,11 @@ public class VacationRequestService {
         CommonResponse cr = new CommonResponse();
         List<SingleVacationLimit> limit = singleVacationLengthRepository.findAll();
         if(limit.size() > 0 ){
+
             SingleVacationLimit singleVacationLimit = limit.get(0);
             singleVacationLimit.setLength(length);
             singleVacationLengthRepository.save(singleVacationLimit);
+
             cr.data = singleVacationLimit;
             cr.msg = "new length limit for a single vacation set to: "+singleVacationLimit.getLength();
             cr.status = HttpStatus.OK;

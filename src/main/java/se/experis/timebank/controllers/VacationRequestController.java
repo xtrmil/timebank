@@ -78,6 +78,7 @@ public class VacationRequestController {
         return vacationRequestService.deleteVacationRequestById(requestId);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/get/singlevacationlimit/")
     public ResponseEntity<CommonResponse> getSingleVacationLimit(){
         return vacationRequestService.getSingleVacationLimit();
@@ -88,13 +89,6 @@ public class VacationRequestController {
     public ResponseEntity<CommonResponse> updateSingleVacationLimit(@RequestBody SingleVacationLimit limit){
         return vacationRequestService.updateSingleVacationLimit(limit.getLength());
     }
-
-
-
-//    @GetMapping("")
-//    public ResponseEntity<CommonResponse> getVacationRequest(){ // token
-//        return null;
-//    }
 
     @GetMapping("/{requestId}")
    public ResponseEntity<CommonResponse> getVacationRequestById(@PathVariable Long requestId) {    // behövs?
