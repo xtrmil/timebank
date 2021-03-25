@@ -2,7 +2,9 @@ import React from "react";
 import { updateSingleVacationRequestLengthLimit } from "../../api/vacationRequest";
 import * as yup from "yup";
 import { Formik } from "formik";
-import { Button, Form,Row } from "react-bootstrap";
+import { Button, Form, Row } from "react-bootstrap";
+import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const SingleVacationRequestLengthLimitForm = (props) => {
 
@@ -55,54 +57,55 @@ const SingleVacationRequestLengthLimitForm = (props) => {
                     handleBlur,
                 }) => (
                     <Form onSubmit={handleSubmit} noValidate>
-                        <Row>
-                        <Form.Group>
-                            <Form.Label>
-                                {" "}
-                                <strong>Max length for single vacationrequest </strong>
-                            </Form.Label>
-                            <Form.Control
-                                type="number"
-                                name="length"
-                                readOnly={editDisabled}
-                                value={values.length}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                isInvalid={!!errors.length && touched.length}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.length}
-                            </Form.Control.Feedback>
-                        </Form.Group>
+                        
+                            <Form.Group>
+                                <Form.Label>
+                                    {" "}
+                                    <strong>Max length for single vacationrequest </strong>
+                                </Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    name="length"
+                                    readOnly={editDisabled}
+                                    value={values.length}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    isInvalid={!!errors.length && touched.length}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.length}
+                                </Form.Control.Feedback>
+
+                                <div className="justify-content-center text-center">
+                                    {editDisabled && (
+                                        <>
+                                            <button
+                                                className="btn edit-button btn-sm mr-2"
+                                                onClick={onEditClicked}>
+                                                 <FontAwesomeIcon color={"white"} icon={faPencilAlt}/>
+                                            </button>
+                                        </>
+                                    )}
+                                    {!editDisabled && (
+                                        <>
+                                            <Button
+                                                className="mr-2"
+                                                onClick={() => onCancelClicked(resetForm)}
+                                                variant="primary">
+                                                Cancel</Button>
+                                            <Button
+                                                type="submit"
+                                                variant="primary">
+                                                Save
+                                    </Button>
+                                        </>
+                                    )}
+                                </div>
+                            </Form.Group>
 
 
-                        <div className="justify-content-center text-center">
-                            {editDisabled && (
-                                <>
-                                    <Button
-                                        className="mr-2"
-                                        variant="primary"
-                                        onClick={onEditClicked}>
-                                        Edit
-                                    </Button>
-                                </>
-                            )}
-                            {!editDisabled && (
-                                <>
-                                    <Button
-                                        className="mr-2"
-                                        onClick={() => onCancelClicked(resetForm)}
-                                        variant="primary">
-                                        Cancel</Button>
-                                    <Button 
-                                        type="submit"
-                                        variant="primary">
-                                        Save
-                                    </Button>
-                                </>
-                            )}
-                        </div>
-                        </Row>
+
+                      
                     </Form>
                 )}
             </Formik>
