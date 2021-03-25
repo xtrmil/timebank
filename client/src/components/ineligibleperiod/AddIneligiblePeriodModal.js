@@ -1,5 +1,5 @@
 import React from "react";
-
+import { useHistory } from "react-router";
 import {Modal} from "react-bootstrap";
 import {addIneligiblePeriod} from "../../api/ineligiblePeriod";
 import IneligiblePeriodForm from "./IneligiblePeriodForm";
@@ -7,6 +7,7 @@ import {useToast} from "../../contexts/ToastContext";
 
 const AddIneligiblePeriodModal = ({showAddPeriodModal, setShowAddPeriodModal}) => {
 
+    const history = useHistory();
     const {setToastHeader, setToastMsg, setToast} = useToast();
 
     const initialValues = {
@@ -14,16 +15,17 @@ const AddIneligiblePeriodModal = ({showAddPeriodModal, setShowAddPeriodModal}) =
         endDate: null
     };
 
-    const onFormSubmit = (data) => {
+    const onFormSubmit = async (data) => {
         try {
             const startDate = new Date (data.startDate);
             const endDate = new Date (data.endDate);
             if (startDate.getTime() <= endDate.getTime()){
-                let response = addIneligiblePeriod(data);
-                setShowAddPeriodModal(false);
+                let response = await addIneligiblePeriod(data);
                 setToastHeader("Success");
                 setToastMsg(response.data.msg);
                 setToast(true);
+                setShowAddPeriodModal(false);
+                history.go(0);
             }
         }catch(error){
             setToastHeader("Error");

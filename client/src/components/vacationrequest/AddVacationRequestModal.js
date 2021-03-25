@@ -22,7 +22,7 @@ const AddVacationRequestModal = ({showAddRequestModal, setShowAddRequestModal}) 
         const endDate = new Date (data.endDate);
         try {
             if(startDate.getTime() <= endDate.getTime()){
-               const response =  await addVacationRequest(data);
+                let response =  await addVacationRequest(data);
                 const request = response.data.data;
                 history.push({pathname:`/request/${request.id}`,state:{request,from:history.location}})
                 setToastHeader("Success");
