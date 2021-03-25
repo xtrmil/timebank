@@ -87,6 +87,7 @@ public class VacationRequestController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/update/singlevacationlimit/")
     public ResponseEntity<CommonResponse> updateSingleVacationLimit(@RequestBody SingleVacationLimit limit){
+        System.out.println(limit.getLength());
         return vacationRequestService.updateSingleVacationLimit(limit.getLength());
     }
 

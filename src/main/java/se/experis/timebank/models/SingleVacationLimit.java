@@ -15,5 +15,5 @@ public class SingleVacationLimit {
     private Long id;
 
     @Column
-    private Integer length = 25;
+    private Integer length;
 }

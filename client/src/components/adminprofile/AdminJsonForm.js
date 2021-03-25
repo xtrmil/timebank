@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { exportAllVacationRequests, importRequestsFromJson } from "../../api/vacationRequest";
+import {Button} from "react-bootstrap";
 
 
 const AdminJsonForm = () => {
@@ -36,10 +37,10 @@ const AdminJsonForm = () => {
         <>
             <div id="container">
                 <input type="file" onChange={onFileChange} />
-                <button onClick={OnClickUploadRequest}>
+                <Button onClick={OnClickUploadRequest}>
                     Upload!
-                </button>
-                <button onClick={exportRequests}>Download Json</button>
+                </Button>
+                <Button onClick={exportRequests}>Download Json</Button>
                 <p />
             </div>
 

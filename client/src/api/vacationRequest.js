@@ -115,6 +115,26 @@ const exportAllVacationRequests = () => {
         })
 }
 
+const getSingleVacationRequestLengthLimit = () => {
+  return Api.get(`/request/get/singlevacationlimit/`,
+  {
+      headers: {
+          Authorization: `Bearer ${cookies.get("session_token")} `
+      }
+  })
+}
+
+const updateSingleVacationRequestLengthLimit = (body) => {
+  return Api.put(`/request/update/singlevacationlimit/`,
+    body,
+    {
+      headers: {
+        Authorization: `Bearer ${cookies.get("session_token")} `,
+      },
+    }
+  );
+}
+
 export {
   addVacationRequest,
   getVacationRequestById,
@@ -127,5 +147,7 @@ export {
   getAllVacationRequestAdminView,
   updateVacationRequestStatus,
   exportAllVacationRequests,
-  importRequestsFromJson
+  importRequestsFromJson,
+  getSingleVacationRequestLengthLimit,
+  updateSingleVacationRequestLengthLimit
 };
