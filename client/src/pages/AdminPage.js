@@ -7,6 +7,7 @@ import {Container} from "react-bootstrap";
 import IneligiblePeriodPage from "./IneligiblePeriodPage";
 import EmployeePage from "./EmployeePage";
 import "./adminPage.scss";
+import SettingsPage from "./SettingsPage";
 
 const AdminPage = () => {
     const {loggedInUser} = useAuth();
@@ -47,6 +48,9 @@ const AdminPage = () => {
                     )}
 
                 {view === 3 && (<IneligiblePeriodPage/>)}
+
+                {view === 4 &&(<SettingsPage/>)}
+                
             </Container>
         </>
     );
