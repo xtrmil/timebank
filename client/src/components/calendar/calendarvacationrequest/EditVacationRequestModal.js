@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
-import { useAuth } from "../../../context/Context";
+import { useAuth } from "../../../contexts/AuthContext";
 import VacationRequestForm from "./VacationRequestForm";
 import { updateVacationRequest } from "../../../api/vacationRequest";
 import { Link } from "react-router-dom";
@@ -23,7 +23,7 @@ const EditVacationRequestModal = (props) => {
     try {
       const startDate = new Date(data.startDate);
       const endDate = new Date(data.endDate);
-      if (startDate.getTime() < endDate.getTime()) {
+      if (startDate.getTime() <= endDate.getTime()) {
         let response = await updateVacationRequest(request.id, data);
         afterUpdate(response.data.data);
       }

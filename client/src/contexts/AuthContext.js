@@ -2,13 +2,12 @@ import { createContext, useState, useEffect, useContext } from "react";
 import jwt_decode from "jwt-decode";
 import { Cookies } from "react-cookie";
 
-
-const context = createContext();
+const authContext = createContext();
 const cookies = new Cookies();
 
 const ContextProvider = ({ children }) => {
   const auth = useCreateAuthContext();
-  return <context.Provider value={auth}>{children}</context.Provider>;
+  return <authContext.Provider value={auth}>{children}</authContext.Provider>;
 };
 
 const useCreateAuthContext = () => {
@@ -64,7 +63,7 @@ const isValidToken = (token) => {
   }
 };
 const useAuth = () => {
-  return useContext(context);
+  return useContext(authContext);
 };
 
 export { ContextProvider, useAuth };

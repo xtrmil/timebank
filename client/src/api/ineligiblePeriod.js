@@ -36,8 +36,7 @@ const updateIneligiblePeriod = (id, body) => {
             headers:{
                 Authorization: `Bearer ${cookies.get("session_token")} `
             }
-        }
-        );
+        });
 }
 
 const deleteIneligiblePeriodById = (id) => {

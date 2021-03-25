@@ -4,7 +4,7 @@ import {faCalendarTimes, faGlobeEurope} from "@fortawesome/free-solid-svg-icons"
 import {Button} from "react-bootstrap";
 import AddVacationRequestModal from "./calendarvacationrequest/AddVacationRequestModal";
 import AddIneligiblePeriodModal from "../ineligibleperiod/AddIneligiblePeriodModal";
-import {useAuth} from "../../context/Context";
+import {useAuth} from "../../contexts/AuthContext";
 
 const CalendarNav = () => {
 

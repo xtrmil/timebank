@@ -8,7 +8,7 @@ import * as yup from "yup";
 import { verifyLogin } from "../api/auth";
 import MobileStoreButton from "react-mobile-store-button";
 import {Cookies} from 'react-cookie'
-import {useAuth} from '../context/Context'
+import {useAuth} from '../contexts/AuthContext'
 import {useHistory} from 'react-router-dom';
 const initialValues = {
   code: "",

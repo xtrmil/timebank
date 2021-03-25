@@ -1,6 +1,6 @@
 import React from "react";
 import LoginForm from "../components/login/LoginForm";
-import {useAuth} from '../context/Context'
+import {useAuth} from '../contexts/AuthContext'
 import { Redirect } from "react-router-dom";
 import {Card, Container,Row} from 'react-bootstrap';
 const LoginPage = () => {

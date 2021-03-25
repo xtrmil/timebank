@@ -3,7 +3,7 @@ import { Table, Row, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router";
-import { useAuth } from "../../context/Context";
+import { useAuth } from "../../contexts/AuthContext";
 import DeleteVacationRequestModal from "../calendar/calendarvacationrequest/DeleteVacationRequestModal";
 import {deleteVacationRequest} from '../../api/vacationRequest';
 import './VacationRequestTable.scss'

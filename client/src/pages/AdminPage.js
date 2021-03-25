@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getAllVacationRequestAdminView } from "../api/vacationRequest";
 import VacationRequestTable from "../components/uservacationrequest/VacationRequestTable";
 import AdminNav from "../components/adminprofile/AdminNav";
-import {useAuth} from "../context/Context";
+import {useAuth} from "../contexts/AuthContext";
 import {Container} from "react-bootstrap";
 import IneligiblePeriodPage from "./IneligiblePeriodPage";
 import EmployeePage from "./EmployeePage";
