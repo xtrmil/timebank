@@ -19,7 +19,7 @@ const AddVacationRequestModal = ({showAddRequestModal, setShowAddRequestModal}) 
         const startDate = new Date (data.startDate);
         const endDate = new Date (data.endDate);
         try {
-            if(startDate.getTime() < endDate.getTime()){
+            if(startDate.getTime() <= endDate.getTime()){
                const response =  await addVacationRequest(data);
                 const request = response.data.data;
                 history.push({pathname:`/request/${request.id}`,state:{request,from:history.location}})
