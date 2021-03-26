@@ -5,6 +5,8 @@ import {Row} from "react-bootstrap";
 import {useToast} from "../contexts/ToastContext";
 import AddIneligiblePeriodModal from "../components/ineligibleperiod/AddIneligiblePeriodModal";
 import "../components/commonButtonStyling.scss";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPlusCircle} from "@fortawesome/free-solid-svg-icons";
 
 const IneligiblePeriodPage = () => {
 
@@ -69,7 +71,7 @@ const IneligiblePeriodPage = () => {
             </Row>
             <Row className="mb-2 justify-content-end" noGutters>
                 <button onClick={() => setShowAddPeriodModal(true)} className="add-period-button btn-sm">
-                    Add Ineligible Period
+                    <FontAwesomeIcon icon={faPlusCircle}/> Ineligible Period
                 </button>
             </Row>
             <IneligiblePeriodTable

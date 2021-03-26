@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Table, Row, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import {faEye, faPlusCircle, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
 import DeleteVacationRequestModal from "./DeleteVacationRequestModal";
 import AddVacationRequestModal from './AddVacationRequestModal';
 import {deleteVacationRequest} from '../../api/vacationRequest';
-import './VacationRequestTable.scss'
+import './VacationRequestTable.scss';
+import "../commonButtonStyling.scss";
 import {useToast} from "../../contexts/ToastContext";
 
 const VacationRequestTable = ({ vacationRequests, isViewable, updateVacationRequestList,showAddButton}) => {
@@ -83,12 +84,12 @@ const VacationRequestTable = ({ vacationRequests, isViewable, updateVacationRequ
       </Row>
       {showAddButton && (
         <Row className="mb-2 justify-content-end" noGutters>
-          <Button
+          <button
             onClick={() => setShowAddModal(true)}
-            className="btn btn-sm btn-info"
+            className="add-vacation-request-button btn-sm"
           >
-            Add Vacation Request
-          </Button>
+              <FontAwesomeIcon icon={faPlusCircle}/>  Vacation Request
+          </button>
         </Row>
       )}
       <Table responsive className="table-hover table-sm table-styling">
