@@ -19,7 +19,7 @@ const SettingsPage = () => {
     return (
 
         <>
-            <Container fluid="md">
+            <Container>
                 <Row className="justify-content-center mb-3">
                     <h5>Admin Settings</h5>
                 </Row>
@@ -32,8 +32,7 @@ const SettingsPage = () => {
                             setLengthLimit={setLengthLimit}
                             getLength={getLength}
                         />}
-                </Row>
-                <Row className="justify-content-center mb-3">
+
                     <AdminJsonForm />
                 </Row>
             </Container>

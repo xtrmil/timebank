@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { exportAllVacationRequests, importRequestsFromJson } from "../../../api/vacationRequest";
-import { Button, Row } from "react-bootstrap";
+import { exportAllVacationRequests, importRequestsFromJson } from "../../api/vacationRequest";
+import { Button, Col, Card } from "react-bootstrap";
 
 
 const AdminJsonForm = () => {
@@ -32,21 +32,46 @@ const AdminJsonForm = () => {
         document.body.appendChild(link);
         link.click();
     }
+    const hiddenFileInput = React.useRef(null);
+
+    const handleClick = event => {
+        hiddenFileInput.current.click();
+    };
 
     return (
         <>
             <div id="container">
-            <p><strong>Import Requests from json</strong></p>
-                <Row>
-                    
-                    <input type="file" onChange={onFileChange} />
-                    {selectedFile && <Button onClick={OnClickUploadRequest} className="btn btn-sm btn-info">
-                        Import File
+
+                <Col>
+                    <Card className= "mb-3">
+                        <Card.Body>
+                            <p><strong>Import Requests from json</strong></p>
+                            <Button 
+                                onClick={handleClick}
+                                className="btn btn-sm btn-info mr-5">
+                                Choose file
+                            </Button>
+                            <input 
+                                type="file"
+                                 onChange={onFileChange}
+                                ref={hiddenFileInput}
+                                style={{ display: 'none' }} />
+
+                            {selectedFile && <Button onClick={OnClickUploadRequest} className="btn btn-sm btn-info">
+                                Upload
                 </Button>
-                    }
-                </Row>
-                <p><strong>Export all Requests from json</strong></p>
-                <Button onClick={exportRequests} className="btn btn-sm btn-info ml-1">Export Json</Button>
+                            }
+                        </Card.Body>
+                    </Card>
+
+                    <Card>
+                        <Card.Body>
+                            <p><strong>Export all Requests to json</strong></p>
+                            <Button onClick={exportRequests} className="btn btn-sm btn-info ml-1">Download</Button>
+                        </Card.Body>
+                    </Card>
+                </Col>
+
 
 
                 <p />
