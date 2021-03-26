@@ -1,21 +1,22 @@
 import React, { useState } from "react";
-import { Table, Row} from "react-bootstrap";
+import { Table, Row, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
 import DeleteVacationRequestModal from "./DeleteVacationRequestModal";
+import AddVacationRequestModal from './AddVacationRequestModal';
 import {deleteVacationRequest} from '../../api/vacationRequest';
 import './VacationRequestTable.scss'
 import {useToast} from "../../contexts/ToastContext";
 
-const VacationRequestTable = ({ vacationRequests, isViewable, updateVacationRequestList}) => {
+const VacationRequestTable = ({ vacationRequests, isViewable, updateVacationRequestList,showAddButton}) => {
     const {setToastHeader, setToastMsg, setToast} = useToast();
     const history = useHistory();
     const { loggedInUser, isAdmin } = useAuth();
     const [request, setRequest] = useState({});
     const [showDeleteModal, setShowDeleteModal] = useState(false);
-
+    const [showAddModal,setShowAddModal ] = useState(false);
     const onDeleteRequestClicked = async(requestId) => {
       try {
           let response = await deleteVacationRequest(requestId);
@@ -77,10 +78,19 @@ const VacationRequestTable = ({ vacationRequests, isViewable, updateVacationRequ
   });
   return (
     <>
-      <Row className="justify-content-center mb-3">
+      <Row className="justify-content-center">
         <h5>Vacation Requests</h5>
       </Row>
-
+      {showAddButton && (
+        <Row className="mb-2 justify-content-end" noGutters>
+          <Button
+            onClick={() => setShowAddModal(true)}
+            className="btn btn-sm btn-info"
+          >
+            Add Vacation Request
+          </Button>
+        </Row>
+      )}
       <Table responsive className="table-hover table-sm table-styling">
         <thead className="table-secondary">
           <tr className="text-center">
@@ -94,13 +104,16 @@ const VacationRequestTable = ({ vacationRequests, isViewable, updateVacationRequ
         </thead>
         <tbody>{table}</tbody>
       </Table>
-
       <DeleteVacationRequestModal
         showDeleteModal={showDeleteModal}
         setShowDeleteModal={setShowDeleteModal}
         request={request}
         onDeleteRequestClicked={onDeleteRequestClicked}
       />
+      <AddVacationRequestModal
+        showAddRequestModal={showAddModal}
+        setShowAddRequestModal={setShowAddModal}
+      />{" "}
     </>
   );
 };
