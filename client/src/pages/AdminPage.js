@@ -44,7 +44,8 @@ const AdminPage = () => {
                     <VacationRequestTable
                         updateVacationRequestList={fetchVacationRequests}
                         vacationRequests={vacationRequests}
-                        isViewable={true}/>
+                        isViewable={true}
+                        showAddButton={true}/>
                     )}
 
                 {view === 3 && (<IneligiblePeriodPage/>)}

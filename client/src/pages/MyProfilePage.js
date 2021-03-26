@@ -67,6 +67,7 @@ const ProfilePage = () => {
           updateVacationRequestList={updateVacationRequestList}
             vacationRequests={vacationRequests}
             isViewable={true}
+            showAddButton={true}
           />
         )}
       </Container>
