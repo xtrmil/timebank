@@ -38,6 +38,16 @@ const updateUser = (id, body) => {
         });
 }
 
+const updateUserByToken = (body) => {
+
+    return Api.put(`user/`,
+        {...body}, {
+            headers:{
+                Authorization: `Bearer ${cookies.get("session_token")} `
+            }
+        });
+}
+
 const deleteUser = (id) => {
     return Api.delete(`user/${id}`,
         {
@@ -79,6 +89,7 @@ const fetchImageByUser =() =>{
 }
 export {addUser,
     updateUser,
+    updateUserByToken,
     getAllUsers,
     getUserById,
     deleteUser,
