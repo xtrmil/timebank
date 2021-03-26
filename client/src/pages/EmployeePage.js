@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from "react";
 import {Row} from "react-bootstrap";
 import {addUser, deleteUser, getAllUsers, updateUser} from "../api/user";
-import EmployeeTable from "../components/adminprofile/EmployeeTable";
-import AddEmployeeModal from "../components/adminprofile/AddEmployeeModal";
+import EmployeeTable from "../components/adminprofile/employee/EmployeeTable";
+import AddEmployeeModal from "../components/adminprofile/employee/AddEmployeeModal";
 import {useToast} from "../contexts/ToastContext";
 import "../components/commonButtonStyling.scss";
 

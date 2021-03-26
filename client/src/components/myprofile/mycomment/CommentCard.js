@@ -3,6 +3,9 @@ import moment from "moment";
 import UpdateCommentForm from "./UpdateCommentForm";
 import { Button } from "react-bootstrap";
 import { useAuth } from "../../../contexts/AuthContext"
+import {faPencilAlt} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import "../../commonButtonStyling.scss";
 
 const CommentCard = (props) => {
     const { loadComments, requestId, comment, isApproved } = props;
@@ -17,7 +20,8 @@ const CommentCard = (props) => {
     return (
         <div className=" border-top mb-2">
             { isEditable && !isApproved &&
-                <Button className="btn btn-info btn-sm float-right mt-2" onClick={onEditClicked}>Edit Comment</Button>
+                <Button className="edit-comment-button btn-sm float-right mt-2" onClick={onEditClicked}>
+                    <FontAwesomeIcon color={"white"} icon={faPencilAlt}/></Button>
             }
             <p className="mt-2"><strong>Last edited: </strong>
                 {moment(comment.lastEditedAt).format("YYYY-MM-DD HH:mm")}

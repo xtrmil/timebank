@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Row, Container, Col } from "react-bootstrap";
-import AdminJsonForm from "../components/adminprofile/AdminJsonForm";
-import SingleVacationRequestLengthLimitForm from "../components/adminprofile/SingleVacationLengthLimitForm";
+import AdminJsonForm from "../components/adminprofile/settings/AdminJsonForm";
+import SingleVacationRequestLengthLimitForm from "../components/adminprofile/settings/SingleVacationLengthLimitForm";
 import { getSingleVacationRequestLengthLimit } from "../api/vacationRequest";
 
 const SettingsPage = () => {

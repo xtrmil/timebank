@@ -6,8 +6,10 @@ import EditVacationRequestStatusModal from "../../vacationrequest/EditVacationRe
 import { useAuth } from "../../../contexts/AuthContext";
 import { Button, Card, Col, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import {faChevronLeft, faPencilAlt, faPlus, faPlusCircle} from "@fortawesome/free-solid-svg-icons";
 import { useHistory,Link } from "react-router-dom";
+import "../../commonButtonStyling.scss";
+import "./vacationRequestDetails.scss";
 
 const VacationRequestDetails = (props) => {
   const {
@@ -51,19 +53,34 @@ const VacationRequestDetails = (props) => {
     <>
       {!isLoading && selectedRequest && (
         <>
-          <Button onClick={() => history.push(backUrl)}>Back</Button>
+          <Row className="mb-2 justify-content-end my-3" noGutters>
+              <Link href="#" onClick={() => history.push(backUrl)} className="back-item">
+                <FontAwesomeIcon color={"black"} icon={faChevronLeft} className="back-icon"/>
+                <span> Back</span>
+              </Link>
+
+
+          </Row>
+
           <Row noGutters>
             <Col xs={12}>
               <Card>
                 <Card.Body>
-                  {!isApproved && (
-                    <Button
-                      className="btn btn-info btn-sm float-right mt-2"
-                      onClick={onEditRequestClicked}
-                    >
-                      Edit Request
-                    </Button>
-                  )}
+                  <Row className="justify-content-end" noGutters>
+                    {!isApproved && (
+                        <button
+                            className="edit-myrequest-button btn-sm mr-2"
+                            onClick={onEditRequestClicked}
+                        >
+                          <FontAwesomeIcon color={"white"} icon={faPencilAlt}/> Request
+                        </button>
+                    )}
+
+                    <button className="add-comment-button btn-sm" onClick={onAddCommentClicked}>
+                      <FontAwesomeIcon icon={faPlusCircle}/> Comment
+                    </button>
+                  </Row>
+
 
                   <Card.Title className="mt-2">
                     {selectedRequest.title}
@@ -101,11 +118,6 @@ const VacationRequestDetails = (props) => {
                   </p>
                   <div className="mb-3">
                     <strong>Comments ({comments.length}) </strong>
-                     
-                      <Button className="btn-sm" onClick={onAddCommentClicked}>
-                        <FontAwesomeIcon icon={faPlusCircle} />
-                      </Button>
-                    
                   </div>
 
                   {showCommentForm && (
