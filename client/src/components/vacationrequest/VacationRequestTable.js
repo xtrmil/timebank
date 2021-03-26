@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Table, Row } from "react-bootstrap";
+import { Table, Row, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
 import DeleteVacationRequestModal from "./DeleteVacationRequestModal";
+import AddVacationRequestModal from "./AddVacationRequestModal";
 import { deleteVacationRequest } from "../../api/vacationRequest";
 import "./VacationRequestTable.scss";
 import { useToast } from "../../contexts/ToastContext";
