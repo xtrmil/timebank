@@ -85,9 +85,9 @@ public class UserService {
 
         Optional<User> optionalUser = userRepository.findById(userId);
         if(optionalUser.isPresent()) {
-
                 User user = optionalUser.get();
                 if (userToUpdate.getFirstName() != null) {
+
                     user.setFirstName(userToUpdate.getFirstName());
                 }
                 if (userToUpdate.getLastName() != null) {
@@ -104,6 +104,7 @@ public class UserService {
                 }
 
                 User updatedUser = userRepository.save(user);
+                System.out.println(updatedUser.getFirstName());
                 UserCredentials credentials = new UserCredentials(updatedUser);
                 cr.data = jwtUtil.generateToken(credentials);
                 cr.msg = "User with id " + userId + " was updated";
