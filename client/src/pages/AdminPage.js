@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { getAllVacationRequestAdminView } from "../api/vacationRequest";
 import VacationRequestTable from "../components/uservacationrequest/VacationRequestTable";
 import AdminNav from "../components/adminprofile/AdminNav";
-import {useAuth} from "../context/Context";
+import {useAuth} from "../contexts/AuthContext";
 import {Container} from "react-bootstrap";
 import IneligiblePeriodPage from "./IneligiblePeriodPage";
 import EmployeePage from "./EmployeePage";
 import "./adminPage.scss";
+import SettingsPage from "./SettingsPage";
 
 const AdminPage = () => {
     const {loggedInUser} = useAuth();
@@ -47,6 +48,9 @@ const AdminPage = () => {
                     )}
 
                 {view === 3 && (<IneligiblePeriodPage/>)}
+
+                {view === 4 &&(<SettingsPage/>)}
+                
             </Container>
         </>
     );

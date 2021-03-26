@@ -29,7 +29,18 @@ const getUserById = (id) => {
 }
  
 const updateUser = (id, body) => {
+    console.log("call",id, body)
     return Api.put(`user/${id}`,
+        {...body}, {
+            headers:{
+                Authorization: `Bearer ${cookies.get("session_token")} `
+            }
+        });
+}
+
+const updateUserByToken = (body) => {
+
+    return Api.put(`user/`,
         {...body}, {
             headers:{
                 Authorization: `Bearer ${cookies.get("session_token")} `
@@ -78,6 +89,7 @@ const fetchImageByUser =() =>{
 }
 export {addUser,
     updateUser,
+    updateUserByToken,
     getAllUsers,
     getUserById,
     deleteUser,

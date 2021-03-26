@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import moment from "moment";
 import UpdateCommentForm from "./UpdateCommentForm";
 import { Button } from "react-bootstrap";
-import { useAuth } from "../../../context/Context"
+import { useAuth } from "../../../contexts/AuthContext"
 
 const CommentCard = (props) => {
     const { loadComments, requestId, comment, isApproved } = props;

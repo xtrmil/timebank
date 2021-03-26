@@ -11,12 +11,23 @@ import AdminPage from "./pages/AdminPage";
 import ProfilePage from "./pages/ProfilePage";
 import UserProfilePage from "./pages/UserProfilePage";
 import VacationRequestDetailsPage from './pages/VacationRequestDetailsPage'
+import Toaster from "./components/toast/Toaster";
+import {useToast} from "./contexts/ToastContext";
 
 function App() {
+    const {toast,setToast, toastHeader, toastMsg} = useToast();
+
   return (
       <Router>
         <div className="App">
             <BootstrapNavbar/>
+            {toast && (
+                <Toaster
+                    toastHeader={toastHeader}
+                    toastMsg={toastMsg}
+                    onClose={() => {setToast(false);}}
+                />
+            )}
            <Switch>
                <Route exact path="/"><Redirect to="/login"/></Route>
                <Route exact path="/login" component={LoginPage}/>

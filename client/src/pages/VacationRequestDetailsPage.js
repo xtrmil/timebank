@@ -4,7 +4,8 @@ import { Redirect, useHistory, useParams } from "react-router-dom";
 import { getAllCommentsByRequestId } from "../api/comment";
 import { getVacationRequestById } from "../api/vacationRequest";
 import VacationRequestDetails from "../components/uservacationrequest/VacationRequestDetails";
-import { useAuth } from "../context/Context";
+import { useAuth } from "../contexts/AuthContext";
+
 const VacationRequestDetailsPage = () => {
   const history = useHistory();
   console.log(history);

@@ -40,6 +40,7 @@ public class UserController {
 
     @PutMapping("")
     public ResponseEntity<CommonResponse> updateUserByToken(@AuthenticationPrincipal UserCredentials userCredentials, @RequestBody User user) {
+        System.out.println(user.getFirstName());
         return userService.updateUserById(userCredentials.getId(),user);
     }
 
@@ -73,7 +74,5 @@ public class UserController {
     @GetMapping("/get/image")
     public ResponseEntity<CommonResponse> getImageByToken(@AuthenticationPrincipal UserCredentials userCredentials){
         return userService.getImageByToken(userCredentials);
-
     }
-
 }

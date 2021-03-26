@@ -1,25 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { useAuth } from "../context/Context";
-import { updateUser } from "../api/user";
+import { useAuth } from "../contexts/AuthContext";
+import { updateUserByToken } from "../api/user";
 import ProfileInfo from "../components/userprofile/ProfileInfo";
 import ProfileNav from "../components/userprofile/ProfileNav";
 import { Container } from "react-bootstrap";
 import "./profilePage.scss";
 import VacationRequestTable from "../components/uservacationrequest/VacationRequestTable";
 import { getAllVacationRequestsByToken } from "../api/vacationRequest";
+import {useToast} from "../contexts/ToastContext";
 
-const ProfilePage = (props) => {
+const ProfilePage = () => {
+  const {setToastHeader, setToastMsg, setToast} = useToast();
   const { updateToken, loggedInUser } = useAuth();
   const [editDisabled, setEditDisabled] = useState(true);
   const [view, setView] = useState(1);
   const [vacationRequests, setVacationRequests] = useState([]);
 
-  const updateProfileInfo = async (props) => {
+  const updateProfileInfo = async (body) => {
     try {
-      let response = await updateUser(props);
+      let response = await updateUserByToken(body);
       updateToken(response.data.data);
+      setToastHeader("Success");
+      setToastMsg(response.data.msg);
+      setToast(true);
     } catch (error) {
-      console.log(error);
+      setToastHeader("Error");
+      setToastMsg(error.message);
+      setToast(true);
     } finally {
       setEditDisabled(true);
     }
@@ -29,7 +36,9 @@ const ProfilePage = (props) => {
       let response = await getAllVacationRequestsByToken();
       setVacationRequests(response.data.data);
     } catch (error) {
-      console.log(error);
+      setToastHeader("Error");
+      setToastMsg(error.message);
+      setToast(true);;
     }
   };
   useEffect(() => {
