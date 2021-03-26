@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from "react";
 import {deleteIneligiblePeriodById, getAllIneligiblePeriods, updateIneligiblePeriod} from "../api/ineligiblePeriod";
 import IneligiblePeriodTable from "../components/ineligibleperiod/IneligiblePeriodTable";
-import {Row} from "react-bootstrap";
+import {Row, Button} from "react-bootstrap";
 import {useToast} from "../contexts/ToastContext";
-
+import AddIneligiblePeriodModal from "../components/ineligibleperiod/AddIneligiblePeriodModal";
 const IneligiblePeriodPage = () => {
 
     const {setToastHeader, setToastMsg, setToast} = useToast();
     const [ineligiblePeriods, setIneligiblePeriods] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-
+    const [showAddModal, setShowAddModal] = useState();
     const fetchIneligiblePeriods = async () => {
         try{
             let response = await getAllIneligiblePeriods();
@@ -61,14 +61,26 @@ const IneligiblePeriodPage = () => {
 
     return(
         <>
-            <Row className="justify-content-center mb-3">
+            <Row className="justify-content-center">
                 <h5>All Ineligible Periods</h5>
             </Row>
+            <Row className="mb-2 justify-content-end" noGutters>
+          <Button
+            onClick={() => setShowAddModal(true)}
+            className="btn btn-sm btn-info"
+          >
+            Add Ineligible Period
+          </Button>
+        </Row>
             <IneligiblePeriodTable
                 onUpdateIneligiblePeriodClicked={onUpdateIneligiblePeriodClicked}
                 onDeletePeriodClicked={onDeletePeriodClicked}
                 ineligiblePeriods={ineligiblePeriods}
                 isLoading={isLoading}/>
+
+                <AddIneligiblePeriodModal
+                showAddPeriodModal={showAddModal}
+                setShowAddPeriodModal={setShowAddModal}/>
         </>
     );
 };
