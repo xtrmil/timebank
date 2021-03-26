@@ -1,25 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import { updateUser } from "../api/user";
-import ProfileInfo from "../components/myprofile/ProfileInfo";
-import ProfileNav from "../components/myprofile/ProfileNav";
+import { updateUserByToken } from "../api/user";
+import ProfileInfo from "../components/userprofile/ProfileInfo";
+import ProfileNav from "../components/userprofile/ProfileNav";
 import { Container } from "react-bootstrap";
-import "./myProfilePage.scss";
-import VacationRequestTable from "../components/vacationrequest/VacationRequestTable";
+import "./profilePage.scss";
+import VacationRequestTable from "../components/uservacationrequest/VacationRequestTable";
 import { getAllVacationRequestsByToken } from "../api/vacationRequest";
 import {useToast} from "../contexts/ToastContext";
 
-const MyProfilePage = () => {
-
+const ProfilePage = () => {
   const {setToastHeader, setToastMsg, setToast} = useToast();
   const { updateToken, loggedInUser } = useAuth();
   const [editDisabled, setEditDisabled] = useState(true);
   const [view, setView] = useState(1);
   const [vacationRequests, setVacationRequests] = useState([]);
 
-  const updateProfileInfo = async (id, body) => {
+  const updateProfileInfo = async (body) => {
     try {
-      let response = await updateUser(loggedInUser.id, body);
+      let response = await updateUserByToken(body);
       updateToken(response.data.data);
       setToastHeader("Success");
       setToastMsg(response.data.msg);
@@ -75,4 +74,4 @@ const MyProfilePage = () => {
   );
 };
 
-export default MyProfilePage;
+export default ProfilePage;
