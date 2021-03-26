@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { updateUserByToken } from "../api/user";
-import ProfileInfo from "../components/userprofile/ProfileInfo";
-import ProfileNav from "../components/userprofile/ProfileNav";
+import ProfileInfo from "../components/myprofile/ProfileInfo";
+import ProfileNav from "../components/myprofile/ProfileNav";
 import { Container } from "react-bootstrap";
-import "./profilePage.scss";
-import VacationRequestTable from "../components/uservacationrequest/VacationRequestTable";
+import "./myProfilePage.scss";
+import VacationRequestTable from "../components/vacationrequest/VacationRequestTable";
 import { getAllVacationRequestsByToken } from "../api/vacationRequest";
 import {useToast} from "../contexts/ToastContext";
 
@@ -50,7 +50,7 @@ const ProfilePage = () => {
       <div className="profile-banner my-4 pt-3 justify-content-center">
         <h6 className="text-center m-0 p-0">Welcome</h6>
         <h3 className="text-center">{loggedInUser.firstName} {loggedInUser.lastName}</h3>
-        <ProfileNav setView={setView} />
+        <ProfileNav setView={setView}/>
       </div>
 
       <Container className="form-container">

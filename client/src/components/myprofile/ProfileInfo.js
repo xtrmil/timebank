@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from "react";
 import ProfileForm from "./ProfileForm";
 import UpdatePasswordForm from "./UpdatePasswordForm";
-import { Button, Card, Col, Row } from "react-bootstrap";
+import {Card, Col, Row } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import {uploadImage,fetchImageByUser} from '../../api/user';
 import {useToast} from "../../contexts/ToastContext";

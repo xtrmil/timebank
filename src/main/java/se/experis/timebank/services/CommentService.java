@@ -33,10 +33,10 @@ public class CommentService {
         if (optionalRequest.isPresent()) {
             if (optionalRequest.get().getUser().getId() == userCredentials.getId() || userCredentials.isAdmin()) {
                 cr.data = commentRepository.findAllByVacationRequestIdOrderByCreatedAtDesc(requestId); // add sorting chronological order (soonest first)
-                cr.msg = "all Comments on request with id: " + requestId;
+                cr.msg = "all Comments on this vacation request with id: " + requestId;
                 cr.status = HttpStatus.OK;
             } else {
-                cr.msg = "Unauthorized operation";
+                cr.msg = "Unauthorized to perform this operation.";
                 cr.status = HttpStatus.UNAUTHORIZED;
             }
         } else {
@@ -58,10 +58,10 @@ public class CommentService {
                 commentRepository.save(newComment);
 
                 cr.data = newComment;
-                cr.msg = "New CommentCard added. ";
+                cr.msg = "New Comment added.";
                 cr.status = HttpStatus.CREATED;
             } else {
-                cr.msg = "Unauthorized operation";
+                cr.msg = "Unauthorized to perform this operation.";
                 cr.status = HttpStatus.UNAUTHORIZED;
             }
         } else {
@@ -83,18 +83,18 @@ public class CommentService {
                         comment.setMessage(newComment.getMessage());
                     }
                     cr.data = commentRepository.save(comment);
-                    cr.msg = "CommentCard with id " + commentId + " was updated";
+                    cr.msg = "Comment successfully updated.";
                     cr.status = HttpStatus.OK;
                 } else {
-                    cr.msg = "Unauthorized operation";
+                    cr.msg = "Unauthorized to perform this operation.";
                     cr.status = HttpStatus.UNAUTHORIZED;
                 }
             } else {
-                cr.msg = "CommentCard  with id " + commentId + " not found";
+                cr.msg = "Comment with id " + commentId + " was not found.";
                 cr.status = HttpStatus.NOT_FOUND;
             }
         }else{
-            cr.msg = "Edit not allowed after 24h from creation";
+            cr.msg = "Edit not allowed after 24h from creation.";
             cr.status = HttpStatus.BAD_REQUEST;
         }
 
@@ -111,13 +111,13 @@ public class CommentService {
             if (optionalComment.get().getUser().getId() == userCredentials.getId()) {
                 commentRepository.deleteById(id);
                 cr.status = HttpStatus.OK;
-                cr.msg = "CommentCard with id: " + id + " successfully deleted";
+                cr.msg = "Comment was deleted successfully.";
             } else {
-                cr.msg = "Unauthorized operation";
+                cr.msg = "Unauthorized to perform this operation.";
                 cr.status = HttpStatus.UNAUTHORIZED;
             }
         } else {
-            cr.msg = "CommentCard with id: " + id + " not found";
+            cr.msg = "Comment with id: " + id + " was not found.";
             cr.status = HttpStatus.NOT_FOUND;
         }
         return new ResponseEntity<>(cr, cr.status);

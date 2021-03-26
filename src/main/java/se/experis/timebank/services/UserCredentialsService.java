@@ -51,12 +51,12 @@ public class UserCredentialsService implements UserDetailsService {
                     userRepository.save(user);
                 }
                 cr.data = jwtUtil.generateToken(new UserCredentials(user));
-                cr.msg = "Verification successful";
+                cr.msg = "Verification was completed successfully.";
                 cr.status = HttpStatus.OK;
             }
 
         }else{
-            cr.msg = "User not found";
+            cr.msg = "User was not found.";
             cr.status = HttpStatus.NOT_FOUND;
         }
         return new ResponseEntity<>(cr,cr.status);

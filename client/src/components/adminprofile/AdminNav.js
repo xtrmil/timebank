@@ -7,7 +7,7 @@ import "./adminNav.scss";
 const AdminNav = ({setView}) => {
 
     return (
-        <div className="row justify-content-center">
+        <div className="row justify-content-center my-3">
             <Button
                 className=" custom-button btn-light btn-sm mr-2 mb-1"
                 onClick={() => setView(1)}

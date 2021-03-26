@@ -69,24 +69,24 @@ public class VacationRequestService {
                     vacationRequest.setUser(user);
                     vacationRequestRepository.save(vacationRequest);
                     cr.data = vacationRequest;
-                    cr.msg = "vacationRequest created successfully";
+                    cr.msg = "Vacation request created successfully.";
                     cr.status = HttpStatus.CREATED;
                 } else {
-                    cr.msg = "User not found";
+                    cr.msg = "User was not found.";
                     cr.status = HttpStatus.NOT_FOUND;
                 }
 
             } else {
                 if (requestedLength > 0) {
-                    cr.msg = "VacationRequest length (" + requestedLength + ") exceeds available days: (" + userCredentials.getCurrentVacationDays() + ")";
+                    cr.msg = "Vacation request length (" + requestedLength + ") exceeds available days: (" + userCredentials.getCurrentVacationDays() + ").";
                 } else {
-                    cr.msg = "VacationRequest length must be minimum 1 day";
+                    cr.msg = "Vacation request length must be minimum 1 day.";
                 }
                 cr.status = HttpStatus.BAD_REQUEST;
             }
         } else {
             cr.status = HttpStatus.BAD_REQUEST;
-            cr.msg = "Requested period overlaps ineligible";
+            cr.msg = "Vacation request overlaps ineligible period.";
         }
         return new ResponseEntity<>(cr, cr.status);
     }
@@ -98,10 +98,10 @@ public class VacationRequestService {
 
         if (optionalVacationRequest.isPresent()) {
             cr.data = optionalVacationRequest.get();
-            cr.msg = "VacationRequest with id:" + id + " was found.";
+            cr.msg = "Vacation request with id:" + id + " was found.";
             cr.status = HttpStatus.OK;
         } else {
-            cr.msg = " Currently unable to get request";
+            cr.msg = " Currently unable to get vacation request.";
             cr.status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
         return new ResponseEntity<>(cr, cr.status);
@@ -114,10 +114,10 @@ public class VacationRequestService {
 
         if (optionalUser.isPresent()) {
             cr.data = vacationRequestRepository.findAllByUserIdOrderByStartDateAsc(optionalUser.get().getId());
-            cr.msg = "VacationRequest with id:" + optionalUser.get().getId() + " was found.";
+            cr.msg = "All vacation requests by user with id:" + optionalUser.get().getId();
             cr.status = HttpStatus.OK;
         } else {
-            cr.msg = " Currently unable to get request";
+            cr.msg = " Currently unable to get vacation requests.";
             cr.status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
         return new ResponseEntity<>(cr, cr.status);
@@ -136,10 +136,10 @@ public class VacationRequestService {
              {
                 cr.data = vacationRequestRepository.findAllByUserIdAndStatusOrderByStartDateAsc(optionalUser.get().getId(), RequestStatus.APPROVED);
             }
-            cr.msg = "VacationRequest with id:" + optionalUser.get().getId() + " was found.";
+            cr.msg = "All vacation requests by user with id: "+ optionalUser.get().getId();
             cr.status = HttpStatus.OK;
         } else {
-            cr.msg = " Currently unable to get request";
+            cr.msg = " Currently unable to get all vacation requests.";
             cr.status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
         return new ResponseEntity<>(cr, cr.status);
@@ -157,6 +157,7 @@ public class VacationRequestService {
         }
         requests.addAll(new HashSet<>(vacationRequestRepository.findAllByUserId(userCredentials.getId())));
         cr.data = requests;
+        cr.msg = "List of all vacation requests.";
         cr.status = HttpStatus.OK;
         return new ResponseEntity<>(cr, cr.status);
     }
@@ -164,6 +165,7 @@ public class VacationRequestService {
     public ResponseEntity<CommonResponse> getAllVacationRequestsAdminview() {
         CommonResponse cr = new CommonResponse();
         cr.data = vacationRequestRepository.findAll();
+        cr.msg = "List of all vacation requests.";
         cr.status = HttpStatus.OK;
 
 
@@ -182,10 +184,11 @@ public class VacationRequestService {
                     System.out.println(request.getTitle() + " added");
                 });
                 cr.status = HttpStatus.OK;
-                cr.msg = "Vacation requests successfully imported";
+                cr.msg = "Vacation requests imported successfully.";
             }
+            cr.msg = "Selected file is not valid for import.";
             cr.status = HttpStatus.BAD_REQUEST;
-            cr.msg = "File not valid for import";
+
 
         } catch (IOException e) {
 
@@ -232,14 +235,14 @@ public class VacationRequestService {
                 Optional<User> admin = userRepository.findById(userCredentials.getId());
                 request.setAdmin(admin.get());
                 cr.data = vacationRequestRepository.save(request);
-                cr.msg = "VacationRequest with id " + requestId + " was updated";
+                cr.msg = "Vacation request was updated successfully.";
                 cr.status = HttpStatus.OK;
             } else {
-                cr.msg = "Unauthorized operation";
+                cr.msg = "Unauthorized to perform this operation.";
                 cr.status = HttpStatus.UNAUTHORIZED;
             }
         } else {
-            cr.msg = "VacationRequest with id " + requestId + " not found";
+            cr.msg = "Vacation request with id " + requestId + " was not found.";
             cr.status = HttpStatus.NOT_FOUND;
         }
         return new ResponseEntity<>(cr, cr.status);
@@ -265,15 +268,15 @@ public class VacationRequestService {
                 request.setAdmin(admin.get());
 
                 cr.status = HttpStatus.OK;
-                cr.msg = "Request status updated to " + status;
+                cr.msg = "Request status updated to: " + status +  " successfully.";
                 vacationRequestRepository.save(request);
             } else {
                 cr.status = HttpStatus.BAD_REQUEST;
-                cr.msg = "Cannot change status on an allready approved vacation request";
+                cr.msg = "Not possible to change status on an approved vacation request.";
             }
         } else {
             cr.status = HttpStatus.NOT_FOUND;
-            cr.msg = "Request not found";
+            cr.msg = "Vacation request was not found.";
         }
         return new ResponseEntity<>(cr, cr.status);
     }
@@ -285,10 +288,10 @@ public class VacationRequestService {
         if (optionalRequest.isPresent()) {
             vacationRequestRepository.deleteById(requestId);
             cr.status = HttpStatus.OK;
-            cr.msg = "Request with id: " + requestId + " successfully deleted";
+            cr.msg = " vacation request with id: " + requestId + " deleted successfully.";
         } else {
             cr.status = HttpStatus.NOT_FOUND;
-            cr.msg = "Request with id: " + requestId + " not found";
+            cr.msg = "Vacation request with id: " + requestId + "was not found.";
         }
         return new ResponseEntity<>(cr, cr.status);
     }
@@ -299,14 +302,14 @@ public class VacationRequestService {
 
             if (limit.size() > 0) {
                 cr.data = limit.get(0);
-                cr.msg = "current length limit is: " + limit.get(0).getLength();
+                cr.msg = "Current vacation length limit is: " + limit.get(0).getLength();
                 cr.status = HttpStatus.OK;
             } else {
                 SingleVacationLimit singleVacationLimit = new SingleVacationLimit();
                 singleVacationLengthRepository.save(singleVacationLimit);
 
                 cr.data = singleVacationLimit;
-                cr.msg = "current length limit is: " + singleVacationLimit;
+                cr.msg = "Current vacation length limit is: " + singleVacationLimit;
                 cr.status = HttpStatus.BAD_REQUEST;
             }
 
@@ -317,19 +320,18 @@ public class VacationRequestService {
         CommonResponse cr = new CommonResponse();
         List<SingleVacationLimit> limit = singleVacationLengthRepository.findAll();
         if(limit.size() > 0 ){
-
             SingleVacationLimit singleVacationLimit = limit.get(0);
             singleVacationLimit.setLength(length);
             singleVacationLengthRepository.save(singleVacationLimit);
 
             cr.data = singleVacationLimit;
-            cr.msg = "new length limit for a single vacation set to: "+singleVacationLimit.getLength();
+            cr.msg = "Vacation length limit was updated successfully.";
             cr.status = HttpStatus.OK;
         }else{
             SingleVacationLimit singleVacationLimit = new SingleVacationLimit();
             singleVacationLimit.setLength(length);
             singleVacationLengthRepository.save(singleVacationLimit);
-            cr.msg = "not allowed";
+            cr.msg = "Vacation length limit must be at least 1 day.";
             cr.status = HttpStatus.BAD_REQUEST;
         }
         return new ResponseEntity<>(cr, cr.status);

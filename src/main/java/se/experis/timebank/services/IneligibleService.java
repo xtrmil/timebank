@@ -42,7 +42,7 @@ public class IneligibleService {
             newPeriod.setCreatedBy(optionalUser.get());
             ineligibleRepository.save(newPeriod);
             cr.data = newPeriod;
-            cr.msg = "Ineligible period was successfully added. "
+            cr.msg = "Ineligible period was successfully added."
                     + newPeriod.getStartDate().toString() + " - " + newPeriod.getEndDate().toString();
             cr.status = HttpStatus.CREATED;
         } else {
