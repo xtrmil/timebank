@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     protected void configure(HttpSecurity http)throws Exception{
-        http.cors().and().csrf().disable().authorizeRequests().antMatchers("/api/v1/auth/login", "/api/v1/auth/verify","/api/v1/user","/api/v1/device").permitAll().
+        http.cors().and().csrf().disable().authorizeRequests().antMatchers("/", "/{x:[\\w\\-]+}", "/{x:^(?!api$).*$}/**/{y:[\\w\\-]+}", "/static/**","/api/v1/auth/login", "/api/v1/auth/verify","/api/v1/user","/api/v1/device").permitAll().
                 anyRequest().authenticated().
                 and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
@@ -58,6 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOriginPatterns(Arrays.asList("*"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080"));
         configuration.setAllowedMethods(Arrays.asList("*"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
