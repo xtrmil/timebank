@@ -5,15 +5,21 @@ import { faEye, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
 import DeleteVacationRequestModal from "../calendar/calendarvacationrequest/DeleteVacationRequestModal";
-import {deleteVacationRequest} from '../../api/vacationRequest';
-import './VacationRequestTable.scss'
-const VacationRequestTable = ({ vacationRequests, isViewable, updateVacationRequestList}) => {
+import AddVacationRequestModal from "../calendar/calendarvacationrequest/AddVacationRequestModal";
+import { deleteVacationRequest } from "../../api/vacationRequest";
+import "./VacationRequestTable.scss";
+const VacationRequestTable = ({
+  vacationRequests,
+  isViewable,
+  updateVacationRequestList,
+  showAddButton,
+}) => {
   const history = useHistory();
   const { loggedInUser, isAdmin } = useAuth();
   const [request, setRequest] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-
-  const onDeleteRequestClicked = async(requestId) => {
+  const [showAddModal, setShowAddModal] = useState(false);
+  const onDeleteRequestClicked = async (requestId) => {
     await deleteVacationRequest(requestId);
     await updateVacationRequestList();
   };
@@ -63,10 +69,19 @@ const VacationRequestTable = ({ vacationRequests, isViewable, updateVacationRequ
   });
   return (
     <>
-      <Row className="justify-content-center mb-3">
+      <Row className="justify-content-center">
         <h5>Vacation Requests</h5>
       </Row>
-
+      {showAddButton && (
+        <Row className="mb-2 justify-content-end" noGutters>
+          <Button
+            onClick={() => setShowAddModal(true)}
+            className="btn btn-sm btn-info"
+          >
+            Add Vacation Request
+          </Button>
+        </Row>
+      )}
       <Table responsive striped>
         <thead>
           <tr className="text-center">
@@ -80,13 +95,16 @@ const VacationRequestTable = ({ vacationRequests, isViewable, updateVacationRequ
         </thead>
         <tbody>{table}</tbody>
       </Table>
-
       <DeleteVacationRequestModal
         showDeleteModal={showDeleteModal}
         setShowDeleteModal={setShowDeleteModal}
         request={request}
         onDeleteRequestClicked={onDeleteRequestClicked}
       />
+      <AddVacationRequestModal
+        showAddRequestModal={showAddModal}
+        setShowAddRequestModal={setShowAddModal}
+      />{" "}
     </>
   );
 };
