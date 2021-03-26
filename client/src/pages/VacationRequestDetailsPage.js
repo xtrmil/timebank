@@ -3,12 +3,13 @@ import { Container } from "react-bootstrap";
 import { Redirect, useHistory, useParams } from "react-router-dom";
 import { getAllCommentsByRequestId } from "../api/comment";
 import { getVacationRequestById } from "../api/vacationRequest";
-import VacationRequestDetails from "../components/uservacationrequest/VacationRequestDetails";
+import VacationRequestDetails from "../components/myprofile/myvacationrequest/VacationRequestDetails";
 import { useAuth } from "../contexts/AuthContext";
+import {useToast} from "../contexts/ToastContext";
 
 const VacationRequestDetailsPage = () => {
+  const {setToastHeader, setToastMsg, setToast} = useToast();
   const history = useHistory();
-  console.log(history);
   const [selectedRequest, setSelectedRequest] = useState(
     history?.location?.state?.request
   );
@@ -17,14 +18,15 @@ const VacationRequestDetailsPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [redirect,setRedirect] = useState(false);
   const { loggedInUser, isAdmin } = useAuth();
-  console.log(loggedInUser);
 
   const loadComments = async () => {
     try {
       let response = await getAllCommentsByRequestId(id);
       setComments(response.data.data);
     } catch (error) {
-      console.log(error.response.data.msg);
+      setToastHeader("Error");
+      setToastMsg(error.message);
+      setToast(true);
     }
   };
   useEffect(() => {

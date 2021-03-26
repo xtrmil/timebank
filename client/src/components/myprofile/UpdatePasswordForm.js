@@ -2,7 +2,7 @@ import React from "react";
 import * as yup from "yup";
 import { Formik } from "formik";
 import { Button, Form } from "react-bootstrap";
-import "../../pages/profilePage.scss";
+import "../../pages/myProfilePage.scss";
 import { updatePassword } from "../../api/user";
 
 const UpdatePasswordForm = (props) => {
@@ -129,13 +129,13 @@ const UpdatePasswordForm = (props) => {
           </Form.Group>
           <div className="text-center">
             <Button
-              className="mr-2"
+              className="mr-2 btn-sm"
               onClick={onCancelClicked}
-              variant="primary"
+              variant="secondary"
             >
               Cancel
             </Button>
-            <Button type="submit" variant="primary">
+            <Button type="submit" className="btn-sm" variant="primary">
               Save
             </Button>
           </div>

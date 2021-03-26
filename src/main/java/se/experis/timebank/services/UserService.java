@@ -47,7 +47,7 @@ public class UserService {
             user.setSecret(totpManager.generateSecret());
             totpManager.getUriForImage(user.getSecret(), user.getEmail());
             cr.data =  userRepository.save(user);
-            cr.msg = "User with id:" + user.getId() + " created";
+            cr.msg = "User with id:" + user.getId() + "was created successfully.";
             cr.status = HttpStatus.CREATED;
         }else {
             cr.msg = "User with email: " + user.getEmail() + " already exists.";
@@ -65,7 +65,7 @@ public class UserService {
             cr.msg = "User with id:" + userId + " was found.";
             cr.status = HttpStatus.OK;
         } else {
-            cr.msg = "User with id: " + userId + " was not found";
+            cr.msg = "User with id: " + userId + " was not found.";
             cr.status = HttpStatus.NOT_FOUND;
         }
         return new ResponseEntity<>(cr, cr.status);
@@ -107,11 +107,11 @@ public class UserService {
                 System.out.println(updatedUser.getFirstName());
                 UserCredentials credentials = new UserCredentials(updatedUser);
                 cr.data = jwtUtil.generateToken(credentials);
-                cr.msg = "User with id " + userId + " was updated";
+                cr.msg = "User with id " + userId + " was updated successfully";
                 cr.status = HttpStatus.OK;
 
         }else{
-            cr.msg = "User with id " + userToUpdate.getId() + " not found";
+            cr.msg = "User with id " + userToUpdate.getId() + "was not found.";
             cr.status = HttpStatus.BAD_REQUEST;
         }
         return new ResponseEntity<>(cr, cr.status);
@@ -125,9 +125,9 @@ public class UserService {
         if(optionalUser.isPresent()){
             userRepository.deleteById(userId);
             cr.status = HttpStatus.OK;
-            cr.msg = "User with id: " + userId + " successfully deleted";
+            cr.msg = "User with id: " + userId + " was deleted successfully.";
         } else {
-            cr.msg = "User with id: " + userId + " not found";
+            cr.msg = "User with id: " + userId + " was not found.";
             cr.status = HttpStatus.NOT_FOUND;
         }
         return new ResponseEntity<>(cr,cr.status);
@@ -141,14 +141,14 @@ public class UserService {
                User user = optionalUser.get();
                user.setPassword(encoder.encode(updatePasswordRequest.getNewPassword()));
                userRepository.save(user);
-               cr.msg = "Password was updated successfully";
+               cr.msg = "Password was updated successfully.";
                cr.status = HttpStatus.OK;
            }else{
-               cr.msg = "User with id: " + userCredentials.getId() + " not found";
+               cr.msg = "User with id: " + userCredentials.getId() + " was not found.";
                cr.status = HttpStatus.NOT_FOUND;
            }
        }else{
-           cr.msg = "Wrong password";
+           cr.msg = "Wrong password.";
            cr.status = HttpStatus.UNAUTHORIZED;
        }
         return new ResponseEntity<>(cr,cr.status);
@@ -167,15 +167,15 @@ public class UserService {
                 user.setProfileImg(sb.toString());
                 userRepository.save(user);
                 cr.data = sb.toString();
-                cr.msg = "Upload image success";
+                cr.msg = "Image uploaded successfully.";
                 cr.status = HttpStatus.OK;
             }
             catch (IOException ioException){
-                cr.msg = "Could not upload file";
+                cr.msg = "Unable to upload file.";
                 cr.status = HttpStatus.BAD_REQUEST;
             }
         }else{
-            cr.msg ="user was not found";
+            cr.msg ="User was not found.";
             cr.status = HttpStatus.NOT_FOUND;
         }
 
@@ -190,10 +190,10 @@ public class UserService {
         if(optionalUser.isPresent()){
             User user = optionalUser.get();
                 cr.data = user.getProfileImg();
-                cr.msg = "Upload image success";
+                cr.msg = "Image uploaded successfully.";
                 cr.status = HttpStatus.OK;
         }else{
-            cr.msg ="user was not found";
+            cr.msg ="User was not found.";
             cr.status = HttpStatus.NOT_FOUND;
         }
         return new ResponseEntity<>(cr,cr.status);

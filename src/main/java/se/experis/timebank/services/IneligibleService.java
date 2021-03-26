@@ -42,7 +42,8 @@ public class IneligibleService {
             newPeriod.setCreatedBy(optionalUser.get());
             ineligibleRepository.save(newPeriod);
             cr.data = newPeriod;
-            cr.msg = "ineligible period added. Start: " + newPeriod.getStartDate() + " Stop: " + newPeriod.getEndDate();
+            cr.msg = "Ineligible period was successfully added."
+                    + newPeriod.getStartDate().toString() + " - " + newPeriod.getEndDate().toString();
             cr.status = HttpStatus.CREATED;
         } else {
             cr.msg = "Unable to add ineligible period.";
@@ -57,10 +58,10 @@ public class IneligibleService {
 
         if (eligibilityPeriodOptional.isPresent()) {
             cr.data = eligibilityPeriodOptional.get();
-            cr.msg = "Eligibility period found with id: " + id;
+            cr.msg = "Ineligible period with id: " + id + "was found.";
             cr.status = HttpStatus.OK;
         } else {
-            cr.msg = "No period found with id: " + id;
+            cr.msg = "Ineligible period with id: " + id + " was not found.";
             cr.status = HttpStatus.NOT_FOUND;
         }
         return new ResponseEntity<>(cr, cr.status);
@@ -81,10 +82,10 @@ public class IneligibleService {
                 period.setEndDate(newPeriod.getEndDate());
             }
             cr.data = ineligibleRepository.save(period);
-            cr.msg = "Eligibility Period with id " + id + " was updated";
+            cr.msg = "Ineligible period was successfully updated.";
             cr.status = HttpStatus.OK;
         } else {
-            cr.msg = "Eligibility  with id " + id + " not found";
+            cr.msg = "Unable to update ineligible period with id: " + id + ".";
             cr.status = HttpStatus.NOT_FOUND;
         }
 
@@ -99,9 +100,9 @@ public class IneligibleService {
         if (optionalPeriod.isPresent()) {
             ineligibleRepository.deleteById(id);
             cr.status = HttpStatus.OK;
-            cr.msg = "Eligibility Period with id: " + id + " successfully deleted";
+            cr.msg = "Ineligible period was successfully deleted.";
         } else {
-            cr.msg = "Eligibility Period with id: " + id + " not found";
+            cr.msg = "Unable to update Ineligible period with id: " + id + ".";
             cr.status = HttpStatus.NOT_FOUND;
         }
         return new ResponseEntity<>(cr, cr.status);

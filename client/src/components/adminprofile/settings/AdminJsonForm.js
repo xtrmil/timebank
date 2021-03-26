@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { exportAllVacationRequests, importRequestsFromJson } from "../../api/vacationRequest";
+import { exportAllVacationRequests, importRequestsFromJson } from "../../../api/vacationRequest";
 import { Button, Col, Card } from "react-bootstrap";
 
 

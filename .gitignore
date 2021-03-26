@@ -40,7 +40,7 @@ build/
 client/node_modules
 client/.pnp
 client/.pnp.js
-
+client/node
 # testing
 client/coverage
 

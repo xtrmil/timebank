@@ -5,36 +5,31 @@ import { faEye, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
 import DeleteVacationRequestModal from "./DeleteVacationRequestModal";
-import AddVacationRequestModal from "./AddVacationRequestModal";
-import { deleteVacationRequest } from "../../api/vacationRequest";
-import "./VacationRequestTable.scss";
-import { useToast } from "../../contexts/ToastContext";
+import AddVacationRequestModal from './AddVacationRequestModal';
+import {deleteVacationRequest} from '../../api/vacationRequest';
+import './VacationRequestTable.scss'
+import {useToast} from "../../contexts/ToastContext";
 
-const VacationRequestTable = ({
-  vacationRequests,
-  isViewable,
-  updateVacationRequestList,
-  showAddButton,
-}) => {
-  const { setToastHeader, setToastMsg, setToast } = useToast();
-  const history = useHistory();
-  const { loggedInUser, isAdmin } = useAuth();
-  const [request, setRequest] = useState({});
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showAddModal, setShowAddModal] = useState(false);
+const VacationRequestTable = ({ vacationRequests, isViewable, updateVacationRequestList,showAddButton}) => {
+    const {setToastHeader, setToastMsg, setToast} = useToast();
+    const history = useHistory();
+    const { loggedInUser, isAdmin } = useAuth();
+    const [request, setRequest] = useState({});
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showAddModal,setShowAddModal ] = useState(false);
+    const onDeleteRequestClicked = async(requestId) => {
+      try {
+          let response = await deleteVacationRequest(requestId);
+          setToastHeader("Success");
+          setToastMsg(response.data.msg);
+          setToast(true);
+          await updateVacationRequestList();
+      }catch(error){
+          setToastHeader("Error");
+          setToastMsg(error.message);
+          setToast(true);
+      }
 
-  const onDeleteRequestClicked = async (requestId) => {
-    try {
-      let response = await deleteVacationRequest(requestId);
-      setToastHeader("Success");
-      setToastMsg(response.data.msg);
-      setToast(true);
-      await updateVacationRequestList();
-    } catch (error) {
-      setToastHeader("Error");
-      setToastMsg(error.message);
-      setToast(true);
-    }
   };
 
   const table = vacationRequests.map((request, index) => {

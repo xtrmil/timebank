@@ -1,5 +1,5 @@
 import React from "react";
-import { updateSingleVacationRequestLengthLimit } from "../../api/vacationRequest";
+import { updateSingleVacationRequestLengthLimit } from "../../../api/vacationRequest";
 import * as yup from "yup";
 import { Formik } from "formik";
 import { Button, Form, Card } from "react-bootstrap";

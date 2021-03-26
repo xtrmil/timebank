@@ -2,13 +2,14 @@ import React from "react";
 import * as yup from "yup";
 import {Button, Modal, Form} from "react-bootstrap";
 import {Formik} from "formik";
-import {updateVacationRequestStatus} from "../../../api/vacationRequest";
-import {addComment} from "../../../api/comment";
-
-
+import {updateVacationRequestStatus} from "../../api/vacationRequest";
+import {addComment} from "../../api/comment";
+import {useToast} from "../../contexts/ToastContext";
 
 const EditVacationRequestStatusModal = (props) => {
+
     const {request, showModal, setShowModal} = props;
+    const {setToastHeader, setToastMsg, setToast} = useToast();
 
     const onClickClose = () => {
         setShowModal(false);
@@ -18,8 +19,13 @@ const EditVacationRequestStatusModal = (props) => {
         try{
             await addComment(request.id, {message: data.comment});
             await updateVacationRequestStatus(request.id, data.status);
+            setToastHeader("Success");
+            setToastMsg("Added comment and updated status successfully.");
+            setToast(true);
         }catch(error){
-            console.log(error);
+            setToastHeader("Error");
+            setToastMsg(error.message);
+            setToast(true);
         }finally {
             setShowModal(false);
         }

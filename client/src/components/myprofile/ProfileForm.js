@@ -3,7 +3,10 @@ import * as yup from "yup";
 import { Formik } from "formik";
 import { Button, Form } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
-import "../../pages/profilePage.scss";
+import "../commonButtonStyling.scss";
+import "../../pages/myProfilePage.scss";
+import {faPencilAlt} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const ProfileForm = (props) => {
   const { loggedInUser } = useAuth();
@@ -110,28 +113,27 @@ const ProfileForm = (props) => {
           <div className="justify-content-center text-center">
             {editDisabled && (
               <>
-                <Button
-                  className="mr-2"
-                  variant="primary"
+                <button
+                  className="edit-profile-button mr-2 btn-sm"
                   onClick={onEditClicked}
                 >
-                  Edit
-                </Button>
-                <Button onClick={() => setShowPasswordForm(true)}>
+                  <FontAwesomeIcon color={"white"} icon={faPencilAlt}/> Profile
+                </button>
+                <button onClick={() => setShowPasswordForm(true)} className="add-password-button btn-sm">
                   New Password
-                </Button>
+                </button>
               </>
             )}
             {!editDisabled && (
               <>
                 <Button
-                  className="mr-2"
+                  className="mr-2 btn-sm"
                   onClick={() => onCancelClicked(resetForm)}
-                  variant="primary"
+                  variant="secondary"
                 >
                   Cancel
                 </Button>
-                <Button type="submit" variant="primary">
+                <Button type="submit" className="btn-sm" variant="primary">
                   Save
                 </Button>
               </>

@@ -1,16 +1,16 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
-import { useAuth } from "../../../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 import VacationRequestForm from "./VacationRequestForm";
-import { updateVacationRequest } from "../../../api/vacationRequest";
+import { updateVacationRequest } from "../../api/vacationRequest";
 import { Link } from "react-router-dom";
+import {useToast} from "../../contexts/ToastContext";
 
 const EditVacationRequestModal = (props) => {
-  const { showModal, setShowModal, request, afterUpdate } = props;
-  const { loggedInUser, isAdmin } = useAuth();
 
-  //Kolla om loggedInUser är admin eller ägaren till request
-  //Visa då upp edit fälten.
+  const { showModal, setShowModal, request, afterUpdate } = props;
+  const {setToastHeader, setToastMsg, setToast} = useToast();
+  const { loggedInUser, isAdmin } = useAuth();
 
   const initialValues = {
     title: request.title,
@@ -26,8 +26,15 @@ const EditVacationRequestModal = (props) => {
       if (startDate.getTime() <= endDate.getTime()) {
         let response = await updateVacationRequest(request.id, data);
         afterUpdate(response.data.data);
+        setToastHeader("Success");
+        setToastMsg(response.data.msg);
+        setToast(true);
       }
-    } catch (error) {}
+    }catch (error){
+      setToastHeader("Error");
+      setToastMsg(error.message);
+      setToast(true);
+    }
   };
 
   const isEditable =

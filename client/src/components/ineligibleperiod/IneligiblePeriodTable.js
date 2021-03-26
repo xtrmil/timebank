@@ -4,7 +4,7 @@ import UpdateIneligiblePeriodModal from "./UpdateIneligiblePeriodModal";
 import DeleteIneligiblePeriodModal from "./DeleteIneligiblePeriodModal";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPencilAlt, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
-import "./ineligiblePeriodTable.scss";
+import "../commonTableStyling.scss";
 
 const IneligiblePeriodTable = (props) => {
 
@@ -31,7 +31,7 @@ const IneligiblePeriodTable = (props) => {
                 <td>{period.createdBy.firstName} {period.createdBy.lastName}</td>
                 <td className="d-flex justify-content-center">
                     <button onClick={() => onShowUpdateModalClicked(period)}
-                            className="btn edit-button btn-sm mr-2">
+                            className="edit-button btn-sm mr-2">
                         <FontAwesomeIcon color={"white"} icon={faPencilAlt}/>
                     </button>
                     <button onClick={() => onShowDeleteModalClicked(period)}

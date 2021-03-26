@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getAllVacationRequestAdminView } from "../api/vacationRequest";
-import VacationRequestTable from "../components/uservacationrequest/VacationRequestTable";
+import VacationRequestTable from "../components/vacationrequest/VacationRequestTable";
 import AdminNav from "../components/adminprofile/AdminNav";
 import {useAuth} from "../contexts/AuthContext";
 import {Container} from "react-bootstrap";

@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from "react";
-import {Row, Button, Col} from "react-bootstrap";
+import {Row} from "react-bootstrap";
 import {addUser, deleteUser, getAllUsers, updateUser} from "../api/user";
-import EmployeeTable from "../components/adminprofile/EmployeeTable";
-import AddEmployeeModal from "../components/adminprofile/AddEmployeeModal";
+import EmployeeTable from "../components/adminprofile/employee/EmployeeTable";
+import AddEmployeeModal from "../components/adminprofile/employee/AddEmployeeModal";
 import {useToast} from "../contexts/ToastContext";
+import "../components/commonButtonStyling.scss";
 
 const EmployeePage = () => {
 
@@ -17,7 +18,9 @@ const EmployeePage = () => {
             let response = await getAllUsers();
             setEmployees(response.data.data);
         }catch(error){
-            console.log(error);
+            setToastHeader("Error");
+            setToastMsg(error.message);
+            setToast(true);
         }finally {
             setIsLoading(false);
         }
@@ -76,9 +79,9 @@ const EmployeePage = () => {
                 <h5>All Employees</h5>
             </Row>
             <Row className="mb-2 justify-content-end" noGutters>
-                <Button onClick={() => setShowAddModal(true)} className="btn btn-sm btn-info">
+                <button onClick={() => setShowAddModal(true)} className="add-employee-button btn-sm">
                     Add New Employee
-                </Button>
+                </button>
             </Row>
 
             <EmployeeTable
@@ -91,7 +94,6 @@ const EmployeePage = () => {
                 setShowModal={setShowAddModal}
                 showModal={showAddModal}
                 onAddEmployeeClicked={onAddEmployeeClicked}/>
-
         </>
     );
 };

@@ -7,7 +7,7 @@ import "./dashboard.scss";
 import CalendarToolbar from "../components/calendar/CalendarToolbar";
 import { getAllVacationRequestsByStatus } from "../api/vacationRequest";
 import { getAllVacationRequests } from "../api/vacationRequest";
-import EditVacationRequestModal from "../components/calendar/calendarvacationrequest/EditVacationRequestModal";
+import EditVacationRequestModal from "../components/vacationrequest/EditVacationRequestModal";
 import { useAuth } from "../contexts/AuthContext";
 import {getAllIneligiblePeriods} from "../api/ineligiblePeriod";
 import {useHistory} from "react-router-dom";

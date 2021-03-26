@@ -1,7 +1,7 @@
 import React from "react";
 import {Modal} from "react-bootstrap";
 import EmployeeForm from "./EmployeeForm";
-import IneligiblePeriodForm from "../ineligibleperiod/IneligiblePeriodForm";
+import IneligiblePeriodForm from "../../ineligibleperiod/IneligiblePeriodForm";
 import * as yup from "yup";
 
 const UpdateEmployeeModal = (props) => {
