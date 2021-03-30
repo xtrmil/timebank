@@ -1,4 +1,8 @@
-.add-password-button, .add-period-button, .add-employee-button, .add-comment-button {
+.add-password-button,
+.add-period-button,
+.add-employee-button,
+.add-comment-button,
+.add-vacation-request-button {
   color: white;
   border: none;
   background-color: #345f9a;
@@ -13,7 +17,11 @@
   }
 }
 
-.edit-profile-button, .edit-image-button, .edit-myrequest-button, .edit-comment-button  {
+.edit-profile-button,
+.edit-image-button,
+.edit-myrequest-button,
+.edit-comment-button,
+.edit-vacation-length-button{
   border: none;
   color: white;
   background-color: #82ab9b;

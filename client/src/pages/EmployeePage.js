@@ -5,6 +5,8 @@ import EmployeeTable from "../components/adminprofile/employee/EmployeeTable";
 import AddEmployeeModal from "../components/adminprofile/employee/AddEmployeeModal";
 import {useToast} from "../contexts/ToastContext";
 import "../components/commonButtonStyling.scss";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPlusCircle} from "@fortawesome/free-solid-svg-icons";
 
 const EmployeePage = () => {
 
@@ -80,7 +82,7 @@ const EmployeePage = () => {
             </Row>
             <Row className="mb-2 justify-content-end" noGutters>
                 <button onClick={() => setShowAddModal(true)} className="add-employee-button btn-sm">
-                    Add New Employee
+                    <FontAwesomeIcon icon={faPlusCircle}/>  New Employee
                 </button>
             </Row>
 

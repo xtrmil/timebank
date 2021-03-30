@@ -5,6 +5,7 @@ import { Formik } from "formik";
 import { Button, Form, Card } from "react-bootstrap";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "../../commonButtonStyling.scss";
 
 const SingleVacationRequestLengthLimitForm = (props) => {
 
@@ -84,7 +85,7 @@ const SingleVacationRequestLengthLimitForm = (props) => {
                                         {editDisabled && (
                                             <>
                                                 <button
-                                                    className="btn btn-info btn-sm mr-2 mt-1"
+                                                    className="edit-vacation-length-button btn-sm mr-2 mt-1"
                                                     onClick={onEditClicked}>
                                                     <FontAwesomeIcon icon={faPencilAlt} />
                                                 </button>
