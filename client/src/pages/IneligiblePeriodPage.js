@@ -81,7 +81,8 @@ const IneligiblePeriodPage = () => {
                 isLoading={isLoading}/>
 
                 <AddIneligiblePeriodModal setShowAddPeriodModal={setShowAddPeriodModal}
-                                          showAddPeriodModal={showAddPeriodModal}/>
+                                          showAddPeriodModal={showAddPeriodModal}
+                                          fetchIneligiblePeriods={fetchIneligiblePeriods}/>
         </>
     );
 };

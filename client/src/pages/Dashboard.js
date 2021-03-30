@@ -127,7 +127,7 @@ const Dashboard = () => {
             <div>
               <h6 className="text-center m-0 p-0">Welcome</h6>
               <h3 className="text-center"> Calendar Overview</h3>
-              <CalendarNav/>
+              <CalendarNav fetchIneligiblePeriods={fetchIneligiblePeriods}/>
             </div>
           </div>
           <Container>

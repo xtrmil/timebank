@@ -6,7 +6,7 @@ import AddVacationRequestModal from "../vacationrequest/AddVacationRequestModal"
 import AddIneligiblePeriodModal from "../ineligibleperiod/AddIneligiblePeriodModal";
 import {useAuth} from "../../contexts/AuthContext";
 
-const CalendarNav = () => {
+const CalendarNav = ({fetchIneligiblePeriods}) => {
 
     const {isAdmin} = useAuth();
     const [showAddRequestModal, setShowAddRequestModal] = useState(false);
@@ -41,7 +41,8 @@ const CalendarNav = () => {
 
             {isAdmin && <AddIneligiblePeriodModal
                 showAddPeriodModal={showAddPeriodModal}
-                setShowAddPeriodModal={setShowAddPeriodModal}/>}
+                setShowAddPeriodModal={setShowAddPeriodModal}
+                fetchIneligiblePeriods={fetchIneligiblePeriods}/>}
 
             <AddVacationRequestModal
                 showAddRequestModal={showAddRequestModal}

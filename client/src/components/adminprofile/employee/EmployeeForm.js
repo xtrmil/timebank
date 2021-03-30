@@ -114,7 +114,6 @@ const EmployeeForm = (props) => {
                          </Button>
                          <Button type="submit" variant="primary">Save</Button>
                      </div>
-                     <pre>{JSON.stringify(values, null, 2)}</pre>
                  </Form>
            )}
 

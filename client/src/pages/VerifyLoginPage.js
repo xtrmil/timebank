@@ -47,7 +47,7 @@ const VerifyLoginPage = (props) => {
         {!verified && (
           <>
             <img className="qr-code" src={qrSecret.qrUri} alt=""></img>
-            <h3>{qrSecret.configCode}</h3>
+            <h3 className="qr-secret">{qrSecret.configCode}</h3>
           </>
         )}
         <Formik

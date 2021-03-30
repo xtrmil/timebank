@@ -5,7 +5,7 @@ import {addIneligiblePeriod} from "../../api/ineligiblePeriod";
 import IneligiblePeriodForm from "./IneligiblePeriodForm";
 import {useToast} from "../../contexts/ToastContext";
 
-const AddIneligiblePeriodModal = ({showAddPeriodModal, setShowAddPeriodModal}) => {
+const AddIneligiblePeriodModal = ({showAddPeriodModal, setShowAddPeriodModal,fetchIneligiblePeriods}) => {
 
     const history = useHistory();
     const {setToastHeader, setToastMsg, setToast} = useToast();
@@ -25,7 +25,7 @@ const AddIneligiblePeriodModal = ({showAddPeriodModal, setShowAddPeriodModal}) =
                 setToastMsg(response.data.msg);
                 setToast(true);
                 setShowAddPeriodModal(false);
-                history.go(0);
+                fetchIneligiblePeriods();
             }
         }catch(error){
             setToastHeader("Error");

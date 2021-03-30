@@ -5,6 +5,7 @@ import SingleVacationRequestLengthLimitForm from "../components/adminprofile/set
 import { getSingleVacationRequestLengthLimit } from "../api/vacationRequest";
 
 const SettingsPage = () => {
+    
     const [editDisabled, setEditDisabled] = useState(true);
     const [lengthLimit, setLengthLimit] = useState();
     const [isLoading, setIsLoading] = useState(true);
