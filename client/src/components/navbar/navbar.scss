@@ -1,0 +1,48 @@
+.nav-container {
+  padding: 1% 1% 1% 1%;
+  overflow: hidden;
+
+}
+
+h3 {
+  color: white;
+}
+
+.custom-navbar{
+  background: white;
+}
+
+.logo {
+  color: black;
+  font-size: 1.5rem;
+  &:hover {
+    color:#c25700;
+    //color:#fd7e14;
+  }
+}
+
+.item {
+  position: relative;
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
+  &:hover {
+    color:#c25700;
+  }
+}
+
+.item::after{
+  display: block;
+  position: absolute;
+  content: "";
+  background-color: #c25700;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  transition: .25s ease-in-out;
+}
+.item:hover::after{
+  width: 100%;
+}

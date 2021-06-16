@@ -37,24 +37,24 @@ build/
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-client/timebank/node_modules
-client/timebank/.pnp
-client/timebank/.pnp.js
-
+client/node_modules
+client/.pnp
+client/.pnp.js
+client/node
 # testing
-client/timebank/coverage
+client/coverage
 
 # production
-client/timebank/build
+client/build
 
 # misc
-client/timebank/.DS_Store
-client/timebank/.env.local
-client/timebank/.env.development.local
-client/timebank/.env.test.local
-client/timebank/.env.production.local
+client/.DS_Store
+client/.env.local
+client/.env.development.local
+client/.env.test.local
+client/.env.production.local
 
-client/timebank/npm-debug.log*
-client/timebank/yarn-debug.log*
-client/timebank/yarn-error.log*
+client/npm-debug.log*
+client/yarn-debug.log*
+client/yarn-error.log*
 

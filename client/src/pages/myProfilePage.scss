@@ -1,0 +1,21 @@
+.form-container {
+    width: 60%;
+}
+
+.profile-banner{
+    width: 85%;
+    margin: auto;
+    background: linear-gradient(180deg,#345f9a,#1c3e6b);
+    //background-color: #82ab9b;
+            //alt. #6d8f82;
+}
+
+@media screen and(max-width:930px){
+    .form-container{
+        padding: 0;
+        width: 100%;
+    }
+    .mobile-col{
+        width: 10%;
+    }
+}
